@@ -105,4 +105,5 @@ def manifest_view(request):
         json.loads(render_to_string(
             'landing/manifest.json',
             context={'prefix': 'assets/img/favicon/'}
-        )), json_dumps_params={'indent': 2})
+        )), json_dumps_params={'indent': 2}
+    )
