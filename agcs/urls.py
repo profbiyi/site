@@ -6,12 +6,12 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 from django.shortcuts import urlresolvers
 
-from landing.views import manifest_view
 from .sitemaps import StaticViewSitemap
 
 from landing.views import (
     ContactView, HomeView,
-    AboutView, ServicesView
+    AboutView, ServicesView,
+    manifest_view
 )
 
 sitemaps = {

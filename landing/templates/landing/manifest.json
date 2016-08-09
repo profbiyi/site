@@ -1,0 +1,62 @@
+{% load favicon %}
+{
+  "name": "Alpha Geek Computer Services",
+  "short_name": "Alpha Geeks",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#cccccc",
+  "description": "Local Computer Repair Services",
+  "icons": [{
+    "src": "{% favicon_url 'favicon-32.png' prefix %}",
+    "sizes": "32x32",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-57.png' prefix %}",
+    "sizes": "57x57",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-76.png' prefix %}",
+    "sizes": "76x76",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-96.png' prefix %}",
+    "sizes": "96x96",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-120.png' prefix %}",
+    "sizes": "120x120",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-128.png' prefix %}",
+    "sizes": "128x128",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-144.png' prefix %}",
+    "sizes": "144x144",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-152.png' prefix %}",
+    "sizes": "152x152",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-180.png' prefix %}",
+    "sizes": "182x180",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-195.png' prefix %}",
+    "sizes": "195x195",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'favicon-228.png' prefix %}",
+    "sizes": "228x228",
+    "type": "image/png"
+  }, {
+    "src": "{% favicon_url 'largetile.png' prefix %}",
+    "sizes": "558x558",
+    "type": "image/png"
+  }],
+  "related_applications": [{
+    "platform": "web"
+  }]
+}

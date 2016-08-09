@@ -1,3 +1,4 @@
+import json
 from django.http import JsonResponse
 from django.views.decorators.cache import cache_page
 from django.views.generic.base import TemplateView
@@ -6,6 +7,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.views.generic.base import RedirectView
 from django.utils.decorators import method_decorator
+from django.template.loader import render_to_string
 
 from .models import Contact
 from .forms import ContactForm
@@ -99,8 +101,8 @@ class ContactView(FormView, AutoTitleView):
 
 @cache_page(settings.DEBUG and 5 or 86400)
 def manifest_view(request):
-    return JsonResponse({
-        'name': 'AGCS',
-        'display': 'standalone',
-        'icons': settings.ANDROID_ICONS
-    }, json_dumps_params={'indent': 2})
+    return JsonResponse(
+        json.loads(render_to_string(
+            'landing/manifest.json',
+            context={'prefix': 'assets/img/favicon/'}
+        )), json_dumps_params={'indent': 2})
