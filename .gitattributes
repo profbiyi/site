@@ -1,1 +1,1 @@
-templates/* linguist-language=htmldjango
+*.html linguist-language=django
