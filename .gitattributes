@@ -1,3 +1,3 @@
-*.html linguist-language=django
-templates/ linguist-language=django
+*.html linguist-language=HTML+Django
+landing/templates/landing/* linguist-language=HTML+Django
 
