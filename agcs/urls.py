@@ -45,7 +45,7 @@ urlpatterns = [
         name='home'
     ),
 
-    url(r'^manifest\.json.+$',
+    url(r'^manifest\.json$',
         manifest_view,
         name='android_manifest'
     ),
