@@ -50,7 +50,7 @@
           <li role="separator" class="divider"></li>
         {% for service in services %}
           <li class="service-item">
-            <a id="{{ service|mkattribute }}-link"
+            <a id="{{ service|mkattribute }}-dd-link"
                class="service-link"
                href="{% if page != title %}{% url 'services' %}{% endif %}#{{ service|mkattribute }}">
               {{ service }}
