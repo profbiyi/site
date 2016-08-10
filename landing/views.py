@@ -18,8 +18,8 @@ class AutoTitleView(object):
     services = [
         'VPN Solutions', 'Backup Solutions', 'Custom Builds',
         'Networking', 'Mobile Devices', 'Lessons',
-        'Planning/Consulting', 'New Device Setup',
-        'Viruses/Spyware', 'Maintenance', 'Repairs',
+        'Consulting', 'Device Setup', 'Viruses/Spyware',
+        'Maintenance', 'Repairs',
     ]
 
     @property
