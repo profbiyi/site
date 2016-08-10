@@ -15,6 +15,12 @@ from .mixins import CacheMixin, NeverCacheMixin
 
 class AutoTitleView(object):
     page_title = None
+    services = [
+        'VPN Solutions', 'Backup Solutions', 'Custom Builds',
+        'Networking', 'Mobile Devices', 'Lessons',
+        'Planning/Consulting', 'New Device Setup',
+        'Viruses/Spyware', 'Maintenance', 'Repairs',
+    ]
 
     @property
     def title(self):
@@ -39,12 +45,14 @@ class AutoTitleView(object):
             'DEBUG'    : getattr(settings, 'DEBUG', False),
             'company'  : getattr(settings, 'COMPANY', None),
             'gapi_key' : getattr(settings, 'GOOGLE_API_KEY', None),
+            'services' : getattr(self, 'services', []),
         }
 
 
 class LandingPageView(CacheMixin, TemplateView, AutoTitleView):
     cache_timeout = settings.DEBUG and 5 or 3600
-    pages = ['home', 'services', 'about', 'contact']
+    pages = ['home', 'about', 'contact', 'services',]
+
 
     def get_context_data(self, **kwargs):
         context = super(LandingPageView, self).get_context_data(**kwargs)

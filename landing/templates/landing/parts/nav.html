@@ -1,4 +1,26 @@
 {% load landing_utils %}
+<style>
+  .navbar-nav li.active a {
+      font-weight: bold;
+  }
+
+  hr.separator {
+    width: 6em;
+    margin: 1em 0 0 0;
+  }
+
+  @media (min-width: 768px) {
+    hr.separator {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #navbar > ul > li.dropdown.open > ul > li > a.text-primary {
+      font-size: large;
+    }
+  }
+</style>
 <div class="container">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -12,32 +34,37 @@
   </div> <!-- navbar-header -->
   <div id="navbar" class="navbar-collapse collapse">
     <ul class="nav navbar-nav nav-stacked navbar-right">
-      {% for page in pages %}
+    {% for page in pages %}
+      {% if page == 'services' %}
+      <li class="dropdown{% if page == title %} active{% endif %}">
+        <a id="dLabel" data-target="#" href="{% url 'services' %}"
+            data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Services&nbsp;<i class="fa fa-caret-down" aria-hidden="true"></i>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dLabel">
+          <li>
+            <a class="text-primary" href="{% url 'services' %}">What We Do
+              <hr class="separator">
+            </a>
+          </li>
+          <li role="separator" class="divider"></li>
+        {% for service in services %}
+          <li class="service-item">
+            <a id="{{ service|mkattribute }}-link"
+               class="service-link"
+               href="{% if page != title %}{% url 'services' %}{% endif %}#{{ service|mkattribute }}">
+              {{ service }}
+            </a>
+          </li>
+        {% endfor %}
+        </ul>
+      </li>
+      {% else %}
       <li{% if page == title %} class="active"{% endif %}>
         <a href="{% url page %}">{{ page|title }}</a>
       </li>
-      {% endfor %}
-      {% if DEBUG %}
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          {% for page in 'index,login'|split %}
-          <li>
-            <a href="{% url 'admin:'|add:page %}" target="_blank">{{ page|title }}</a>
-          </li>
-          {% endfor %}
-          <li role="separator" class="divider"></li>
-          <li class="dropdown-header">Docs</li>
-          {% for page in 'docroot,bookmarklets,tags,filters,views-index,models-index'|split %}
-          <li>
-            <a href="{% url 'django-admindocs-'|add:page %}" target="_blank">{{ page|title }}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </li>
       {% endif %}
+    {% endfor %}
     </ul>
   </div> <!-- #navbar -->
 </div> <!-- container -->
