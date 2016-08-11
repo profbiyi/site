@@ -5,6 +5,8 @@ html {
 
 body {
   padding-top: 50px;
+  padding-bottom: 385px;
+
 }
 
 body > .container,
@@ -17,16 +19,7 @@ footer {
   bottom: 0;
   width: 100%;
   border-color: transparent;
-}
-
-footer hr {
-  width: 0;
-  margin: 10px 0;
-}
-
-footer > .container {
-  padding-right: 15px;
-  padding-left: 0px;
+  height: 385px;
 }
 
 .footer-default {
@@ -46,8 +39,8 @@ header img {
     margin: 0 auto 0;
 }
 
-.img-centered {
-  margin: 0 auto;
+.navbar-brand {
+    font-weight: bold;
 }
 
 hr.star-primary {
@@ -76,47 +69,8 @@ hr.star-primary:after {
   background-color: #ecf0f1;
 }
 
-div.social-buttons {
-    padding-top: 5px;
-}
-
-.social-buttons a.btn {
-    padding: 10px 0px;
-}
-
-.social-buttons a.btn:hover,
-.social-buttons a.btn:focus,
-.social-buttons a.btn.focus {
-    color: #44596f;
-}
-
-.social-buttons a.company-number {
-    padding: 10px 5px;
-}
-
-.company-addr {
-  margin: 0 0 2px 0;
-  color: white;
-}
-
-.container .text-muted {
-  margin: 20px 0;
-}
-
-.container .text-muted.copy-and-ref {
-    margin: 5px 0 15px 0;
-}
-
-.base-template {
-  text-align: center;
-}
-
-.navbar-nav li.active a {
-    font-weight: bold;
-}
-
-.navbar-brand {
-    font-weight: bold;
+blockquote.definition {
+    font-size: medium;
 }
 
 .color-grid {
@@ -128,76 +82,28 @@ div.social-buttons {
   border: 1px solid rgba(86,61,124,.2);
 }
 
-.table-of-contents {
-    margin-top:1em;
-}
-
-.toc-title, .table-of-contents {
-    text-align: left;
-}
-
-blockquote.definition {
-    font-size: medium;
-}
-
-.service .list-group .bullet-item {
-    padding: .5em;
-    margin-left: 2em;
-}
-
 @media (max-width: 768px) {
-  body {
-    padding-bottom: 16em;
-  }
-
-  footer {
-    height: 16em;
-  }
-
   header .jumbotron p {
     font-size: 18px;
   }
-
-  .toc-title, .table-of-contents {
-      text-align: center;
-  }
 }
 
-@media (min-width: 768px) {
-  body {
-    padding-bottom: 16em;
-  }
+@media (min-width: 309px) {
+    body {
+      padding-bottom: 290px;
+    }
 
-  footer {
-    height: 16em;
-  }
-
-  footer > .container {
-    padding-left: 15px;
-  }
-
-  .company-addr {
-    margin-top: 5px;
-  }
+    footer {
+        height: 290px;
+    }
 }
 
 @media (min-width: 992px) {
   body {
-    padding-bottom: 5em;
+    padding-bottom: 80px;
   }
 
   footer {
-    height: 5em;
+    height: 80px;
   }
-
-  .container .text-muted.copy-and-ref {
-      margin: 15px 0 15px 0;
-  }
-}
-
-@media (min-width: 1200px) {
-    .push-right-lg {
-        padding-right: 0px;
-        padding-left: 40px;
-    }
 }
