@@ -1,10 +1,10 @@
 user               = None
 group              = None
-bind               = 'unix:/var/tmp/gunicorn.sock'
-pidfile            = '/var/tmp/gunicorn.pid'
-errorlog           = '/home/django/logs/gunicorn_error.log'
-accesslog          = '/home/django/logs/gunicorn_access.log'
-working_dir        = '/home/django/agcs'
+bind               = 'unix:/var/local/agcs/run/gunicorn.sock'
+errorlog           = '/var/local/agcs/log/gunicorn/error.log'
+accesslog          = '/var/local/agcs/log/gunicorn/access.log'
+pidfile            = '/var/local/agcs/run/gunicorn.pid'
+working_dir        = '/home/django/site/site'
 chdir              = working_dir
 loglevel           = 'info'
 backlog            = 2048
