@@ -2,6 +2,7 @@ import os
 
 HTML_MINIFY             = False
 DEBUG                   = False
+TESTING                 = False
 SECURE_SSL_REDIRECT     = True
 SECURE_SSL_HOST         = 'alphageek.xyz'
 SESSION_COOKIE_SECURE   = True
@@ -29,6 +30,9 @@ TIME_ZONE        = 'America/Chicago'
 USE_I18N         = True
 USE_L10N         = True
 USE_TZ           = True
+EMAIL_USE_TLS    = True
+EMAIL_HOST       = 'smtp.zoho.com'
+EMAIL_PORT       = '587'
 STATIC_URL       = '/static/'
 STATIC_ROOT      = os.path.join('/srv', PROJECT_NAME, 'assets', 'static')
 STATICFILES_DIRS = [
@@ -109,18 +113,28 @@ COMPANY = {
     },
 }
 
-#GOOGLE_API_KEY = ''
 #SECRET_KEY = ''
-#EMAIL_HOST = ''
-#EMAIL_PORT = ''
+#GOOGLE_API_KEY = ''
+#RECAPTCHA_PRIVATE_KEY = ''
+#RECAPTCHA_PUBLIC_KEY = ''
 #EMAIL_HOST_USER = ''
 #EMAIL_HOST_PASSWORD = ''
 #DATABASES = {}
-#RECAPTCHA_PRIVATE_KEY = ''
-#RECAPTCHA_PUBLIC_KEY = ''
 
 try:
     from .local_settings import *
 except ImportError:
     pass
 
+if TESTING:
+    SECRET_KEY = '^sp+qc8lmvr^jnj0#hpr!ueg%=yoi1d=6h6jg@530o-7)csrcd'
+    SECURE_SSL_REDIRECT     = False
+    SECURE_SSL_HOST         = None
+    SECURE_PROXY_SSL_HEADER = None
+    ALLOWED_HOSTS           = ['localhost', 'rdkpc.dk.lan', '192.168.92.27']
+    DATABASES               = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
