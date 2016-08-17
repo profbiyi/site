@@ -47,7 +47,7 @@ urlpatterns = [
 
     url(r'^manifest\.json$',
         manifest_view,
-        name='android_manifest'
+        name='chrome_manifest'
     ),
 
     url(r'^sitemap\.xml$',
