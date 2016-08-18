@@ -1,8 +1,8 @@
 import os
 from machina import (
-	get_apps as get_machina_apps,
-	MACHINA_MAIN_TEMPLATE_DIR,
-	MACHINA_MAIN_STATIC_DIR
+    get_apps as get_machina_apps,
+    MACHINA_MAIN_TEMPLATE_DIR,
+    MACHINA_MAIN_STATIC_DIR
 )
 
 HTML_MINIFY             = False
@@ -81,7 +81,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'pagedown',
     'django_markdown',
-	'pytz',
+    'pytz',
     'community',
 ] + get_machina_apps([
     'community.apps.forum_conversation',
@@ -107,10 +107,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-			os.path.join(BASE_DIR, PROJECT_NAME, 'templates'),
+            os.path.join(BASE_DIR, PROJECT_NAME, 'templates'),
             os.path.join(BASE_DIR, 'community', 'templates'),
             MACHINA_MAIN_TEMPLATE_DIR,
-		],
+        ],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
