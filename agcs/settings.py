@@ -5,7 +5,7 @@ from machina import (
     MACHINA_MAIN_STATIC_DIR
 )
 
-HTML_MINIFY             = False
+HTML_MINIFY             = True
 DEBUG                   = False
 TESTING                 = False
 SECURE_SSL_REDIRECT     = True

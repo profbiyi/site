@@ -59,13 +59,9 @@
         {% endfor %}
         </ul>
       </li>
-      {% elif page == 'community' %}
-      <li{% if page == title %} class="active"{% endif %}>
-        <a href="{% url page %}" target="_blank">Forum</a>
-      </li>
       {% else %}
       <li{% if page == title %} class="active"{% endif %}>
-        <a href="{% url page %}">{{ page|title }}</a>
+        <a href="{% url page %}">{% if page == 'community' %}Forum{% else %}{{ page|title }}{% endif %}</a>
       </li>
       {% endif %}
     {% endfor %}
