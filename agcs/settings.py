@@ -23,6 +23,7 @@ ALLOWED_HOSTS           = [
     'www.alphageek.xyz',
     'secure.alphageek.xyz',
     'www.secure.alphageek.xyz',
+    'community.alphageek.xyz',
 ]
 BASE_DIR         = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_URLCONF     = PROJECT_NAME + '.urls'

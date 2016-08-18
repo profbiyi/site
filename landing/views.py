@@ -51,7 +51,7 @@ class AutoTitleView(object):
 
 class LandingPageView(CacheMixin, TemplateView, AutoTitleView):
     cache_timeout = settings.DEBUG and 5 or 3600
-    pages = ['home', 'about', 'contact', 'services', 'community',]
+    pages = ['home', 'about', 'contact', 'community', 'services',]
 
 
     def get_context_data(self, **kwargs):

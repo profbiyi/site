@@ -37,9 +37,10 @@
     {% for page in pages %}
       {% if page == 'services' %}
       <li class="dropdown{% if page == title %} active{% endif %}">
-        <a id="dLabel" data-target="#" href="{% url 'services' %}"
-            data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            Services&nbsp;<i class="fa fa-caret-down" aria-hidden="true"></i>
+        <a id="dLabel" href="{% url 'services' %}" role="button"
+            data-target="#" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">Services
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
         </a>
         <ul class="dropdown-menu" aria-labelledby="dLabel">
           <li>
@@ -57,6 +58,10 @@
           </li>
         {% endfor %}
         </ul>
+      </li>
+      {% elif page == 'community' %}
+      <li{% if page == title %} class="active"{% endif %}>
+        <a href="{% url page %}" target="_blank">Forum</a>
       </li>
       {% else %}
       <li{% if page == title %} class="active"{% endif %}>

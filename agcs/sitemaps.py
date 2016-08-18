@@ -3,7 +3,7 @@ from machina.apps.forum.models import Forum
 from community.apps.forum_conversation.models import Post, Topic
 from django.core.urlresolvers import reverse
 
-class StaticViewSitemap(sitemaps.Sitemap):
+class StaticSitemap(sitemaps.Sitemap):
     priority = 0.5
     changefreq = 'daily'
 
@@ -13,7 +13,8 @@ class StaticViewSitemap(sitemaps.Sitemap):
     def location(self, item):
         return reverse(item)
 
-class ForumSitemap(sitemaps.Sitemap):
+
+class ForumsSitemap(sitemaps.Sitemap):
     priority = 0.5
     changefreq = 'daily'
 
@@ -24,12 +25,26 @@ class ForumSitemap(sitemaps.Sitemap):
         return obj.last_post_on
 
     def location(self, item):
-        return '/community/forum/{0}-{1}/'.format(
-            item.name.replace(' ','-').replace('/', '').lower(),
-            item.pk
-        )
+        return reverse('forum:forum', kwargs={
+            'pk': item.pk,
+            'slug': item.slug
+        })
 
 
+class TopicsSitemap(sitemaps.Sitemap):
+    priority = 0.5
+    changefreq = 'daily'
 
+    def items(self):
+        return Topic.objects.filter(approved=True, status=0)
 
+    def lastmod(self, obj):
+        return obj.updated
 
+    def location(self, item):
+        return reverse('forum_conversation:topic', kwargs={
+            'pk': item.pk,
+            'slug': item.slug,
+            'forum_pk': item.forum.pk,
+            'forum_slug': item.forum.slug,
+        })
