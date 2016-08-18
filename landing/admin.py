@@ -6,6 +6,9 @@ from django.utils.html import (
     format_html,
     urlize as _urlize
 )
+from .sites import AdminSite as AGCSAdmin
+agcs_admin = AGCSAdmin()
+
 from .models import Contact, STATUS_CHOICES
 
 # admin.site.disable_action('delete_selected')

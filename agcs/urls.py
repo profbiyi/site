@@ -5,8 +5,10 @@ from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 from django.shortcuts import urlresolvers
+from machina.apps.forum.app import application as forum_app
+from community import urls as community_urls
 
-from .sitemaps import StaticViewSitemap
+from .sitemaps import StaticViewSitemap, ForumSitemap
 
 from landing.views import (
     ContactView, HomeView,
@@ -14,8 +16,11 @@ from landing.views import (
     manifest_view
 )
 
+#from landing.sites import site as agcs_admin
+
 sitemaps = {
     'static': StaticViewSitemap,
+	'forums': ForumSitemap,
 }
 
 urlpatterns = [
@@ -71,4 +76,19 @@ urlpatterns = [
     url(r'^admin/',
         admin.site.urls
     ),
+
+    url(r'^markdown/',
+        include( 'django_markdown.urls')
+    ),
+
+    url(r'^community/$',
+        forum_app.index_view.as_view(),
+        name='community'
+    ),
+
+    url(r'^community/',
+        include(community_urls)
+    ),
+
+
 ]

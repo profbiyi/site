@@ -1,0 +1,229 @@
+{% extends "machina/board_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load compress %}
+{% load forum_permission_tags %}
+
+{% block css %}
+    {{ block.super }}
+    {% compress css %}
+        <link rel="stylesheet" type="text/less" href="{% static 'less/theme.less' %}" />
+    {% endcompress %}
+{% endblock css %}
+
+{% block extra_css %}
+    {{ block.super }}
+    {% compress css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'landing/css/landing.css' %}" />
+    {% endcompress %}
+{% endblock extra_css %}
+
+{% block body %}
+{% block header %}
+<style>
+    p.nav-item {
+        display: inline;
+    }
+</style>
+    <div id="wrap">
+        <div class="navbar-fixed-top-spacing">&nbsp;</div>
+        <div class="navbar navbar-default navbar-fixed-top machina-navbar navbar-machina" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Alpha Geeks Forum</a>
+                </div>
+                <div class="collapse navbar-collapse text-center">
+                    {% if request.user.is_authenticated %}
+                        <p class="navbar-text">{{ request.user.username }}</p>
+                    {% endif %}
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'forum_search:search' %}" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Search' %}"><i class="fa fa-search"></i></a></li>
+                            <li><a href="{% url 'forum_member:profile' request.user.id %}" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Profile' %}"><i class="fa fa-user"></i></a></li>
+                            <li><a href="{% url 'account-parameters' %}" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Account settings' %}"><i class="fa fa-cogs"></i></a></li>
+                            <li><a href="{% url 'logout' %}?next={% url 'forum:index' %}" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Sign out' %}"><i class="fa fa-power-off"></i></a></li>
+                        {% else %}
+                            <li><a href="{% url 'register' %}">{% trans "Sign up" %}</a></li>
+                            <li><a href="{% url 'login' %}">{% trans "Sign in" %}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endblock header %}
+        <div class="container" id="main_container">
+            <div class="row">
+                <div class="col-xs-12">
+                    {% block breadcrumb %}
+                        {% include "machina/partials/breadcrumb.html" %}
+                    {% endblock breadcrumb %}
+                    <div class="pull-right controls-link-wrapper">
+                        {% if not request.user.is_anonymous %}
+                                                    <a href="{% url 'forum_member:user_subscriptions' %}" class="btn btn-link"><i class="fa fa-bookmark-o ">&nbsp;</i>{% trans "Subscriptions" %}</a>
+                          <a href="{% url 'forum_member:user_posts' request.user.pk %}" class="btn btn-link"><i class="fa fa-comments-o ">&nbsp;</i>{% trans "View my messages" %}</a>
+                        {% endif %}
+                        {% get_permission 'can_access_moderation_queue' request.user as can_access_moderation_queue %}
+                        {% if can_access_moderation_queue %}
+                          <a href="{% url 'forum_moderation:queue' %}" class="btn btn-link"><i class="fa fa-gavel">&nbsp;</i>{% trans "Moderation queue" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <br />
+                    {% block messages %}
+                        {% include "machina/partials/messages.html" %}
+                    {% endblock messages %}
+                </div>
+            </div>
+                        {% block content_wrapper %}
+            {% block content %}
+            {% endblock content %}
+                        {% endblock content_wrapper %}
+        </div>
+        <div id="push"></div>
+    </div>
+
+<style>
+  footer hr {
+    width: 0;
+    margin: 10px 0;
+  }
+
+  div.social-buttons {
+      padding-top: 5px;
+  }
+
+  .social-buttons a.btn {
+      padding: 10px 0px;
+  }
+
+  .social-buttons a.btn:hover,
+  .social-buttons a.btn:focus,
+  .social-buttons a.btn.focus {
+      color: #44596f;
+  }
+
+  .social-buttons a.company-number {
+      padding: 10px 5px;
+  }
+
+  #company-address {
+    margin: 0 0 .5em 0;
+    color: black;
+  }
+
+  #copyright {
+      padding: 5px 0 5px 0;
+      margin-top: 10.5px;
+  }
+
+  #webhost {
+    padding: 2.5px 0 1.25px 0;
+    margin-top: 5px;
+  }
+
+  #framework {
+    padding: 1.25px 0 5px 0;
+    margin-top: 2px;
+  }
+
+  @media (min-width: 768px) {
+    #company-address {
+      margin-top: .5em;
+    }
+  }
+
+  @media (min-width: 992px) {
+    #webhost, #framework {
+      display: inline;
+    }
+
+    #webhost::after {
+      content: '. ';
+      color: #3498db;
+    }
+  }
+</style>
+
+<footer id="footer" class="footer">
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 social-buttons text-center">
+      <a class="btn" href="https://facebook.com/alphageekcs" target="_blank">
+        {% include 'landing/fa/stack.html' with type='facebook' tip='Like us on Facebook' %}
+      </a>
+      <a class="btn" href="https://plus.google.com/+Ntxcomputerservices" target="_blank">
+        {% include 'landing/fa/stack.html' with type='google-plus' tip=company.long_name|add:' on Google Plus' %}
+      </a>
+      <a class="btn" href="https://www.yelp.com/biz/alpha-geek-computer-services-plano" target="_blank">
+        {% include 'landing/fa/stack.html' with type='yelp' tip='Yelp! Read reviews or write a new one' %}
+      </a>
+      <a class="btn" href="https://github.com/alphageek-xyz" target="_blank">
+        {% include 'landing/fa/stack.html' with type='github' tip='Public repositories on GitHub' %}
+      </a>
+      <a class="btn" href="https://maps.google.com?daddr=Alpha+Geek+Computer+Services+1727+Nest+Place+Plano+TX+75093" target="_blank">
+        {% include 'landing/fa/stack.html' with type='map-marker' tip='Get Directions' %}
+      </a>
+      <a class="btn" href="mailto:root@alphageek.xyz">
+        {% include 'landing/fa/stack.html' with type='envelope' tip='Email Us' %}
+      </a>
+    </div>
+    <hr class="visible-xs visible-sm">
+    <div class="col-md-4 col-md-push-4 text-center">
+      <p id="company-address">
+        <a href="tel:+19726569338"><b>(972)&nbsp;656-9338</b></a>
+        <br>1727 Nest Pl.<br>Plano, TX 75093
+      </p>
+    </div>
+    <hr class="visible-xs visible-sm">
+    <div class="col-md-4 col-md-pull-4 text-center">
+      <p id="copyright" class="text-muted">&copy;
+        <a class="text-muted text-small" href="/">Alpha Geek Computer Services</a>
+      </p>
+      <p id="webhost" class="text-muted">
+        <span class="text-info small">Hosted by
+          <a href="https://m.do.co/c/9b25b239d056" target="_blank">DigitalOcean</a>
+        </span>
+      </p>
+      <p id="framework" class="text-muted">
+        <span class="text-info small">Powered by
+          <a href="https://github.com/ellmetha/django-machina" target="_blank">django-machina</a>
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+</footer>
+{% comment %}
+        <div class="container">
+            <div class="text-center">
+                <p id="copyright" class="text-muted">&copy;
+                    <a href="/">Alpha Geek Computer Services</a>
+                </p>
+            </div>
+            <div class="pull-right">
+                <p class="text-muted">
+                    Powered by&nbsp;<a href="https://github.com/ellmetha/django-machina">django-machina</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+{% endcomment %}
+{% endblock body %}
+
+{% block js %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function() {
+            $('a[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+{% endblock js %}
