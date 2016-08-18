@@ -1,6 +1,9 @@
 {% extends "board_base.html" %}
 {% load i18n %}
-
+{% load recaptcha2 %}
+{% block more_css %}
+    {% recaptcha_init %}
+{% endblock more_css %}    
 {% block sub_title %}{% trans "Sign up" %}{% endblock sub_title %}
 
 {% block breadcrumb %}{% endblock breadcrumb %}
@@ -23,6 +26,7 @@
                         {% include "machina/partials/form_field.html" with field=form.email %}
                         {% include "machina/partials/form_field.html" with field=form.password1 %}
                         {% include "machina/partials/form_field.html" with field=form.password2 %}
+                        {% include "machina/partials/form_field.html" with field=form.captcha %}
                         <input type="hidden" name="next" value="/">
                         <div class="form-actions">
                             <input type="submit" class="btn btn-large btn-primary" value="{% trans "Register" %}" />

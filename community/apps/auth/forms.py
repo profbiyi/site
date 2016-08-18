@@ -7,14 +7,18 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import EmailField
 from django.utils.translation import ugettext_lazy as _
+from snowpenguin.django.recaptcha2.fields import ReCaptchaField
+from snowpenguin.django.recaptcha2.widgets import ReCaptchaWidget
 
 
 class UserCreationForm(UserCreationForm):
     email = EmailField(label=_('Email address'), required=True)
+    captcha = ReCaptchaField(label="   ", widget=ReCaptchaWidget())
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2', 'captcha')
+
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
