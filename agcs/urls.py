@@ -8,20 +8,28 @@ from django.shortcuts import urlresolvers
 from machina.apps.forum.app import application as forum_app
 from community import urls as community_urls
 
-from .sitemaps import StaticViewSitemap, ForumSitemap
-
 from landing.views import (
     ContactView, HomeView,
     AboutView, ServicesView,
     manifest_view
 )
 
-#from landing.sites import site as agcs_admin
+from .sitemaps import (
+    StaticSitemap,
+    ForumsSitemap,
+    TopicsSitemap
+)
 
 sitemaps = {
-    'static': StaticViewSitemap,
-	'forums': ForumSitemap,
+    'static': StaticSitemap,
+    'forums': ForumsSitemap,
+    'topics': TopicsSitemap,
 }
+
+handler404 = 'agcs.views.page_not_found_view'
+#handler500 = 'agcs.views.server_error_view'
+#handler403 = 'agcs.views.permission_denied_view'
+#handler400 = 'agcs.views.bad_request_view'
 
 urlpatterns = [
 
