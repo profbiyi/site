@@ -48,7 +48,11 @@ STATICFILES_DIRS = [
     ('assets', os.path.join(BASE_DIR, PROJECT_NAME, 'static')),
     MACHINA_MAIN_STATIC_DIR,
 ]
-
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+	'compressor.finders.CompressorFinder',
+]
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -163,6 +167,8 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS = [
     'can_download_file',
 ]
 
+MARKDOWN_EDITOR_SKIN = 'simple'
+
 #SECRET_KEY = ''
 #GOOGLE_API_KEY = ''
 #RECAPTCHA_PRIVATE_KEY = ''
@@ -175,19 +181,6 @@ try:
     from .local_settings import *
 except ImportError:
     pass
-
-if TESTING:
-    SECRET_KEY = '^sp+qc8lmvr^jnj0#hpr!ueg%=yoi1d=6h6jg@530o-7)csrcd'
-    SECURE_SSL_REDIRECT     = False
-    SECURE_SSL_HOST         = None
-    SECURE_PROXY_SSL_HEADER = None
-    ALLOWED_HOSTS           = ['localhost', 'rdkpc.dk.lan', '192.168.92.27']
-    DATABASES               = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
 
 COMPANY = {
     'phone'      : '(972) 656-9338',
@@ -206,9 +199,6 @@ COMPANY = {
     },
 }
 
-DEBUG=True
-TESTING=True
-
 if TESTING:
     SECRET_KEY = '^sp+qc8lmvr^jnj0#hpr!ueg%=yoi1d=6h6jg@530o-7)csrcd'
     SECURE_SSL_REDIRECT     = False
@@ -225,5 +215,3 @@ if TESTING:
     INTERNAL_IPS = (
         '127.0.0.1',
     )
-
-
