@@ -9,4 +9,3 @@ from community.core.mixins import MenuItemMixin
 
 class ForumProfileUpdateView(MenuItemMixin, BaseForumProfileUpdateView):
     menu_parameters = 'profile'
-
