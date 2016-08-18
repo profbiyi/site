@@ -16,10 +16,10 @@ from .mixins import CacheMixin, NeverCacheMixin
 class AutoTitleView(object):
     page_title = None
     services = [
-        'VPN Solutions', 'Backup Solutions', 'Custom Builds',
-        'Networking', 'Mobile Devices', 'Lessons',
-        'Consulting', 'Device Setup', 'Viruses/Spyware',
-        'Maintenance', 'Repairs',
+        'Web Design', 'VPN Solutions', 'Backup Solutions',
+        'Custom Builds', 'Networking', 'Mobile Devices',
+        'Lessons', 'Consulting', 'Device Setup',
+        'Viruses/Spyware', 'Maintenance', 'Repairs',
     ]
 
     @property
