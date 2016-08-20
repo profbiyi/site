@@ -5,7 +5,7 @@ from machina import (
     MACHINA_MAIN_STATIC_DIR
 )
 
-HTML_MINIFY             = True
+HTML_MINIFY             = False
 DEBUG                   = False
 TESTING                 = False
 SECURE_SSL_REDIRECT     = True
@@ -188,11 +188,11 @@ COMPANY = {
     'email'      : 'root@alphageek.xyz',
     'addr'       : ['1727 Nest Pl.', 'Plano, TX 75093'],
     'long_name'  : 'Alpha Geek Computer Services',
-    'short_name' : 'Alpha Geek Services',
+    'short_name' : 'Alpha Geeks',
     'links' : {
         'social' : {
             'facebook'    : 'https://facebook.com/alphageekcs',
-            'google_plus' : 'https://plus.google.com/+Ntxcomputerservices',
+            'google_plus' : 'https://plus.google.com/+Ntxcomputerservices/about',
             'google_maps' : 'https://maps.google.com?daddr=Alpha+Geek+Computer+Services+1727+Nest+Place+Plano+TX+75093',
             'yelp'        : 'https://www.yelp.com/biz/alpha-geek-computer-services-plano',
             'github'      : 'https://github.com/alphageek-xyz',

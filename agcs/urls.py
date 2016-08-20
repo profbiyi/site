@@ -48,7 +48,7 @@ urlpatterns = [
         name='contact'
     ),
 
-    url(r'^home/$',
+    url(r'^(home|index)/$',
         HomeView.as_view(),
         name='home'
     ),
