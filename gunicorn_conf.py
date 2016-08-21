@@ -4,6 +4,7 @@ bind               = 'unix:/var/local/agcs/run/gunicorn.sock'
 errorlog           = '/var/local/agcs/log/gunicorn/error.log'
 accesslog          = '/var/local/agcs/log/gunicorn/access.log'
 pidfile            = '/var/local/agcs/run/gunicorn.pid'
+worker_tmp_dir     = '/var/local/agcs/tmp/gunicorn'
 working_dir        = '/home/django/site/site'
 chdir              = working_dir
 loglevel           = 'info'
@@ -20,10 +21,10 @@ tmp_upload_dir     = None
 
 
 try:
-    from agcs_utils.utils import num_cpus
-    workers = 2 * num_cpus() + 1
-    del(num_cpus)
-except:
+    from multiprocessing import cpu_count
+    workers = 2 * cpu_count() + 1
+    del(cpu_count)
+except NotImplementedError:
     workers = 3
 
 try:
@@ -45,18 +46,28 @@ finally:
 
 loglevel = debug and 'debug' or 'info'
 
-def post_fork(server, worker):
-    pass
-    #server.log.info("Worker spawned (pid: %s)", worker.pid)
 
-def pre_fork(server, worker):
-    pass
-def pre_exec(server):
-    server.log.info("Forked child, re-executing.")
-def when_ready(server):
-    server.log.info("Server is ready. Spawning workers")
-def worker_abort(worker):
-    worker.log.info("worker received SIGABRT signal")
+def on_starting(server):
+    from os import (
+        mkdir, chmod, stat,
+        access, F_OK
+    )
+
+    global worker_tmp_dir
+
+    try:
+        access(worker_tmp_dir, F_OK) or (
+            mkdir(worker_tmp_dir)
+        )
+        stat(worker_tmp_dir).st_mode == 0o46775 or (
+            chmod(worker_tmp_dir, 0o46775)
+        )
+    except:
+        worker_tmp_dir = None
+        server.log.info("Failed to create %s. "
+            "Using fallback." % worker_tmp_dir
+        )
+
 def worker_int(worker):
     worker.log.info("worker received INT or QUIT signal")
     import threading, sys, traceback
@@ -71,3 +82,16 @@ def worker_int(worker):
             if line:
                 code.append("  %s" % (line.strip()))
     worker.log.debug("\n".join(code))
+
+
+def post_fork(server, worker):
+    pass
+def pre_fork(server, worker):
+    pass
+def pre_exec(server):
+    server.log.info("Forked child, re-executing.")
+def when_ready(server):
+    server.log.info("Server is ready. Spawning workers")
+def worker_abort(worker):
+    worker.log.info("worker received SIGABRT signal")
+
