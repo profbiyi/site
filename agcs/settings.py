@@ -8,10 +8,13 @@ from machina import (
 HTML_MINIFY             = False
 DEBUG                   = False
 TESTING                 = False
+USE_X_FORWARDED_HOST    = True
 SECURE_SSL_REDIRECT     = True
-SECURE_SSL_HOST         = 'alphageek.xyz'
+#SECURE_SSL_HOST         = 'alphageek.xyz'
+CSRF_COOKIE_DOMAIN      = '.alphageek.xyz'
 SESSION_COOKIE_SECURE   = True
 CSRF_COOKIE_SECURE      = True
+CSRF_COOKIE_HTTPONLY    = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 PROJECT_NAME            = 'agcs'
 ALLOWED_HOSTS           = [
@@ -52,7 +55,6 @@ STATICFILES_DIRS = [
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-	'compressor.finders.CompressorFinder',
 ]
 CACHES = {
     'default': {
@@ -79,7 +81,6 @@ INSTALLED_APPS = [
     'favicon',
     'bootstrap3',
     'django_assets',
-    'compressor',
     'mptt',
     'haystack',
     'whoosh',
@@ -93,11 +94,20 @@ INSTALLED_APPS = [
     'community.apps.forum_member',
 ])
 
+COMPRESS_CSS_FILTERS=[
+	'compressor.filters.css_default.CssAbsoluteFilter',
+	'compressor.filters.cssmin.CSSCompressorFilter',
+]
+COMPRESS_JS_FILTERS=[
+	'compressor.filters.jsmin.JSMinFilter',
+	'compressor.filters.jsmin.SlimItFilter',
+]
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -105,7 +115,6 @@ MIDDLEWARE_CLASSES = [
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
     'machina.apps.forum_permission.middleware.ForumPermissionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
 TEMPLATES = [

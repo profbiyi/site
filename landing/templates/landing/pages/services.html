@@ -6,6 +6,7 @@
   {% include "landing/parts/header.html" %}
 {% endblock header %}
 {% block content %}
+
   <div class="container-fluid">
     <div class="NOT-page-header" id="banner">
       <div class="row">
@@ -97,7 +98,7 @@
   </div> <!-- container -->
 {% endblock content %}
 {% block page_extra_script %}
-  <script>
+  <script async>
     $(document).ready(function() {
       var tis = $('.table-of-contents .list-group-item');
 
