@@ -1,10 +1,11 @@
 user               = None
 group              = None
 bind               = 'unix:/var/local/agcs/run/gunicorn.sock'
-errorlog           = '/var/local/agcs/log/gunicorn/error.log'
-accesslog          = '/var/local/agcs/log/gunicorn/access.log'
 pidfile            = '/var/local/agcs/run/gunicorn.pid'
 worker_tmp_dir     = '/var/local/agcs/tmp/gunicorn'
+errorlog           = '/var/local/agcs/log/gunicorn/error.log'
+accesslog          = '/var/local/agcs/log/gunicorn/access.log'
+capture_output     = True
 working_dir        = '/home/django/site/site'
 chdir              = working_dir
 loglevel           = 'info'
