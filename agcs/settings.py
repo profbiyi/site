@@ -34,7 +34,7 @@ EMAIL_HOST       = 'smtp.zoho.com'
 EMAIL_PORT       = '587'
 STATIC_URL       = '/static/'
 STATIC_ROOT      = os.path.join('/srv', PROJECT_NAME, 'assets', 'static')
-MEDIA_ROOT       = os.path.join('/home/django', 'public', 'media')
+MEDIA_ROOT       = os.path.join('/srv', PROJECT_NAME, 'public', 'media')
 MEDIA_URL        = '/media/'
 
 ALLOWED_HOSTS           = [
