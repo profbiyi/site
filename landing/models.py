@@ -1,5 +1,6 @@
 from django.db import models
 from django.core import validators
+from django.core.exceptions import ValidationError
 from datetime import datetime
 
 STATUS_CHOICES = (
@@ -53,6 +54,7 @@ class Contact(models.Model):
     name = models.CharField(
         verbose_name='Full Name',
         max_length=100,
+        blank=True,
         validators=[
             validators.MinLengthValidator(5),
             validators.RegexValidator(
@@ -114,8 +116,8 @@ class Contact(models.Model):
         blank=True
     )
 
-    def save(self, *args, **kwargs):
-        if self.first_name and self.last_name:
+    def save(self,  *args, **kwargs):
+        if not self.name and (self.first_name and self.last_name):
             self.name = self.first_name + ' ' + self.last_name
         elif self.name:
             parts = self.name.split(' ')
@@ -123,11 +125,22 @@ class Contact(models.Model):
                 self.first_name = parts[0]
                 self.last_name = parts[1]
             else:
-                raise ValueError("Invalid name.")
+                raise ValidationError("Bad name: '%s'" % self.name)
+
+        name = self.name.split(' ')
+
+        if self.name.split(' ') != [
+            self.first_name, self.last_name
+        ]: raise ValidationError("Bad names: '%s','%s','%s'" % (
+            self.first_name, self.last_name, self.name
+        ))
+
         return super(Contact, self).save(*args, **kwargs)
+
 
     def natural_key(self):
         return (self.first_name, self.last_name)
+
 
     def __str__(self):
         if self.date:
