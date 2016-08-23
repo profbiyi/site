@@ -10,24 +10,13 @@ DEBUG                   = False
 TESTING                 = False
 USE_X_FORWARDED_HOST    = True
 SECURE_SSL_REDIRECT     = True
-#SECURE_SSL_HOST         = 'alphageek.xyz'
 CSRF_COOKIE_DOMAIN      = '.alphageek.xyz'
 SESSION_COOKIE_SECURE   = True
 CSRF_COOKIE_SECURE      = True
 CSRF_COOKIE_HTTPONLY    = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 PROJECT_NAME            = 'agcs'
-ALLOWED_HOSTS           = [
-    'alphageekcs.com',
-    'www.alphageekcs.com',
-    'secure.alphageekcs.com',
-    'www.secure.alphageekcs.com',
-    'alphageek.xyz',
-    'www.alphageek.xyz',
-    'secure.alphageek.xyz',
-    'www.secure.alphageek.xyz',
-    'community.alphageek.xyz',
-]
+LOG_DIR          = '/var/local/agcs/log/django'
 BASE_DIR         = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_URLCONF     = PROJECT_NAME + '.urls'
 EMAIL_USE_TLS    = True
@@ -48,14 +37,28 @@ STATIC_ROOT      = os.path.join('/srv', PROJECT_NAME, 'assets', 'static')
 MEDIA_ROOT       = os.path.join('/home/django', 'public', 'media')
 MEDIA_URL        = '/media/'
 
+ALLOWED_HOSTS           = [
+    'alphageekcs.com',
+    'www.alphageekcs.com',
+    'secure.alphageekcs.com',
+    'www.secure.alphageekcs.com',
+    'alphageek.xyz',
+    'www.alphageek.xyz',
+    'secure.alphageek.xyz',
+    'www.secure.alphageek.xyz',
+    'community.alphageek.xyz',
+]
+
 STATICFILES_DIRS = [
     ('assets', os.path.join(BASE_DIR, PROJECT_NAME, 'static')),
     MACHINA_MAIN_STATIC_DIR,
 ]
+
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -89,18 +92,20 @@ INSTALLED_APPS = [
     'django_markdown',
     'pytz',
     'community',
+    'dgapp',
 ] + get_machina_apps([
     'community.apps.forum_conversation',
     'community.apps.forum_member',
 ])
 
 COMPRESS_CSS_FILTERS=[
-	'compressor.filters.css_default.CssAbsoluteFilter',
-	'compressor.filters.cssmin.CSSCompressorFilter',
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSCompressorFilter',
 ]
+
 COMPRESS_JS_FILTERS=[
-	'compressor.filters.jsmin.JSMinFilter',
-	'compressor.filters.jsmin.SlimItFilter',
+    'compressor.filters.jsmin.JSMinFilter',
+    'compressor.filters.jsmin.SlimItFilter',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -134,7 +139,6 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.request',
                 'machina.core.context_processors.metadata',
             ],
             'loaders': [
@@ -155,6 +159,46 @@ AUTH_PASSWORD_VALIDATORS = [
 MIGRATION_MODULES = {
     'forum_conversation': 'machina.apps.forum_conversation.migrations',
     'forum_member': 'machina.apps.forum_member.migrations',
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'formatters': {
+        'debug': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+         'info': {
+            'format': '%(levelname)s %(asctime)s %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, os.getenv('DJANGO_LOG_LEVEL', 'INFO').lower() + '.log'),
+            'formatter': 'debug',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'mail_admins'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True,
+        },
+    },
 }
 
 HAYSTACK_CONNECTIONS = {
@@ -179,14 +223,6 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS = [
 
 MARKDOWN_EDITOR_SKIN = 'simple'
 
-#SECRET_KEY = ''
-#GOOGLE_API_KEY = ''
-#RECAPTCHA_PRIVATE_KEY = ''
-#RECAPTCHA_PUBLIC_KEY = ''
-#EMAIL_HOST_USER = ''
-#EMAIL_HOST_PASSWORD = ''
-#DATABASES = {}
-
 try:
     from .local_settings import *
 except ImportError:
@@ -208,20 +244,3 @@ COMPANY = {
         },
     },
 }
-
-if TESTING:
-    SECRET_KEY = '^sp+qc8lmvr^jnj0#hpr!ueg%=yoi1d=6h6jg@530o-7)csrcd'
-    SECURE_SSL_REDIRECT     = False
-    SECURE_SSL_HOST         = None
-    SECURE_PROXY_SSL_HEADER = None
-    SESSION_COOKIE_SECURE   = False
-    CSRF_COOKIE_SECURE      = False
-    ALLOWED_HOSTS           = ['localhost', 'rdkpc.dk.lan', '192.168.92.27']
-
-    ALLOWED_HOSTS = [
-        'localhost:8000',
-    ]
-
-    INTERNAL_IPS = (
-        '127.0.0.1',
-    )
