@@ -7,6 +7,15 @@ ALLOWED_HOSTS.append('testserver')
 INSTALLED_APPS += ["tests",]
 RECAPTCHA_PRIVATE_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
 RECAPTCHA_PUBLIC_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
-DATABASES = os.environ.get('TRAVIS_CL_TEST') and {
+
+if (os.environ.get('TRAVIS_CL_TEST') or not
+    locals().get('DATABASES')
+): DATABASES = {
     'default': {'ENGINE': 'django.db.backends.sqlite3'}
-} or DATABASES
+}
+
+if locals().get('LOGGING'):
+    del(LOGGING)
+
+STATIC_URL = '/static/'
+STATIC_ROOT = '/tmp'

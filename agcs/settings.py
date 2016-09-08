@@ -92,7 +92,6 @@ INSTALLED_APPS = [
     'django_markdown',
     'pytz',
     'community',
-    'dgapp',
 ] + get_machina_apps([
     'community.apps.forum_conversation',
     'community.apps.forum_member',
