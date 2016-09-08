@@ -1,5 +1,15 @@
 import sys
+import random
+from string import digits as _digits
 from ast import literal_eval
+
+
+def random_int(len=1, choices=_digits):
+    return int(''.join(
+        random.choice(str(choices))
+            for i in range(len)
+        )
+    )
 
 
 def run_with_args(func, args=None):
