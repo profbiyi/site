@@ -10,10 +10,10 @@ install:
   - pip install -r requirements.txt
   - pip install anglerfish
   - pip install css-html-js-minify
+  - pip install coveralls
 
 script:
-  - make test
+  - coverage run --source=landing,agcs runtests.py
 
 after_success:
-  - pip install coveralls
   - coveralls
