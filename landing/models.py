@@ -3,16 +3,19 @@ from django.core import validators
 from django.core.exceptions import ValidationError
 from datetime import datetime
 
+
 STATUS_CHOICES = (
     ('r', 'Responded'),
     ('c', 'Closed'),
     ('n', 'New'),
 )
 
+
 class ContactManager(models.Manager):
 
     def get_by_natural_key(self, first_name, last_name):
         return self.get(first_name=first_name, last_name=last_name)
+
 
 class Contact(models.Model):
 

@@ -1,3 +1,4 @@
+import os
 import json
 from django.http import JsonResponse
 from django.views.decorators.cache import cache_page
@@ -5,16 +6,15 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib import messages
 from django.conf import settings
-from django.views.generic.base import RedirectView
-from django.utils.decorators import method_decorator
 from django.template.loader import render_to_string
-
 from .models import Contact
 from .forms import ContactForm
-from .mixins import CacheMixin, NeverCacheMixin
+from .mixins import CacheMixin
+
 
 class AutoTitleView(object):
     page_title = None
+
     services = [
         'Web Design', 'VPN Solutions', 'Backup Solutions',
         'Custom Builds', 'Networking', 'Mobile Devices',
@@ -51,7 +51,11 @@ class AutoTitleView(object):
 
 class LandingPageView(CacheMixin, TemplateView, AutoTitleView):
     cache_timeout = settings.DEBUG and 5 or 3600
-    pages = ['home', 'about', 'contact', 'community', 'services',]
+
+    pages = [
+        'home', 'about', 'contact',
+        'community', 'services',
+    ]
 
 
     def get_context_data(self, **kwargs):
@@ -73,8 +77,8 @@ class ServicesView(LandingPageView):
 
 
 class ContactView(FormView, AutoTitleView):
-    pages = LandingPageView.pages
     template_name = 'landing/pages/contact.html'
+    pages = LandingPageView.pages
     success_url = '/contact/'
     form_class = ContactForm
     send_email = True
