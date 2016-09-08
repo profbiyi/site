@@ -1,18 +1,22 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = favicon
+source = .
 omit =
-    tests/*
-    community/*
+    gunicorn_conf.py
+    runtests.py
+    agcs/wsgi.py
+    agcs/util.py
+    agcs/views.py
     landing/apps.py
     landing/mixins.py
     landing/sites.py
     landing/migrations*
     landing/management/*
+    tests/*
+    community/*
 
 [report]
-# Regexes for lines to exclude from consideration
 exclude_lines =
     # Have to re-enable the standard pragma
     pragma: no cover
