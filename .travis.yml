@@ -9,6 +9,8 @@ env:
 install:
   - pip install -U setuptools
   - pip install -r requirements.txt
+  - pip install anglerfish
+  - pip install css-html-js-minify
   - pip install coveralls
 
 script:
