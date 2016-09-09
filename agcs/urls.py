@@ -1,10 +1,10 @@
 from __future__ import unicode_literals
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from django.contrib import admin, admindocs
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
-from django.shortcuts import urlresolvers
+from django_markdown.views import preview
 from machina.apps.forum.app import application as forum_app
 from community import urls as community_urls
 
@@ -85,8 +85,9 @@ urlpatterns = [
         admin.site.urls
     ),
 
-    url(r'^markdown/',
-        include( 'django_markdown.urls')
+    url(r'^markdown/preview/$',
+        preview,
+        name='django_markdown_preview',
     ),
 
     url(r'^community/$',
