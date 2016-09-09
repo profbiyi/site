@@ -1,10 +1,8 @@
 import os
 from django.core import mail
-from django.test import TestCase
+from django.test import TestCase, override_settings
+from landing import forms as landing_forms
 from .test_models import ok_fields
-
-
-__all__ = ['ContactFormTest']
 
 
 class ContactFormTest(TestCase):
@@ -48,3 +46,31 @@ class ContactFormTest(TestCase):
         self.assertFormError(response,
             'form', 'first_name', 'This field is required.'
         )
+
+
+    @override_settings(ADMINS=(('Foo Bar', 'foo@bar.com\nyut'),))
+    def test_bad_email_header(self):
+        form = landing_forms.ContactForm(self.data)
+
+        self.assertTrue(
+            form.is_valid()
+        )
+
+        ret = form.send_email()
+
+        self.assertIsInstance(ret,
+            landing_forms.HttpResponse
+        )
+
+        self.assertEqual(200,
+            ret.status_code
+        )
+
+        self.assertRegex(ret.content.decode(),
+            r'BadHeaderError'
+        )
+
+        self.assertEqual(0,
+            len(mail.outbox)
+        )
+

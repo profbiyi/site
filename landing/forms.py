@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives, BadHeaderError
 from django.template.loader import render_to_string
 from snowpenguin.django.recaptcha2.fields import ReCaptchaField
@@ -47,9 +48,12 @@ class ContactForm(forms.ModelForm):
 
         try:
             msg.send()
-        except BadHeaderError:
-            return HttpResponse('Invalid header found.')
-        except Exception as e:
+        except BadHeaderError as e:
+            return HttpResponse(' '.join(
+                ['BadHeaderError:'] + list(e.args)
+            ))
+        except Exception as e: # pragma: no cover
             print(e)
             return False
         return True
+
