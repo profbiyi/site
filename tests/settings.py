@@ -11,7 +11,10 @@ RECAPTCHA_PUBLIC_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 if (os.environ.get('TRAVIS_CL_TEST') or not
     locals().get('DATABASES')
 ): DATABASES = {
-    'default': {'ENGINE': 'django.db.backends.sqlite3'}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'django_db',
+     },
 }
 
 if locals().get('LOGGING'):
