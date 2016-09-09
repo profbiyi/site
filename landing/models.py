@@ -11,12 +11,6 @@ STATUS_CHOICES = (
 )
 
 
-class ContactManager(models.Manager):
-
-    def get_by_natural_key(self, first_name, last_name):
-        return self.get(first_name=first_name, last_name=last_name)
-
-
 class Contact(models.Model):
 
     class Meta:
@@ -122,7 +116,7 @@ class Contact(models.Model):
     def save(self,  *args, **kwargs):
         if not self.name and (self.first_name and self.last_name):
             self.name = self.first_name + ' ' + self.last_name
-        elif self.name:
+        elif self.name: # pragma: no cover
             parts = self.name.split(' ')
             if len(parts) == 2:
                 self.first_name = parts[0]
@@ -140,11 +134,6 @@ class Contact(models.Model):
 
         return super(Contact, self).save(*args, **kwargs)
 
-
-    def natural_key(self):
-        return (self.first_name, self.last_name)
-
-
     def __str__(self):
         if self.date:
             return '{0} : {1}'.format(
@@ -152,3 +141,4 @@ class Contact(models.Model):
                 self.date.strftime('%Y-%m-%d %H:%M:%S')
             )
         return self.name
+
