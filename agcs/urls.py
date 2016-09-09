@@ -4,7 +4,6 @@ from django.contrib import admin, admindocs
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
-from django_markdown.views import preview
 from machina.apps.forum.app import application as forum_app
 from community import urls as community_urls
 
@@ -83,11 +82,6 @@ urlpatterns = [
 
     url(r'^admin/',
         admin.site.urls
-    ),
-
-    url(r'^markdown/preview/$',
-        preview,
-        name='django_markdown_preview',
     ),
 
     url(r'^community/$',

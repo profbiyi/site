@@ -89,7 +89,6 @@ INSTALLED_APPS = [
     'whoosh',
     'widget_tweaks',
     'pagedown',
-    'django_markdown',
     'pytz',
     'community',
 ] + get_machina_apps([
@@ -220,7 +219,6 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS = [
     'can_download_file',
 ]
 
-MARKDOWN_EDITOR_SKIN = 'simple'
 
 try:
     from .local_settings import *
