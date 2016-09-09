@@ -63,3 +63,4 @@ target/
 static_dir/static/*
 !landing/templates/landing/parts/
 *.bak
+coverage_html_report
