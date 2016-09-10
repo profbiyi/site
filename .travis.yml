@@ -1,4 +1,14 @@
+dist: trusty
+
+sudo: required
+
 language: python
+
+addons:
+  postgresql: "9.5"
+
+services:
+  - postgresql
 
 python:
   - "3.5"
@@ -7,14 +17,18 @@ env:
   - TRAVIS_CL_TEST=1
 
 install:
-  - pip install -U setuptools
-  - pip install -r requirements.txt
-  - pip install anglerfish
-  - pip install css-html-js-minify
-  - pip install coveralls
+  - make install
+
+before_script:
+  - psql -c 'create database agcs_db;' -U postgres
 
 script:
-  - coverage run --source=landing,agcs runtests.py
+  - make travis
 
 after_success:
-  - coveralls
+  - codecov
+
+branches:
+  only:
+    - master
+
