@@ -10,6 +10,21 @@ STATUS_CHOICES = (
     ('n', 'New'),
 )
 
+class Service(models.Model):
+
+    name = models.CharField(
+        verbose_name='Service Name',
+        max_length=100,
+        unique=True,
+    )
+
+    description = models.TextField(
+        verbose_name='Description',
+    )
+
+    def __str__(self):
+        return str(self.name)
+
 
 class Contact(models.Model):
 
@@ -141,4 +156,3 @@ class Contact(models.Model):
                 self.date.strftime('%Y-%m-%d %H:%M:%S')
             )
         return self.name
-

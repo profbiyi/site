@@ -9,7 +9,7 @@ from django.utils.html import (
 from .sites import AdminSite as AGCSAdmin
 agcs_admin = AGCSAdmin()
 
-from .models import Contact, STATUS_CHOICES
+from .models import Service, Contact, STATUS_CHOICES
 
 # admin.site.disable_action('delete_selected')
 
@@ -31,6 +31,11 @@ def urlize(text, target='_blank', *args, **kwargs):
             and do_phone() or _urlize(text, *args, **kwargs)
         )
     )
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    fields = ('name', 'description',)
 
 
 @admin.register(Contact)
