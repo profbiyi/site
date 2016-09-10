@@ -8,6 +8,7 @@ omit =
     agcs/wsgi.py
     agcs/util.py
     agcs/views.py
+    landing/admin.py
     landing/apps.py
     landing/mixins.py
     landing/sites.py

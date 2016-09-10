@@ -67,24 +67,16 @@
           </div>
           <div class="list-group table-of-contents panel-body">
           {% for service in services %}
-            <a class="list-group-item" href="#{{ service|mkattribute }}">{{ service }}</a>
+            <a class="list-group-item" href="#{{ service.name|mkattribute }}">{{ service.name }}</a>
           {% endfor %}
           </div> <!--list-group -->
         </div> <!-- panel -->
       </div> <!-- col-sm... -->
       <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-1">
         {% for service in services %}
-          {% with service|mkattribute as service_id %}
+          {% with service.name|mkattribute as service_id %}
           <hr id="{{ service_id }}" class="service-tag">
-          <div class="service-div">
-            <div class="page-header">
-              <h2 class="text-center text-primary"><strong>{{ service }}</strong></h2>
-            </div> <!-- page-header -->
-            <div class="bs-component service well well-lg">
-              {% include "landing/services/"|add:service_id|add:".html" %}
-            </div> <!-- bs-component -->
-          </div> <!-- service-div -->
-          <br>
+          {% include "landing/parts/service.html" with service=service %}
           {% endwith %}
           {% if forloop.counter0 == 0 %}
         </div> <!-- col-sm... -->

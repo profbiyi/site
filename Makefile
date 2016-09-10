@@ -12,6 +12,8 @@ install:
 	pip install -r requirements.txt
 	pip install anglerfish
 	pip install css-html-js-minify
+	pip install -U 'html5lib<0.99999999'
+	pip install -U bleach
 
 coverage:
 	coverage run --source=landing,agcs runtests.py
@@ -23,5 +25,3 @@ travis: coverage
 
 test:
 	python runtests.py
-
-

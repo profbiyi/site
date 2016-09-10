@@ -1,5 +1,6 @@
+import re
 from django.test import TestCase, Client
-from landing.models import Contact
+from landing.models import Contact, Service, markup_markdown
 from django.core.exceptions import ValidationError
 from collections import namedtuple
 
@@ -13,6 +14,43 @@ ok_fields = namedtuple('Data', [
     'Foo', 'bar', 'hello world', 'foo@bar.com', '1231231234'
 )
 
+class LandingServiceModelTest(TestCase):
+
+
+    def test_markup_markdown(self):
+        script_re = re.compile('<( +)?script')
+        self.assertNotRegex(markup_markdown(self.description),
+            script_re
+        )
+        self.assertRegex(self.description, script_re)
+
+    def test_new_service(self):
+        Service.objects.create(
+            name='Test Service',
+            description = "- foo\n- bar",
+        )
+
+    description = """
+    # H1
+
+    <script>console.log("hello");</script>
+
+    ## List
+
+    - foo
+    - bar
+
+    ### Code
+
+    ```
+     <script>alert("Hello");</script>
+     <span class="foo">hello</span>
+    ```
+
+    # Paragraph
+
+    hello world
+    """
 
 class LandingModelsTest(TestCase):
 

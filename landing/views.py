@@ -7,7 +7,7 @@ from django.views.generic.edit import FormView
 from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string
-from .models import Contact
+from .models import Contact, Service
 from .forms import ContactForm
 from .mixins import CacheMixin
 
@@ -45,8 +45,9 @@ class AutoTitleView(object):
             'DEBUG'    : getattr(settings, 'DEBUG', False),
             'company'  : getattr(settings, 'COMPANY', None),
             'gapi_key' : getattr(settings, 'GOOGLE_API_KEY', None),
-            'services' : getattr(self, 'services', []),
+            'services' : Service.objects.all().order_by('order')
         }
+
 
 
 class LandingPageView(CacheMixin, TemplateView, AutoTitleView):

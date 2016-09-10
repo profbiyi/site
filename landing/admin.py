@@ -1,4 +1,5 @@
 import re
+from django.db.utils import IntegrityError
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.html import (
@@ -7,16 +8,14 @@ from django.utils.html import (
     urlize as _urlize
 )
 from .sites import AdminSite as AGCSAdmin
-agcs_admin = AGCSAdmin()
+from .models import Service, Contact, STATUS_CHOICES
 
-from .models import Contact, STATUS_CHOICES
-
-# admin.site.disable_action('delete_selected')
 
 phone_number_re = re.compile(
     '^(\+?\d-?)?(\d{3}-?){2}\d{4}$',
     flags=re.IGNORECASE+re.UNICODE
 )
+
 
 def urlize(text, target='_blank', *args, **kwargs):
     def add_target(text):
@@ -31,6 +30,53 @@ def urlize(text, target='_blank', *args, **kwargs):
             and do_phone() or _urlize(text, *args, **kwargs)
         )
     )
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    fields = ('order', 'name', 'description', 'html',)
+    ordering = ('order',)
+    readonly_fields = ('order', 'html',)
+    actions = ['move_to_top']
+
+    def move_to_top(self, request, queryset):
+        if len(queryset) > 1:
+            self.message_user(request,
+                'Please select only one service'
+            )
+            return
+
+        new_first = queryset.last()
+
+        try:
+            first = min([
+                s.order for s in Service.objects.filter(
+                    order__lt=new_first.order
+                )
+            ])
+        except ValueError as e:
+            if 'empty sequence' in str(e):
+                self.message_user(request,
+                    '%s is already at the top!' % new_first.name
+                )
+                return
+            raise
+
+        Service.objects.filter(
+            order=first
+        ).update(
+            order=new_first.order
+        )
+
+        new_first.order=first
+
+        new_first.save()
+
+        self.message_user(request,
+            'Successfully moved %s to the top' % new_first.name
+        )
+
+    move_to_top.short_description    = 'Move Service to top'
 
 
 @admin.register(Contact)
