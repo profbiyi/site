@@ -1,0 +1,9 @@
+{% load landing_utils %}
+<div class="service-div">
+  <div class="page-header">
+    <h2 class="text-center text-primary"><strong>{{ service.name|title }}</strong></h2>
+  </div>
+  <div class="bs-component service well well-lg">
+    {{ service.html|safe }}
+  </div>
+</div>
