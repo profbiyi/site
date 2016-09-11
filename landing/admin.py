@@ -1,4 +1,5 @@
 import re
+from django.db.utils import IntegrityError
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.html import (
@@ -35,7 +36,29 @@ def urlize(text, target='_blank', *args, **kwargs):
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    fields = ('name', 'description',)
+    fields = ('order', 'name', 'description', 'html',)
+    ordering = ('order',)
+    readonly_fields = ('order', 'html',)
+    actions = ['move_to_top']
+
+    def move_to_top(self, request, queryset):
+        if len(queryset) > 1:
+            self.message_user(request, 'Please select only one service')
+            return
+
+        new_first = queryset.last()
+        first = min([s.order for s in Service.objects.filter(order__lt=new_first.order)])
+        old_firsts = Service.objects.filter(order=first)
+        old_firsts.update(order=new_first.order)
+        new_first.order=first
+        new_first.save()
+        self.message_user(request, 'Successfully moved %s to the top' % new_first.name)
+
+    move_to_top.short_description    = 'Move Service to top'
+
+
+
+
 
 
 @admin.register(Contact)

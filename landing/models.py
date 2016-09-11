@@ -59,7 +59,11 @@ def markup_markdown(md, allowed_tags=None):
     return str(soup)
 
 
+
 class Service(models.Model):
+
+    class Meta:
+        ordering = ['order']
 
     name = models.CharField(
         verbose_name='Service Name',
@@ -69,14 +73,22 @@ class Service(models.Model):
 
     description = models.TextField(
         verbose_name='Description',
+        default='#'
     )
 
     html = models.TextField(
         verbose_name='HTML Markup',
     )
 
+    order = models.IntegerField(
+        null=True,
+    )
+
     def save(self, *args, **kwargs):
         self.html = markup_markdown(self.description)
+        super(Service, self).save()
+        if not self.order:
+            self.order = Service._meta.pk.value_from_object(self)
         return super(Service, self).save(*args, **kwargs)
 
     def __str__(self):
