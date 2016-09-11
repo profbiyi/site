@@ -45,12 +45,7 @@ class AutoTitleView(object):
             'DEBUG'    : getattr(settings, 'DEBUG', False),
             'company'  : getattr(settings, 'COMPANY', None),
             'gapi_key' : getattr(settings, 'GOOGLE_API_KEY', None),
-            'services' : [{
-                'name': instance.name,
-                'desc': instance.description,
-                'html': instance.html,
-                } for instance in Service.objects.all().order_by('order')
-            ],
+            'services' : Service.objects.all().order_by('order')
         }
 
 
