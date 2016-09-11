@@ -43,16 +43,40 @@ class ServiceAdmin(admin.ModelAdmin):
 
     def move_to_top(self, request, queryset):
         if len(queryset) > 1:
-            self.message_user(request, 'Please select only one service')
+            self.message_user(request,
+                'Please select only one service'
+            )
             return
 
         new_first = queryset.last()
-        first = min([s.order for s in Service.objects.filter(order__lt=new_first.order)])
-        old_firsts = Service.objects.filter(order=first)
-        old_firsts.update(order=new_first.order)
+
+        try:
+            first = min([
+                s.order for s in Service.objects.filter(
+                    order__lt=new_first.order
+                )
+            ])
+        except ValueError as e:
+            if 'empty sequence' in str(e):
+                self.message_user(request,
+                    '%s is already at the top!' % new_first.name
+                )
+                return
+            raise
+
+        Service.objects.filter(
+            order=first
+        ).update(
+            order=new_first.order
+        )
+
         new_first.order=first
+
         new_first.save()
-        self.message_user(request, 'Successfully moved %s to the top' % new_first.name)
+
+        self.message_user(request,
+            'Successfully moved %s to the top' % new_first.name
+        )
 
     move_to_top.short_description    = 'Move Service to top'
 
