@@ -62,9 +62,6 @@ def markup_markdown(md, allowed_tags=None):
 
 class Service(models.Model):
 
-    class Meta:
-        ordering = ['order']
-
     name = models.CharField(
         verbose_name='Service Name',
         max_length=100,
@@ -86,9 +83,10 @@ class Service(models.Model):
 
     def save(self, *args, **kwargs):
         self.html = markup_markdown(self.description)
-        super(Service, self).save()
         if not self.order:
-            self.order = Service._meta.pk.value_from_object(self)
+            self.order = getattr(
+                Service.objects.last(), 'pk', 0
+            ) + 1
         return super(Service, self).save(*args, **kwargs)
 
     def __str__(self):
