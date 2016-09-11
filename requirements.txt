@@ -68,6 +68,8 @@ virtualenv==15.0.3
 wcwidth==0.1.7
 webencodings==0.5
 bleach
+pymdown-extensions
+encoding
 # Testing
 #pytest>=2.6
 #pytest-cov>=1.8
