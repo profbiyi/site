@@ -15,8 +15,8 @@ STATUS_CHOICES = (
 )
 
 _MARKDOWN_SETTINGS = {
-    'ul_classes' : ['bullet-item'],
-    'li_classes' : ['list-group'],
+    'ul_classes' : ['list-group'],
+    'li_classes' : ['bullet-item'],
     'hx_classes' : ['text-primary'],
     'extensions': [
         'markdown.extensions.tables',
