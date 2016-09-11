@@ -8,6 +8,7 @@ clean:
 
 install:
 	pip install -U setuptools
+	pip install -U html5lib
 	pip install -q psycopg2
 	pip install -r requirements.txt
 	pip install anglerfish
@@ -23,5 +24,3 @@ travis: coverage
 
 test:
 	python runtests.py
-
-
