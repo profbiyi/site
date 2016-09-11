@@ -49,7 +49,7 @@ class AutoTitleView(object):
                 'name': instance.name,
                 'desc': instance.description,
                 'html': instance.html,
-                } for instance in Service.objects.all()
+                } for instance in Service.objects.all().order_by('order')
             ],
         }
 
