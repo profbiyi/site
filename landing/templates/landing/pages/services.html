@@ -76,8 +76,7 @@
         {% for service in services %}
           {% with service.name|mkattribute as service_id %}
           <hr id="{{ service_id }}" class="service-tag">
-              {% include "landing/services/service.html" with service=service %}
-          <br>
+          {% include "landing/services/service.html" with service=service %}
           {% endwith %}
           {% if forloop.counter0 == 0 %}
         </div> <!-- col-sm... -->
