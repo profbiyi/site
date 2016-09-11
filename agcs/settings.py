@@ -242,7 +242,7 @@ COMPANY = {
     },
 }
 
-if os.environ.get('DJANGO_DEBUG_OVERRIDE'):
+if os.environ.get('DJANGO_DEBUG_OVERRIDE'): # pragma: no cover
     DEBUG = True
     SECURE_SSL_REDIRECT = False
     del(ALLOWED_HOSTS,
