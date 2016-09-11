@@ -8,16 +8,14 @@ from django.utils.html import (
     urlize as _urlize
 )
 from .sites import AdminSite as AGCSAdmin
-agcs_admin = AGCSAdmin()
-
 from .models import Service, Contact, STATUS_CHOICES
 
-# admin.site.disable_action('delete_selected')
 
 phone_number_re = re.compile(
     '^(\+?\d-?)?(\d{3}-?){2}\d{4}$',
     flags=re.IGNORECASE+re.UNICODE
 )
+
 
 def urlize(text, target='_blank', *args, **kwargs):
     def add_target(text):
@@ -79,10 +77,6 @@ class ServiceAdmin(admin.ModelAdmin):
         )
 
     move_to_top.short_description    = 'Move Service to top'
-
-
-
-
 
 
 @admin.register(Contact)
