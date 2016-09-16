@@ -62,6 +62,9 @@ def markup_markdown(md, allowed_tags=None):
 
 class Service(models.Model):
 
+    class Meta:
+        ordering = ('order',)
+
     name = models.CharField(
         verbose_name='Service Name',
         max_length=100,
