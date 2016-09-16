@@ -14,6 +14,7 @@ STATUS_CHOICES = (
     ('n', 'New'),
 )
 
+
 _MARKDOWN_SETTINGS = {
     'ul_classes' : ['list-group'],
     'li_classes' : ['bullet-item'],
@@ -26,6 +27,7 @@ _MARKDOWN_SETTINGS = {
         'pymdownx.superfences',
     ],
 }
+
 
 def markup_markdown(md, allowed_tags=None):
     html = bleach.clean(markdown.markdown(
@@ -57,7 +59,6 @@ def markup_markdown(md, allowed_tags=None):
                 _MARKDOWN_SETTINGS['hx_classes']
             )))
     return str(soup)
-
 
 
 class Service(models.Model):
