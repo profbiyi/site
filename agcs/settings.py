@@ -5,7 +5,7 @@ from machina import (
     MACHINA_MAIN_STATIC_DIR
 )
 
-HTML_MINIFY             = False
+HTML_MINIFY             = True
 DEBUG                   = False
 TESTING                 = False
 USE_X_FORWARDED_HOST    = True
@@ -255,3 +255,4 @@ if os.environ.get('DJANGO_DEBUG_OVERRIDE'): # pragma: no cover
     )
     RECAPTCHA_PRIVATE_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
     RECAPTCHA_PUBLIC_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+    HTML_MINIFY = False
