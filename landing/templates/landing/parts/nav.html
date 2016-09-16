@@ -49,7 +49,7 @@
             </a>
           </li>
           <li role="separator" class="divider"></li>
-        {% for service in services %}
+        {% for service in object_list %}
           <li class="service-item">
             <a id="{{ service.name|mkattribute }}-dd-link" class="service-link"
                href="{% if page != title %}{% url 'services' %}{% endif %}#{{ service.name|mkattribute }}">

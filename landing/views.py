@@ -1,40 +1,32 @@
-import os
 import json
 from django.http import JsonResponse
-from django.views.decorators.cache import cache_page
-from django.views.generic.base import TemplateView
+from django.views.generic.base import ContextMixin
 from django.views.generic.edit import FormView
+from django.views.generic.list import ListView, MultipleObjectMixin
 from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.views.decorators.cache import cache_page
+from .mixins import CacheMixin, NeverCacheMixin
 from .models import Contact, Service
 from .forms import ContactForm
-from .mixins import CacheMixin
 
 
-class AutoTitleView(object):
+class AutoTitleMixin(ContextMixin):
     page_title = None
-
-    services = [
-        'Web Design', 'VPN Solutions', 'Backup Solutions',
-        'Custom Builds', 'Networking', 'Mobile Devices',
-        'Lessons', 'Consulting', 'Device Setup',
-        'Viruses/Spyware', 'Maintenance', 'Repairs',
+    pages = [
+        'home', 'about', 'contact',
+        'community', 'services',
     ]
 
     @property
     def title(self):
-        return (self.page_title and
-            self.page_title or
+        return (self.page_title or
             self.template_name
                 .rpartition('/')[-1]
                 .rpartition('.')[0]
                 .replace('_', ' ')
         )
-
-    @title.setter
-    def title(self, title):
-        self.page_title = title
 
     @property
     def common_context(self):
@@ -45,24 +37,37 @@ class AutoTitleView(object):
             'DEBUG'    : getattr(settings, 'DEBUG', False),
             'company'  : getattr(settings, 'COMPANY', None),
             'gapi_key' : getattr(settings, 'GOOGLE_API_KEY', None),
-            'services' : Service.objects.all().order_by('order')
         }
 
+    def get_context_data(self, **kwargs):
+        kwargs.update(self.common_context)
+        if settings.DEBUG:
+            kwargs.update({
+                'pages': ['admin:index'] + self.pages
+            })
+        return super(AutoTitleMixin, self).get_context_data(**kwargs)
 
 
-class LandingPageView(CacheMixin, TemplateView, AutoTitleView):
+class LandingPageView(CacheMixin, AutoTitleMixin,
+                        ListView):
     cache_timeout = settings.DEBUG and 5 or 3600
+    model = Service
 
-    pages = [
-        'home', 'about', 'contact',
-        'community', 'services',
-    ]
 
+class LandingFormView(NeverCacheMixin, MultipleObjectMixin,
+                        AutoTitleMixin, FormView):
+    form_class = ContactForm
+    model = LandingPageView.model
+
+    @property
+    def object_list(self):
+        return self.model.objects.all()
 
     def get_context_data(self, **kwargs):
-        context = super(LandingPageView, self).get_context_data(**kwargs)
-        context.update(self.common_context)
-        return context
+        kwargs.update(self.common_context)
+        if 'form' not in kwargs:
+            kwargs['form'] = self.get_form()
+        return super(LandingFormView, self).get_context_data(**kwargs)
 
 
 class HomeView(LandingPageView):
@@ -77,17 +82,10 @@ class ServicesView(LandingPageView):
     template_name = 'landing/pages/services.html'
 
 
-class ContactView(FormView, AutoTitleView):
+class ContactView(LandingFormView):
     template_name = 'landing/pages/contact.html'
-    pages = LandingPageView.pages
-    success_url = '/contact/'
-    form_class = ContactForm
-    send_email = True
-
-    def get_context_data(self, **kwargs):
-        context = super(ContactView, self).get_context_data(**kwargs)
-        context.update(self.common_context)
-        return context
+    success_url   = '/contact/'
+    send_email    = True
 
     def form_valid(self, form):
         form.instance.remote_address = self.request.META.get('HTTP_X_REAL_IP', '0.0.0.0')

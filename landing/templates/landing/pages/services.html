@@ -66,14 +66,14 @@
             <h3 class="panel-title text-center">What We do</h3>
           </div>
           <div class="list-group table-of-contents panel-body">
-          {% for service in services %}
+          {% for service in object_list %}
             <a class="list-group-item" href="#{{ service.name|mkattribute }}">{{ service.name }}</a>
           {% endfor %}
           </div> <!--list-group -->
         </div> <!-- panel -->
       </div> <!-- col-sm... -->
       <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-1">
-        {% for service in services %}
+        {% for service in object_list %}
           {% with service.name|mkattribute as service_id %}
           <hr id="{{ service_id }}" class="service-tag">
           {% include "landing/parts/service.html" with service=service %}
