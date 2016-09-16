@@ -222,7 +222,7 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS = [
 
 try:
     from .local_settings import *
-except ImportError:
+except ImportError: # pragma: no cover
     pass
 
 COMPANY = {
