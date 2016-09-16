@@ -1,5 +1,6 @@
 import re
 from django.db.utils import IntegrityError
+from django.db.models import F
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.html import (
@@ -35,6 +36,7 @@ def urlize(text, target='_blank', *args, **kwargs):
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     fields = ('order', 'name', 'description', 'html',)
+    list_display = ('name', 'order',)
     ordering = ('order',)
     readonly_fields = ('order', 'html',)
     actions = ['move_to_top']
@@ -48,28 +50,17 @@ class ServiceAdmin(admin.ModelAdmin):
 
         new_first = queryset.last()
 
-        try:
-            first = min([
-                s.order for s in Service.objects.filter(
-                    order__lt=new_first.order
-                )
-            ])
-        except ValueError as e:
-            if 'empty sequence' in str(e):
-                self.message_user(request,
-                    '%s is already at the top!' % new_first.name
-                )
-                return
-            raise
+        if new_first.order == 1:
+            self.message_user(request,
+                '%s is already at the top!' % new_first.name
+            )
+            return
 
         Service.objects.filter(
-            order=first
-        ).update(
-            order=new_first.order
-        )
+            order__lt=new_first.order
+        ).update(order=F('order') + 1)
 
-        new_first.order=first
-
+        new_first.order = 1
         new_first.save()
 
         self.message_user(request,
