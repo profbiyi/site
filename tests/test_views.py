@@ -2,30 +2,63 @@ import logging
 import importlib
 from django.test import TestCase
 from django.http import Http404
+from django.core.urlresolvers import reverse
+from django.template.loader import render_to_string
+from machina.test.factories import create_forum
+from machina.test.factories import create_topic
+from machina.test.factories import PostFactory
+from machina.test.factories import UserFactory
 from agcs.urls import handler404
-
-
-__all__ = ['LandingViewsTest']
+from agcs.sitemaps import StaticSitemap, ForumsSitemap, TopicsSitemap
+from landing.forms import ContactForm
+from landing.urls import urlpatterns as landing_urls
 
 
 class LandingViewsTest(TestCase):
 
-    def test_get_landing_pages(self):
-        for page in [
-            '/', '/about/', '/services/',
-            '/contact/', '/community/',
-        ]:  self.assertEqual(200,
-                self.client.get(page,
-                    follow=True
-                ).status_code
-            )
+    fixtures = ['services.json']
 
-    def test_get_site_maps(self):
+    def setUp(self):
+        self.u1 = UserFactory.create()
+        self.top_level_forum = create_forum()
+        self.topic = create_topic(forum=self.top_level_forum, poster=self.u1)
+        self.post = PostFactory.create(topic=self.topic, poster=self.u1)
+        self.topic_pk = self.topic.pk
+
+    def assertStatusOK(self, url):
         self.assertEqual(200,
-            self.client.get('/sitemap.xml',
+            self.client.get(url,
                 follow=True
-            ).status_code
+            ).status_code,
+            msg='url: %s' % url
         )
+
+
+    def test_get_landing_pages(self):
+        for url in landing_urls:
+            self.assertStatusOK(reverse(url.name))
+
+    def test_get_manifest(self):
+        self.assertStatusOK(reverse('chrome_manifest'))
+
+    def test_get_site_map(self):
+        self.assertStatusOK('/sitemap.xml')
+
+    def test_urls_from_site_map(self):
+        fsm = ForumsSitemap()
+        tsm = TopicsSitemap()
+        ssm = StaticSitemap()
+
+        self.assertGreaterEqual(len(fsm.items()), 1)
+        self.assertGreaterEqual(len(tsm.items()), 1)
+        self.assertGreaterEqual(len(ssm.items()), 1)
+
+
+class TemplateTagsTest(TestCase):
+
+    def test_landing_utils(self):
+        render_to_string('test/landing_utils.html', context={'form': ContactForm()})
+
 
 
 class ErrorPageViewsTest(TestCase):

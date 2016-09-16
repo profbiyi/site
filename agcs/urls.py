@@ -1,17 +1,11 @@
 from __future__ import unicode_literals
 from django.conf.urls import url, include
-from django.contrib import admin, admindocs
+from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 from machina.apps.forum.app import application as forum_app
-from community import urls as community_urls
-
-from landing.views import (
-    ContactView, HomeView,
-    AboutView, ServicesView,
-    manifest_view
-)
+from landing.views import HomeView
 
 from .sitemaps import (
     StaticSitemap,
@@ -26,40 +20,16 @@ sitemaps = {
 }
 
 handler404 = 'agcs.views.page_not_found_view'
-#handler500 = 'agcs.views.server_error_view'
-#handler403 = 'agcs.views.permission_denied_view'
-#handler400 = 'agcs.views.bad_request_view'
 
 urlpatterns = [
 
-    url(r'^services/$',
-        ServicesView.as_view(),
-        name='services'
-    ),
-
-    url(r'^about/$',
-        AboutView.as_view(),
-        name='about'
-    ),
-
-    url(r'^contact/$',
-        ContactView.as_view(),
-        name='contact'
-    ),
-
-    url(r'^(home|index)/$',
-        HomeView.as_view(),
-        name='home'
+    url(r'^',
+        include('landing.urls')
     ),
 
     url(r'^$',
         HomeView.as_view(),
         name='home'
-    ),
-
-    url(r'^manifest\.json$',
-        manifest_view,
-        name='chrome_manifest'
     ),
 
     url(r'^sitemap\.xml$',
@@ -86,12 +56,10 @@ urlpatterns = [
 
     url(r'^community/$',
         forum_app.index_view.as_view(),
-        name='community'
+        name='community',
     ),
 
     url(r'^community/',
-        include(community_urls)
+        include('community.urls')
     ),
-
-
 ]
