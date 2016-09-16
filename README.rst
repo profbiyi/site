@@ -1,5 +1,5 @@
 ========================
-Main site Django project
+Main site Django_ project
 ========================
 
 .. image:: https://img.shields.io/travis/alphageek-xyz/site.svg?style=flat-square
@@ -10,3 +10,4 @@ Main site Django project
 	:target: https://codecov.io/gh/alphageek-xyz/site
 	:alt: Codecov status
 
+.. _Django: https://www.djangoproject.com/
