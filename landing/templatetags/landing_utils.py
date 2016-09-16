@@ -40,10 +40,6 @@ class InlineResource(object):
         self.mini = kwargs.get('mini', getattr(settings, 'MINIFY_INLINE_RESOURCS', True))
 
     @property
-    def text(self):
-        return self._text
-
-    @property
     def minified(self):
         return (self._type is 'js'
             and js_minify(self._text)
@@ -110,22 +106,6 @@ def minify_html(value):
     return mark_safe(html_minify(value))
 
 
-def _append(value, arg):
-    return value + arg
-
-
-@register.assignment_tag
-@register.filter
-def append(value, arg):
-    return _append(value, arg)
-
-
-@register.assignment_tag
-@register.filter
-def append(value, arg):
-    return _append(value, arg)
-
-
 @register.filter
 def listsort(value):
     return sorted(value)
@@ -141,11 +121,6 @@ def listsortreversed(value):
 def split(value, char=','):
     return value.split(char)
 
-
-@register.filter
-@stringfilter
-def mklist(*args, **kwargs):
-    return split(*args, **kwargs)
 
 
 @register.filter
