@@ -126,6 +126,16 @@ def split(value, char=','):
 @register.filter
 @stringfilter
 def mkattribute(value):
+    """
+    This generates a string suitable for an
+    HTML attribute by replacing common
+    non-alphanumeric characters with an underscore.
+
+    Usage::
+
+        <div id="{% my_string|mkattribute %}"></div>
+    """
+
     return re.sub(" ?[&/\\@ ] ?", '_', value)[0:20]
 
 
