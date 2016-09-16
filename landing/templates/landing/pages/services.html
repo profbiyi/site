@@ -7,103 +7,103 @@
 {% endblock header %}
 {% block content %}
 
-  <div class="container-fluid">
-    <div class="NOT-page-header" id="banner">
-      <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-4">
-          <p class="lead"></p>
-        </div> <!-- col-lg-8 col... -->
-        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-offset-3">
-          <div class="sponsor">
-          </div> <!-- sponsor -->
-        </div> <!-- col-lg-4 col... -->
-      </div> <!-- row -->
-    </div> <!-- page-header -->
-  </div> <!-- container-fluid -->
-  <style>
-    .table-of-contents {
-        margin-top:1em;
-    }
-
-    .toc-title, .table-of-contents {
-        text-align: left;
-    }
-
-    .service .list-group .bullet-item {
-        padding: .5em;
-        margin-left: 2em;
-    }
-    hr.service-tag {
-      border: 1em solid transparent;
-      margin: 0;
-    }
-
-    a.list-group-item:hover,
-    a.list-group-item:focus,
-    a.list-group-item,
-    a.list-group-item.last-clicked {
-      color: #18bc9c;
-      font-weight: bold;
-    }
-
-    a.list-group-item:hover,
-    a.list-group-item:focus,
-    a.list-group-item.last-clicked {
-      background-color: rgb(44,62,80);
-    }
-
-    .panel-title {
-        font-size: 20px;
-        color: #ffffff;
-        font-weight: bolder;
-    }
-  </style>
-  <div class="container">
+<div class="container-fluid">
+  <div class="NOT-page-header" id="banner">
     <div class="row">
-      <div class="col-sm-4 col-md-3 hidden-xs hidden-sm" id="sidebar">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title text-center">What We do</h3>
-          </div>
-          <div class="list-group table-of-contents panel-body">
-          {% for service in object_list %}
-            <a class="list-group-item" href="#{{ service.name|mkattribute }}">{{ service.name }}</a>
-          {% endfor %}
-          </div> <!--list-group -->
-        </div> <!-- panel -->
-      </div> <!-- col-sm... -->
-      <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-1">
+      <div class="col-lg-3 col-md-3 col-sm-4">
+        <p class="lead"></p>
+      </div> <!-- col-lg-8 col... -->
+      <div class="col-lg-9 col-md-9 col-sm-8 col-xs-offset-3">
+        <div class="sponsor">
+        </div> <!-- sponsor -->
+      </div> <!-- col-lg-4 col... -->
+    </div> <!-- row -->
+  </div> <!-- page-header -->
+</div> <!-- container-fluid -->
+<style>
+  .table-of-contents {
+      margin-top:1em;
+  }
+
+  .toc-title, .table-of-contents {
+      text-align: left;
+  }
+
+  .service .list-group .bullet-item {
+      padding: .5em;
+      margin-left: 2em;
+  }
+  hr.service-tag {
+    border: 1em solid transparent;
+    margin: 0;
+  }
+
+  a.list-group-item:hover,
+  a.list-group-item:focus,
+  a.list-group-item,
+  a.list-group-item.last-clicked {
+    color: #18bc9c;
+    font-weight: bold;
+  }
+
+  a.list-group-item:hover,
+  a.list-group-item:focus,
+  a.list-group-item.last-clicked {
+    background-color: rgb(44,62,80);
+  }
+
+  .panel-title {
+      font-size: 20px;
+      color: #ffffff;
+      font-weight: bolder;
+  }
+</style>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4 col-md-3 hidden-xs hidden-sm" id="sidebar">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">What We do</h3>
+        </div>
+        <div class="list-group table-of-contents panel-body">
         {% for service in object_list %}
-          {% with service.name|mkattribute as service_id %}
-          <hr id="{{ service_id }}" class="service-tag">
-          {% include "landing/parts/service.html" with service=service %}
-          {% endwith %}
-          {% if forloop.counter0 == 0 %}
-        </div> <!-- col-sm... -->
-      </div> <!-- row -->
-      <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-          {% endif %}
+          <a class="list-group-item" href="#{{ service.name|mkattribute }}">{{ service.name }}</a>
         {% endfor %}
+        </div> <!--list-group -->
+      </div> <!-- panel -->
+    </div> <!-- col-sm... -->
+    <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-1">
+      {% for service in object_list %}
+        {% with service.name|mkattribute as service_id %}
+        <hr id="{{ service_id }}" class="service-tag">
+        {% include "landing/parts/service.html" with service=service %}
+        {% endwith %}
+        {% if forloop.counter0 == 0 %}
       </div> <!-- col-sm... -->
     </div> <!-- row -->
-  </div> <!-- container -->
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        {% endif %}
+      {% endfor %}
+    </div> <!-- col-sm... -->
+  </div> <!-- row -->
+</div> <!-- container -->
 {% endblock content %}
 {% block page_extra_script %}
-  <script async>
-    $(document).ready(function() {
-      var tis = $('.table-of-contents .list-group-item');
+<script async>
+  $(document).ready(function() {
+    var tis = $('.table-of-contents .list-group-item');
 
-      $(document).scroll(function() {
-        if (!$(window).scrollTop())
-          $(tis).removeClass('last-clicked');
-      });
-
-      $(tis).click(function() {
+    $(document).scroll(function() {
+      if (!$(window).scrollTop())
         $(tis).removeClass('last-clicked');
-        $(this).addClass('last-clicked');
-      });
-
     });
+
+    $(tis).click(function() {
+      $(tis).removeClass('last-clicked');
+      $(this).addClass('last-clicked');
+    });
+
+  });
 </script>
 {% endblock page_extra_script %}
