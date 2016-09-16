@@ -1,0 +1,22 @@
+{
+    "@context":"http://schema.org",
+    "@type":"LocalBusiness",
+    "address": {
+        "@type":"PostalAddress",
+        "addressLocality":"Plano",
+        "addressRegion":"TX",
+        "postalCode":"75093",
+        "streetAddress":"1727 Nest Place"
+    },
+    "name":"Alpha Geek Computer Services",
+    "description":"Alpha Geek Computer Services provides in-shop, on-site, and remote IT services.",
+    "alternateName":"Alpha Geeks",
+    "url":"https://alphageek.xyz",
+    "email":"root@alphageek.xyz",
+    "telephone":"(972) 656-9338",
+    "logo":"https://alphageek.xyz/static/assets/img/logo.png",
+    "sameAs":[
+        "https://plus.google.com/+Ntxcomputerservices",
+        "https://facebook.com/alphageekcs"
+    ]
+}
