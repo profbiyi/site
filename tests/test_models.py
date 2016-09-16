@@ -5,17 +5,16 @@ from django.core.exceptions import ValidationError
 from collections import namedtuple
 
 
-__all__ = ['LandingModelsTest']
-
-
 ok_fields = namedtuple('Data', [
     'first_name','last_name','comment','email', 'phone'
 ])(
     'Foo', 'bar', 'hello world', 'foo@bar.com', '1231231234'
 )
 
+
 class LandingServiceModelTest(TestCase):
 
+    fixtures = ['services.json']
 
     def test_markup_markdown(self):
         script_re = re.compile('<( +)?script')
@@ -29,6 +28,16 @@ class LandingServiceModelTest(TestCase):
             name='Test Service',
             description = "- foo\n- bar",
         )
+
+    def test_save_with_explicit_order(self):
+        last = Service.objects.last()
+        s = Service(
+            name='Test Service',
+            description=self.description,
+            order=last.order+1
+        )
+        s.save()
+        self.assertEqual(s.order, last.order+1)
 
     description = """
     # H1
@@ -52,7 +61,8 @@ class LandingServiceModelTest(TestCase):
     hello world
     """
 
-class LandingModelsTest(TestCase):
+
+class LandingContactModelTest(TestCase):
 
     def setUp(self):
         self.fields = ok_fields._asdict()
