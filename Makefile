@@ -14,6 +14,8 @@ install:
 	pip install css-html-js-minify
 	pip install -U 'html5lib<0.99999999'
 	pip install -U bleach
+	pip install factory-boy
+	pip install fake-factory
 
 coverage:
 	coverage run --source=landing,agcs runtests.py
