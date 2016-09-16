@@ -60,7 +60,6 @@ class TemplateTagsTest(TestCase):
         render_to_string('test/landing_utils.html', context={'form': ContactForm()})
 
 
-
 class ErrorPageViewsTest(TestCase):
 
     def setUp(self):
