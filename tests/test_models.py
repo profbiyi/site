@@ -39,27 +39,25 @@ class LandingServiceModelTest(TestCase):
         s.save()
         self.assertEqual(s.order, last.order+1)
 
-    description = """
-    # H1
+    @property
+    def description(self):
+        return """
+# H1
+## H2
+### H3
 
-    <script>console.log("hello");</script>
+<script>console.log("hello");</script>
 
-    ## List
+- foo
+- bar
 
-    - foo
-    - bar
+```
+<script>alert("Hello");</script>
+<span class="foo">hello</span>
+```
 
-    ### Code
-
-    ```
-     <script>alert("Hello");</script>
-     <span class="foo">hello</span>
-    ```
-
-    # Paragraph
-
-    hello world
-    """
+hello world
+"""
 
 
 class LandingContactModelTest(TestCase):
