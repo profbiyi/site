@@ -57,7 +57,26 @@ class LandingViewsTest(TestCase):
 class TemplateTagsTest(TestCase):
 
     def test_landing_utils(self):
-        render_to_string('test/landing_utils.html', context={'form': ContactForm()})
+
+        with self.assertRaises(RuntimeError):
+            render_to_string('test/landing_utils.html',
+                context={
+                    'form': ContactForm(),
+                    'badpath': 'assets/js/none.js'
+                })
+
+        with self.assertRaises(RuntimeError):
+            render_to_string('test/landing_utils.html',
+                context={
+                    'form': ContactForm(),
+                    'somedir': 'assets/js'
+                })
+
+        render_to_string(
+            'test/landing_utils.html',
+            context={'form': ContactForm()}
+        )
+
 
 
 class ErrorPageViewsTest(TestCase):

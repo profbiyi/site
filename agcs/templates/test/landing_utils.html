@@ -1,30 +1,26 @@
 {% load landing_utils %}
-
-{% inline_js_file 'assets/js/scroll-top-wrapper.js' %}
-{% inline_js_file 'assets/js/scroll-top-wrapper.js' 'assets/js' %}
-{% inline_css_file 'assets/css/scroll-top-wrapper.css' %}
+{% inline_static_file 'assets/js/scroll-top-wrapper.js' 'js' %}
+{% inline_static_file somedir|default:'assets/js/schema.json' 'css' %}
+{% inline_static_file badpath|default:'assets/js/schema.json' 'html' %}
+{% inline_static_file 'assets/js/scroll-top-wrapper.js' 'sh' %}
+{% inline_static_file 'assets/css/scroll-top-wrapper.css' 'css' %}
 {% async_css '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' %}
 {% autofocus_form form %}
 {% for field in form %}
-{% autofocus_field field %}
+    {% autofocus_field field %}
 {% endfor %}
-
 {{ "alert('hello')"|minify_js }}
 {{ ".foo { color: red; }"|minify_css }}
 {{ "<div class='foo'>  BAR</div>"|minify_html }}
-
 {% with nums='1,2,3,4'|make_list %}
     {% for n in nums|listsort %}
         {{ n }}
     {% endfor %}
 {% endwith %}
-
 {% with nums='1,2,3,4'|make_list %}
     {% for n in nums|listsortreversed %}
         {{ n }}
     {% endfor %}
 {% endwith %}
-
 {{ 'foobar'|find:'foo' }}
-
 {{ 'foo,bar'|split }}
