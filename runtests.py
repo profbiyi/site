@@ -2,6 +2,7 @@
 
 import os, sys
 import django
+from pathlib import Path
 from django.conf import settings
 from django.test.utils import get_runner
 
@@ -15,6 +16,10 @@ def main():
 
 if __name__ == "__main__":
     os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.settings'
+    os.environ.setdefault('DJANGOPROJECT_DATA_DIR', str(
+        Path(__file__).resolve().parent.joinpath('tests', 'data')
+    ))
+
     if len(sys.argv) == 1:
         django.setup()
         TestRunner  = get_runner(settings)

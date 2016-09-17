@@ -38,5 +38,5 @@ CACHES = {
     }
 }
 
-STATIC_URL = '/static/'
+STATIC_URL = '/s/'
 STATIC_ROOT = '/tmp'
