@@ -6,8 +6,6 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 from machina.apps.forum.app import application as forum_app
 from landing.views import HomeView
-from landing.models import Service
-from contact.views import ContactView
 
 from .sitemaps import (
     StaticSitemap,
@@ -65,8 +63,9 @@ urlpatterns = [
         include('community.urls')
     ),
 
-    url(r'contact/', ContactView.as_view(
-        object_list=Service.objects.all(),
-        pages=['home', 'about', 'contact', 'community', 'services',]
-    ), name='contact_form'),
+    # url(r'contact/', ContactView.as_view(
+    #     object_list=Service.objects.all(),
+    #     pages=['home', 'about', 'contact', 'community', 'services',],
+    #     template_name='contact/contact.html'
+    # ), name='contact'),
 ]

@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.conf.urls import url
 from landing.views import (
-    HomeView, AboutView,
+    HomeView, AboutView, ContactView,
     ServicesView, manifest_view
 )
 
@@ -15,6 +15,11 @@ urlpatterns = [
     url(r'^about/$',
         AboutView.as_view(),
         name='about'
+    ),
+
+    url(r'^contact/$',
+        ContactView.as_view(),
+        name='contact'
     ),
 
     url(r'^(home|index)/$',
