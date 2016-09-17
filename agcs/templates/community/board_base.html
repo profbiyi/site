@@ -6,12 +6,12 @@
 {% block css %}
     {{ block.super }}
         <link rel="stylesheet" type="text/less" href="{% static 'less/theme.less' %}" />
-    {% block more_css %}{% endblock more_css %}    
+    {% block more_css %}{% endblock more_css %}
 {% endblock css %}
 
 {% block extra_css %}
     {{ block.super }}
-        <link rel="stylesheet" type="text/css" href="{% static 'landing/css/landing.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}" />
 {% endblock extra_css %}
 
 {% block body %}

@@ -1,9 +1,9 @@
 {% load landing_utils %}
-{% inline_static_file 'assets/js/scroll-top-wrapper.js' 'js' %}
-{% inline_static_file somedir|default:'assets/js/schema.json' 'css' %}
-{% inline_static_file badpath|default:'assets/js/schema.json' 'html' %}
-{% inline_static_file 'assets/js/scroll-top-wrapper.js' 'sh' %}
-{% inline_static_file 'assets/css/scroll-top-wrapper.css' 'css' %}
+{% inline_static_file 'js/scroll-top-wrapper.js' 'js' %}
+{% inline_static_file somedir|default:'js/schema.json' 'css' %}
+{% inline_static_file badpath|default:'js/schema.json' 'html' %}
+{% inline_static_file 'js/scroll-top-wrapper.js' 'sh' %}
+{% inline_static_file 'css/scroll-top-wrapper.css' 'css' %}
 {% async_css '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' %}
 {% autofocus_form form %}
 {% for field in form %}

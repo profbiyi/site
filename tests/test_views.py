@@ -62,14 +62,14 @@ class TemplateTagsTest(TestCase):
             render_to_string('test/landing_utils.html',
                 context={
                     'form': ContactForm(),
-                    'badpath': 'assets/js/none.js'
+                    'badpath': 'js/none.js'
                 })
 
         with self.assertRaises(RuntimeError):
             render_to_string('test/landing_utils.html',
                 context={
                     'form': ContactForm(),
-                    'somedir': 'assets/js'
+                    'somedir': 'js'
                 })
 
         render_to_string(

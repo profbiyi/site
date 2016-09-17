@@ -6,6 +6,8 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 from machina.apps.forum.app import application as forum_app
 from landing.views import HomeView
+from landing.models import Service
+from contact.views import ContactView
 
 from .sitemaps import (
     StaticSitemap,
@@ -40,7 +42,7 @@ urlpatterns = [
 
     url(r'^favicon\.ico$',
         RedirectView.as_view(
-            url=staticfiles_storage.url('assets/img/favicon.ico'),
+            url=staticfiles_storage.url('img/favicon.ico'),
             permanent=False
         ),
         name='favicon'
@@ -62,4 +64,9 @@ urlpatterns = [
     url(r'^community/',
         include('community.urls')
     ),
+
+    url(r'contact/', ContactView.as_view(
+        object_list=Service.objects.all(),
+        pages=['home', 'about', 'contact', 'community', 'services',]
+    ), name='contact_form'),
 ]

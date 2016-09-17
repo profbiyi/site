@@ -68,7 +68,7 @@ CSRF_COOKIE_HTTPONLY = True
 
 
 STATICFILES_DIRS = [
-    ('assets', str(PROJECT_PACKAGE.joinpath('static'))),
+    str(PROJECT_PACKAGE.joinpath('static')),
     MACHINA_MAIN_STATIC_DIR,
 ]
 
@@ -98,6 +98,7 @@ INSTALLED_APPS = [
     'pagedown',
     'pytz',
     'community',
+    'contact',
 ] + get_machina_apps([
     'community.apps.forum_conversation',
     'community.apps.forum_member',
@@ -123,7 +124,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             str(PROJECT_PACKAGE.joinpath('templates')),
-            str(BASE_DIR.joinpath('community', 'templates')),
+            str(PROJECT_PACKAGE.joinpath('templates', 'community')),
             MACHINA_MAIN_TEMPLATE_DIR,
         ],
         'OPTIONS': {

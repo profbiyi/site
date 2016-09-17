@@ -5,7 +5,7 @@
 {% load landing_utils %}
 {% load favicon %}
 {% block bootstrap3_extra_head %}
-<link rel="stylesheet" href="{% static 'landing/css/landing.css' %}" type="text/css" charset="utf-8">
+<link rel="stylesheet" href="{% static 'css/landing.css' %}" type="text/css" charset="utf-8">
 <meta name="keywords" content="alpha geeks, computer assistance, computer fix, computer geeks, computer help, computer maintenance, computer problems, computer repair, computer repair services, computer service, computer services, computer support, computer tech help, computer tech support, computer troubleshooting, computer lessons, computer virus removal, fix computer, fix computer problems, fix my computer, fix my pc, geek computer repair, geek squad, home computer repair, home computer repair service, home computer service, home computer services, home computer support, home pc support, in home computer repair, it support, mobile computer repair, online computer help, pc computer repair, pc fix, pc repair, pc repair services, pc repair shop, pc support, remote computer repair, repair computer, repair my computer, virus removal">
 <meta name="description" content="Alpha Geek Computer Services provides in-shop, on-site, and remote IT services. We are located in Plano, TX.">
 <meta name="author" content="Ryan Kaiser">
@@ -16,19 +16,19 @@
 <meta name="google-site-verification" content="aNcBkJyU-QbMhrf4qytgXNxjMZ3nkEzM6TdXGTTnRbY">
 <meta name="msvalidate.01" content="4A9ECC2E495C85CC9CC904F51D67E03A">
 <meta property="og:description" content="Alpha Geek Computer Services provides in-shop, on-site, and remote IT services. We are located in Plano, TX.">
-{% get_favicons "assets/img/favicon/" %}
+{% get_favicons "img/favicon/" %}
 <meta name="theme-color" content="#cccccc">
 <link rel="manifest" href="{% url 'chrome_manifest' %}">
 {% block canonical %}<link rel="canonical" href="https://alphageek.xyz{% url title %}" itemprop="url">{% endblock canonical %}
 {% block page_extra_head %}{% endblock page_extra_head %}
-<script type="application/ld+json">{% inline_static_file 'assets/js/schema.json' 'js' %}</script>
+<script type="application/ld+json">{% inline_static_file 'js/schema.json' 'js' %}</script>
 {% endblock bootstrap3_extra_head %}
 
 {% block bootstrap3_content %}
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-N4BNCJ"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<script>{% inline_static_file 'landing/js/tag-manager.js' 'js' %}</script>
+<script>{% inline_static_file 'js/tag-manager.js' 'js' %}</script>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
   {% block navigation %}
@@ -37,7 +37,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </nav>
 
 <header>
-  {% block header %}{% endblock header %}
+  {% block header %}
+    {% include "landing/parts/header.html" %}
+  {% endblock header %}
 </header>
 
 <main id="content" class="group" role="main">

@@ -5,11 +5,21 @@ ALLOWED_HOSTS = list(set([
     'www.alphageek.xyz',
 ] + SECRETS.get('allowed_hosts', [])))
 
+#CACHES = {
+    #'default': {
+        #'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        #'LOCATION': 'trololololol',
+    #},
+#}
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'trololololol',
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': SECRETS.get('memcached_host', '127.0.0.1:11211'),
     },
+    'machina_attachments': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp',
+   }
 }
 
 DEBUG = True
