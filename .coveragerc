@@ -1,13 +1,14 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = .
+source = agcs,landing
 omit =
     gunicorn_conf.py
     runtests.py
     agcs/wsgi.py
     agcs/util.py
     agcs/views.py
+    agcs/settings/dev.py
     landing/admin.py
     landing/apps.py
     landing/mixins.py
@@ -38,4 +39,3 @@ ignore_errors = True
 
 [html]
 directory = coverage_html_report
-

@@ -1,5 +1,5 @@
 import os
-from agcs.settings import *
+from agcs.settings.prod import *
 
 SECRET_KEY = 'fake-key'
 SECURE_SSL_REDIRECT = False

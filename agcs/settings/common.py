@@ -1,56 +1,74 @@
+import json
 import os
+from pathlib import Path
 from machina import (
     get_apps as get_machina_apps,
     MACHINA_MAIN_TEMPLATE_DIR,
     MACHINA_MAIN_STATIC_DIR
 )
 
-HTML_MINIFY             = True
-DEBUG                   = False
-TESTING                 = False
-USE_X_FORWARDED_HOST    = True
-SECURE_SSL_REDIRECT     = True
-CSRF_COOKIE_DOMAIN      = '.alphageek.xyz'
-SESSION_COOKIE_SECURE   = True
-CSRF_COOKIE_SECURE      = True
-CSRF_COOKIE_HTTPONLY    = True
+PROJECT_PACKAGE = Path(__file__).resolve().parent.parent
+
+BASE_DIR = PROJECT_PACKAGE.parent
+
+DATA_DIR = Path(os.environ['DJANGOPROJECT_DATA_DIR']) if (
+    'DJANGOPROJECT_DATA_DIR' in os.environ
+) else BASE_DIR.parent
+
+LOG_DIR = DATA_DIR.joinpath('log', 'django')
+
+try:
+    with DATA_DIR.joinpath('conf', 'secrets.json').open() as handle:
+        SECRETS = json.load(handle)
+except IOError: # pragma: no cover
+    SECRETS = {
+        'secret_key': 'a',
+        'superfeedr_creds': ['any@email.com', 'some_string'],
+    }
+
+RECAPTCHA_PUBLIC_KEY  = SECRETS.get('recaptcha_pub', '')
+RECAPTCHA_PRIVATE_KEY = SECRETS.get('recaptcha_pri', '')
+GOOGLE_API_KEY        = SECRETS.get('gapi_key', '')
+EMAIL_HOST_USER       = SECRETS.get('email_host_user', '')
+EMAIL_HOST_PASSWORD   = SECRETS.get('email_host_pass', '')
+SECRET_KEY            = str(SECRETS['secret_key'])
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'agcs_db',
+        'USER': 'django',
+        'HOST': SECRETS.get('db_host', ''),
+        'PASSWORD': SECRETS.get('db_password', ''),
+    },
+}
+
+ROOT_URLCONF     = 'agcs.urls'
+
+WSGI_APPLICATION = 'agcs.wsgi.application'
+
+ADMINS = MANAGERS  = (('Ryan Kaiser', 'ryank@alphageek.xyz'),)
+
+DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'no-reply@alphageek.xyz'
+
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-PROJECT_NAME            = 'agcs'
-LOG_DIR          = '/var/local/agcs/log/django'
-BASE_DIR         = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ROOT_URLCONF     = PROJECT_NAME + '.urls'
-EMAIL_USE_TLS    = True
-ADMINS           = (('Ryan Kaiser', 'ryank@alphageek.xyz'),)
+
 ADMIN_URL        = 'admin/'
-MANAGERS         = ADMINS
-WSGI_APPLICATION = PROJECT_NAME +'.wsgi.application'
+STATIC_URL       = '/s/'
+MEDIA_URL        = '/m/'
 LANGUAGE_CODE    = 'en-us'
 TIME_ZONE        = 'America/Chicago'
+EMAIL_HOST       = 'smtp.zoho.com'
+EMAIL_PORT       = '587'
 USE_I18N         = True
 USE_L10N         = True
 USE_TZ           = True
 EMAIL_USE_TLS    = True
-EMAIL_HOST       = 'smtp.zoho.com'
-EMAIL_PORT       = '587'
-STATIC_URL       = '/static/'
-STATIC_ROOT      = os.path.join('/srv', PROJECT_NAME, 'assets', 'static')
-MEDIA_ROOT       = os.path.join('/srv', PROJECT_NAME, 'public', 'media')
-MEDIA_URL        = '/media/'
+CSRF_COOKIE_HTTPONLY = True
 
-ALLOWED_HOSTS           = [
-    'alphageekcs.com',
-    'www.alphageekcs.com',
-    'secure.alphageekcs.com',
-    'www.secure.alphageekcs.com',
-    'alphageek.xyz',
-    'www.alphageek.xyz',
-    'secure.alphageek.xyz',
-    'www.secure.alphageek.xyz',
-    'community.alphageek.xyz',
-]
 
 STATICFILES_DIRS = [
-    ('assets', os.path.join(BASE_DIR, PROJECT_NAME, 'static')),
+    ('assets', str(PROJECT_PACKAGE.joinpath('static'))),
     MACHINA_MAIN_STATIC_DIR,
 ]
 
@@ -58,17 +76,6 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-    },
-    'machina_attachments': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp',
-   }
-}
 
 INSTALLED_APPS = [
     'landing.apps.LandingConfig',
@@ -96,15 +103,6 @@ INSTALLED_APPS = [
     'community.apps.forum_member',
 ])
 
-COMPRESS_CSS_FILTERS=[
-    'compressor.filters.css_default.CssAbsoluteFilter',
-    'compressor.filters.cssmin.CSSCompressorFilter',
-]
-
-COMPRESS_JS_FILTERS=[
-    'compressor.filters.jsmin.JSMinFilter',
-    'compressor.filters.jsmin.SlimItFilter',
-]
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -124,8 +122,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, PROJECT_NAME, 'templates'),
-            os.path.join(BASE_DIR, 'community', 'templates'),
+            str(PROJECT_PACKAGE.joinpath('templates')),
+            str(BASE_DIR.joinpath('community', 'templates')),
             MACHINA_MAIN_TEMPLATE_DIR,
         ],
         'OPTIONS': {
@@ -154,10 +152,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
-MIGRATION_MODULES = {
-    'forum_conversation': 'machina.apps.forum_conversation.migrations',
-    'forum_member': 'machina.apps.forum_member.migrations',
-}
 
 LOGGING = {
     'version': 1,
@@ -168,11 +162,11 @@ LOGGING = {
         },
     },
     'formatters': {
-        'debug': {
+        'full': {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%S',
         },
-         'info': {
+         'simple': {
             'format': '%(levelname)s %(asctime)s %(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%S',
         },
@@ -181,13 +175,19 @@ LOGGING = {
         'file': {
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
             'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_DIR, os.getenv('DJANGO_LOG_LEVEL', 'INFO').lower() + '.log'),
-            'formatter': 'debug',
+            'formatter': 'full',
+            'filename': str(LOG_DIR.joinpath(os.environ.get(
+                'DJANGO_LOG_LEVEL', 'INFO').lower())) + '.log',
         },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
         },
     },
     'loggers': {
@@ -199,10 +199,15 @@ LOGGING = {
     },
 }
 
+MIGRATION_MODULES = {
+    'forum_conversation': 'machina.apps.forum_conversation.migrations',
+    'forum_member': 'machina.apps.forum_member.migrations',
+}
+
 HAYSTACK_CONNECTIONS = {
   'default': {
     'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-    'PATH': '/var/local/agcs/idx/whoosh_index',
+    'PATH': str(DATA_DIR.joinpath('idx', 'whoosh_index')),
   },
 }
 
@@ -219,40 +224,20 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS = [
     'can_download_file',
 ]
 
+COMPRESS_CSS_FILTERS=[
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSCompressorFilter',
+]
+
+COMPRESS_JS_FILTERS=[
+    'compressor.filters.jsmin.JSMinFilter',
+    'compressor.filters.jsmin.SlimItFilter',
+]
 
 try:
-    from .local_settings import *
-except ImportError: # pragma: no cover
-    pass
+    with BASE_DIR.joinpath('context.json').open() as handle:
+        LOCAL_CONTEXT = json.load(handle)
+except IOError: # pragma: no cover
+    LOCAL_CONTEXT = {}
 
-COMPANY = {
-    'phone'      : '(972) 656-9338',
-    'email'      : 'root@alphageek.xyz',
-    'addr'       : ['1727 Nest Pl.', 'Plano, TX 75093'],
-    'long_name'  : 'Alpha Geek Computer Services',
-    'short_name' : 'Alpha Geeks',
-    'links' : {
-        'social' : {
-            'facebook'    : 'https://facebook.com/alphageekcs',
-            'google_plus' : 'https://plus.google.com/+Ntxcomputerservices/about',
-            'google_maps' : 'https://maps.google.com?daddr=Alpha+Geek+Computer+Services+1727+Nest+Place+Plano+TX+75093',
-            'yelp'        : 'https://www.yelp.com/biz/alpha-geek-computer-services-plano',
-            'github'      : 'https://github.com/alphageek-xyz',
-        },
-    },
-}
-
-if os.environ.get('DJANGO_DEBUG_OVERRIDE'): # pragma: no cover
-    DEBUG = True
-    SECURE_SSL_REDIRECT = False
-    del(ALLOWED_HOSTS,
-        LOGGING,
-        CSRF_COOKIE_DOMAIN,
-        SESSION_COOKIE_SECURE,
-        CSRF_COOKIE_SECURE,
-        CSRF_COOKIE_HTTPONLY,
-        SECURE_PROXY_SSL_HEADER
-    )
-    RECAPTCHA_PRIVATE_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
-    RECAPTCHA_PUBLIC_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
-    HTML_MINIFY = False
+COMPANY = LOCAL_CONTEXT.get('company', {})
