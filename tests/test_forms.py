@@ -1,7 +1,7 @@
 import os
 from django.core import mail
 from django.test import TestCase, override_settings
-from landing import forms as landing_forms
+from contact import forms as contact_forms
 from .test_models import ok_fields
 
 
@@ -50,7 +50,7 @@ class ContactFormTest(TestCase):
 
     @override_settings(ADMINS=(('Foo Bar', 'foo@bar.com\nyut'),))
     def test_bad_email_header(self):
-        form = landing_forms.ContactForm(self.data)
+        form = contact_forms.ContactForm(self.data)
 
         self.assertTrue(
             form.is_valid()
@@ -59,7 +59,7 @@ class ContactFormTest(TestCase):
         ret = form.send_email()
 
         self.assertIsInstance(ret,
-            landing_forms.HttpResponse
+            contact_forms.HttpResponse
         )
 
         self.assertEqual(200,
@@ -73,4 +73,3 @@ class ContactFormTest(TestCase):
         self.assertEqual(0,
             len(mail.outbox)
         )
-

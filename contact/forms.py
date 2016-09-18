@@ -5,7 +5,7 @@ from django.core.mail import EmailMultiAlternatives, BadHeaderError
 from django.template.loader import render_to_string
 from snowpenguin.django.recaptcha2.fields import ReCaptchaField
 from snowpenguin.django.recaptcha2.widgets import ReCaptchaWidget
-from .models import Contact, STATUS_CHOICES
+from .models import Contact
 
 
 class ContactForm(forms.ModelForm):
@@ -36,7 +36,7 @@ class ContactForm(forms.ModelForm):
 
         msg.attach_alternative(
             render_to_string(
-                'landing/email/contact_form.html',
+                'contact/email.html',
                 context={
                     'name'    : str(self.instance.name),
                     'phone'   : self.cleaned_data['phone'],
@@ -56,4 +56,3 @@ class ContactForm(forms.ModelForm):
             print(e)
             return False
         return True
-

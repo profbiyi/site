@@ -3,8 +3,6 @@ from django.conf import settings
 from django.views.decorators.cache import cache_page
 from django.template import Context, Engine, TemplateDoesNotExist, loader
 from django.utils import six
-from django.utils.encoding import force_text
-from django.views.decorators.csrf import requires_csrf_token
 
 ERR_CODES = {
     404: 'Page not found',
@@ -12,7 +10,6 @@ ERR_CODES = {
     403: 'Permission denied',
     400: 'Bad request',
 }
-
 
 class ErrorPage(object):
     def __init__(self, request, exception, code):
@@ -30,8 +27,8 @@ class ErrorPage(object):
             'exception'   : exception_repr,
             'error_code'  : self.code,
             'error_text'  : ERR_CODES[self.code],
-            'company'     : getattr(settings, 'COMPANY', None),
         }
+
         try:
             self.template = loader.get_template('errors/base_error.html')
             self.body = self.template.render(self.context, request)

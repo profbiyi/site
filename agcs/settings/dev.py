@@ -30,7 +30,7 @@ CSRF_COOKIE_SECURE = False
 
 CSRF_COOKIE_DOMAIN = None
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_ROOT = str(DATA_DIR.joinpath('media_root'))
 

@@ -1,0 +1,48 @@
+<style>@import url({{ STATIC_URL }}css/nav.css);</style>
+<div class="container">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand hidden-xs" href="/">{{ extra.schema.name }}</a>
+    <a class="navbar-brand visible-xs" href="/">{{ extra.schema.alternateName }}</a>
+  </div> <!-- navbar-header -->
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav nav-stacked navbar-right">
+      <li{% if '/home/' == request.path or '/index/' == request.path or '/' == request.path %} class="active"{% endif %}>
+        <a href="{% url 'home' %}">Home</a>
+      </li>
+      <li{% if 'about' in request.path %} class="active"{% endif %}>
+        <a href="{% url 'about' %}">About</a>
+      </li>
+      <li{% if 'contact' in request.path %} class="active"{% endif %}>
+        <a href="{% url 'contact' %}">Contact</a>
+      </li>
+      <li{% if 'community' in request.path %} class="active"{% endif %}>
+        <a href="{% url 'community' %}">Forum</a>
+      </li>
+      <li class="dropdown{% if 'services' in request.path %} active{% endif %}">
+        <a id="dLabel" href="{% url 'services' %}" role="button"
+            data-target="#" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">Services
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dLabel">
+          <li>
+            <a id="whatwedo" class="text-primary" href="{% url 'services' %}">What We Do<hr class="separator"></a>
+          </li>
+          <li role="separator" class="divider"></li>
+        {% for service in service_list %}
+          <li class="service-item">
+            <a id="{{ service.anchor_id }}-dd-link" class="service-link"
+               href="{% if 'services' not in request.path %}{% url 'services' %}{% endif %}#{{ service.anchor_id }}">{{ service.name }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+      </li>
+    </ul>
+  </div> <!-- #navbar -->
+</div> <!-- container -->

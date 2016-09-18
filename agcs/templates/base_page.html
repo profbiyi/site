@@ -1,27 +1,24 @@
-{% extends 'landing/bootstrap.html' %}
-{% load staticfiles %}
-{% load bootstrap3 %}
-{% load cache %}
-{% load landing_utils %}
-{% load favicon %}
+{% extends 'bootstrap.html' %}{% load staticfiles %}{% load bootstrap3 %}
+{% load cache %}{% load landing_utils %}{% load favicon %}
+
 {% block bootstrap3_extra_head %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}" type="text/css" charset="utf-8">
-<meta name="keywords" content="alpha geeks, computer assistance, computer fix, computer geeks, computer help, computer maintenance, computer problems, computer repair, computer repair services, computer service, computer services, computer support, computer tech help, computer tech support, computer troubleshooting, computer lessons, computer virus removal, fix computer, fix computer problems, fix my computer, fix my pc, geek computer repair, geek squad, home computer repair, home computer repair service, home computer service, home computer services, home computer support, home pc support, in home computer repair, it support, mobile computer repair, online computer help, pc computer repair, pc fix, pc repair, pc repair services, pc repair shop, pc support, remote computer repair, repair computer, repair my computer, virus removal">
-<meta name="description" content="Alpha Geek Computer Services provides in-shop, on-site, and remote IT services. We are located in Plano, TX.">
+<meta name="keywords" content="{{ extra.keywords|join:', ' }}">
+<meta name="description" content="{{ extra.schema.description }}">
 <meta name="author" content="Ryan Kaiser">
-<meta name="copyright" content="Alpha Geek Computer Services">
+<meta name="copyright" content="{{ extra.schema.name }}">
 <meta name="robots" content="all">
-<meta name="apple-mobile-web-app-title" content="AGCS">
-<meta name="application-name" content="AGCS">
+<meta name="apple-mobile-web-app-title" content="{{ extra.schema.alternateName }}">
+<meta name="application-name" content="{{ extra.schema.alternateName }}">
 <meta name="google-site-verification" content="aNcBkJyU-QbMhrf4qytgXNxjMZ3nkEzM6TdXGTTnRbY">
 <meta name="msvalidate.01" content="4A9ECC2E495C85CC9CC904F51D67E03A">
-<meta property="og:description" content="Alpha Geek Computer Services provides in-shop, on-site, and remote IT services. We are located in Plano, TX.">
-{% get_favicons "img/favicon/" %}
+<meta property="og:description" content="{{ extra.schema.description }}">
 <meta name="theme-color" content="#cccccc">
 <link rel="manifest" href="{% url 'chrome_manifest' %}">
-{% block canonical %}<link rel="canonical" href="https://alphageek.xyz{% url title %}" itemprop="url">{% endblock canonical %}
+<link rel="canonical" href="{% block canonical %}{{ extra.schema.url }}{{ request.path }}{% endblock canonical %}" itemprop="url">
+{% get_favicons "img/favicon/" %}
 {% block page_extra_head %}{% endblock page_extra_head %}
-<script type="application/ld+json">{% inline_static_file 'js/schema.json' 'js' %}</script>
+<script type="application/ld+json">{% dict_to_json extra.schema %}</script>
 {% endblock bootstrap3_extra_head %}
 
 {% block bootstrap3_content %}
@@ -32,14 +29,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
   {% block navigation %}
-    {% include 'landing/parts/nav.html' %}
+    {% include 'parts/navigation.html' %}
   {% endblock navigation %}
 </nav>
 
 <header>
-  {% block header %}
-    {% include "landing/parts/header.html" %}
-  {% endblock header %}
+{% block base_header %}
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <h2>{% block page_title %}{{ request.resolver_match.url_name|title }}{% endblock page_title %}</h2>
+      <hr class="star-primary">
+    </div>
+  </div>
+{% endblock base_header %}
+{% block header %}{% endblock header %}
 </header>
 
 <main id="content" class="group" role="main">
@@ -48,17 +51,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <footer class="footer footer-inverse">
   {% block footer %}
-    {% include 'landing/parts/footer.html' %}
+    {% include 'parts/footer.html' %}
   {% endblock footer %}
 </footer>
 
-{% include 'landing/parts/scroll-top.html' %}
+{% include 'parts/scroll-top.html' %}
 
 {% endblock bootstrap3_content %}
 
 {% block bootstrap3_extra_script %}
   {% block page_extra_script %}{% endblock page_extra_script %}
-
 <script async>
   $(function() {
     $(document).scroll(function() {
@@ -100,5 +102,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 </script>
-
 {% endblock bootstrap3_extra_script %}

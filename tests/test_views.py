@@ -1,6 +1,7 @@
 import logging
 import importlib
-from django.test import TestCase
+from pathlib import Path
+from django.test import TestCase, override_settings
 from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
@@ -10,7 +11,7 @@ from machina.test.factories import PostFactory
 from machina.test.factories import UserFactory
 from agcs.urls import handler404
 from agcs.sitemaps import StaticSitemap, ForumsSitemap, TopicsSitemap
-from landing.forms import ContactForm
+from contact.forms import ContactForm
 from landing.urls import urlpatterns as landing_urls
 
 

@@ -1,11 +1,14 @@
 from __future__ import unicode_literals
 from django.conf.urls import url, include
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 from machina.apps.forum.app import application as forum_app
+from landing.models import Service
 from landing.views import HomeView
+from contact.views import ContactView
 
 from .sitemaps import (
     StaticSitemap,
@@ -20,6 +23,8 @@ sitemaps = {
 }
 
 handler404 = 'agcs.views.page_not_found_view'
+
+_pages = getattr(settings,'LOCAL_CONTEXT', {}).get('pages', [])
 
 urlpatterns = [
 
@@ -61,6 +66,13 @@ urlpatterns = [
 
     url(r'^community/',
         include('community.urls')
+    ),
+
+    url(r'^contact/$',
+        ContactView.as_view(
+            success_url='/contact/',
+            model=Service,
+        ), name='contact'
     ),
 
     # url(r'contact/', ContactView.as_view(

@@ -1,4 +1,4 @@
-import os, re
+import os, re, json
 from django.conf import settings
 from django.template import Library
 from django.template.defaultfilters import stringfilter
@@ -11,6 +11,11 @@ from css_html_js_minify.js_minifier import js_minify
 
 
 register = Library()
+
+
+@register.simple_tag
+def dict_to_json(pydict):
+    return mark_safe(json.dumps(pydict))
 
 
 @register.simple_tag
@@ -92,22 +97,6 @@ def listsortreversed(value):
 @stringfilter
 def split(value, char=','):
     return value.split(char)
-
-
-@register.filter
-@stringfilter
-def mkattribute(value):
-    """
-    This generates a string suitable for an
-    HTML attribute by replacing common
-    non-alphanumeric characters with an underscore.
-
-    Usage::
-
-        <div id="{% my_string|mkattribute %}"></div>
-    """
-
-    return re.sub(" ?[&/\\@ ] ?", '_', value)[0:20]
 
 
 @register.filter

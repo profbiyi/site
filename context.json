@@ -1,18 +1,49 @@
 {
-    "company": {
-        "phone"      : "(972) 656-9338",
-        "email"      : "root@alphageek.xyz",
-        "addr"       : ["1727 Nest Pl.", "Plano, TX 75093"],
-        "long_name"  : "Alpha Geek Computer Services",
-        "short_name" : "Alpha Geeks",
-        "links" : {
-            "social" : {
-                "facebook"    : "https://facebook.com/alphageekcs",
-                "google_plus" : "https://plus.google.com/+Ntxcomputerservices/about",
-                "google_maps" : "https://maps.google.com?daddr=Alpha+Geek+Computer+Services+1727+Nest+Place+Plano+TX+75093",
-                "yelp"        : "https://www.yelp.com/biz/alpha-geek-computer-services-plano",
-                "github"      : "https://github.com/alphageek-xyz"
-            }
-        }
+    "pages": ["home", "about", "contact", "community", "services"],
+    "links": {
+        "social" : {
+            "facebook"    : "https://facebook.com/alphageekcs",
+            "google_plus" : "https://plus.google.com/+Ntxcomputerservices/about",
+            "google_maps" : "https://maps.google.com?daddr=Alpha+Geek+Computer+Services+1727+Nest+Place+Plano+TX+75093",
+            "yelp"        : "https://www.yelp.com/biz/alpha-geek-computer-services-plano",
+            "github"      : "https://github.com/alphageek-xyz"
+          }
+    },
+    "keywords": [
+      "alpha geeks", "computer assistance", "computer fix",
+      "computer geeks", "computer help", "computer maintenance",
+      "computer problems", "computer repair", "computer repair services",
+      "computer service", "computer services", "computer support",
+      "computer tech help", "computer tech support", "computer troubleshooting",
+      "computer lessons", "computer virus removal", "fix computer","fix computer problems",
+      "fix my computer", "fix my pc", "geek computer repair", "geek squad", "home computer repair",
+      "home computer repair service", "home computer service", "home computer services",
+      "home computer support", "home pc support", "in home computer repair", "it support",
+      "mobile computer repair", "online computer help", "pc computer repair", "pc fix", "pc repair",
+      "pc repair services", "pc repair shop", "pc support", "remote computer repair", "repair computer",
+      "repair my computer", "virus removal"
+    ],
+    "schema": {
+        "@context":"http://schema.org",
+        "@type":"LocalBusiness",
+        "address": {
+            "@type":"PostalAddress",
+            "addressLocality":"Plano",
+            "addressRegion":"TX",
+            "postalCode":"75093",
+            "streetAddress":"1727 Nest Place"
+        },
+        "name":"Alpha Geek Computer Services",
+        "description":"Alpha Geek Computer Services provides in-shop, on-site, and remote IT services.",
+        "alternateName":"Alpha Geeks",
+        "url":"https://alphageek.xyz",
+        "email":"root@alphageek.xyz",
+        "telephone":"(972) 656-9338",
+        "logo":"https://alphageek.xyz/static/img/logo.png",
+        "sameAs":[
+            "https://plus.google.com/+Ntxcomputerservices",
+            "https://facebook.com/alphageekcs",
+            "https://github.com/alphageek-xyz"
+        ]
     }
 }

@@ -1,13 +1,8 @@
-{% extends 'landing/base.html' %}
-{% load recaptcha2 %}
-{% load cache %}
-
-{% block page_extra_head %}
-  {% recaptcha_init %}
+{% extends 'base_page.html' %}{% load bootstrap3 %}{% load recaptcha2 %}{% load cache %}
+{% block page_title %}Contact Us{% endblock page_title %}
+{% block page_extra_head %}{% recaptcha_init %}
 <style>#GoogleMap {height: 480px;border: 2em solid white;}</style>
 {% endblock page_extra_head %}
-
-
 {% block content %}
 <div class="container">
   <div class="page-header" id="banner">
@@ -34,8 +29,13 @@
           {% endif %}
         {% endfor %}
       {% endif %}
-      <form id='contact_form' class="form-horizontal" role="form" action="" method="POST" novalidate>
-        {% include 'contact/form.html' %}
+      <style>
+        div.form-group > button.btn {margin-left: 1em;}
+        textarea.form-control{max-width: 100%;}
+      </style>
+      <form id='contact_form' class="form-horizontal" role="form" action="" method="POST" novalidate>{% csrf_token %}
+        {% bootstrap_form form show_label=False form_group_class='form-group row' field_class='col-md-12' %}
+        {% buttons submit='Submit' reset="Cancel" %}{% endbuttons %}
       </form>
     </div>
     <div class="col-md-6 col-md-offset-1 color-grid" id="GoogleMap">
@@ -48,25 +48,23 @@
   </div> <!-- row -->
 </div> <!-- container -->
 {% endblock content %}
-
 {% block page_extra_script %}
 <script>
   function initMap() {
       var agcs = new google.maps.LatLng(33.023705,-96.772012);
       var infowindow = new google.maps.InfoWindow({
-          content:
-            '<div id="content">'+
-              '<span style="font-size: 16px;">'+
-                '<address>'+
-                  '1727 Nest Pl.<br>'+
-                  'Plano, TX 75093<br>'+
-                  '<a href="tel:+19726569338">(972) 656-9338</a>'+
-                '</address>'+
-                '<a href="https://maps.google.com?daddr=Alpha+Geek+Computer+Services+1727+Nest+Place+Plano+TX+75093"'+
-                   'target="_blank">Get Directions <i class="fa fa-external-link-square"></i>'+
-                '</a>'+
-              '</span>'+
-            '</div>'
+          content: '<div id="content">\
+            <span style="font-size: 16px;">\
+              <address>{{ extra.schema.address.streetAddress }}<br>\
+                {{ extra.schema.address.addressLocality|add:',' }}\
+                {{ extra.schema.address.addressRegion }}\
+                {{ extra.schema.address.postalCode }}<br>\
+                <a href="tel:{{ "+1"|add:extra.schema.telephone|urlencode }}">\
+                  {{ extra.schema.telephone }}</a>\
+              </address>\
+              <a href="{{ extra.links.google_maps }}" target="_blank">Get Directions\
+              <i class="fa fa-external-link-square"></i>\
+            </a></span></div>'
       });
 
       var map = new google.maps.Map(document.getElementById('GoogleMap'), {
@@ -98,11 +96,12 @@
       infowindow.open(map, marker);
   }
 </script>
-
-{% if DEBUG %}
+{% if debug %}
 <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyCEE3LMbP2_ZJsha-M1yMrsaVqAltAwnHE"></script>
 {% else %}
 <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyALXHHKqqKIM-E8_zyhCoGk8psef7d9t0k"></script>
 {% endif %}
-
 {% endblock page_extra_script %}
+
+https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyALXHHKqqKIM-E8_zyhCoGk8psef7d9t0k
+https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyALXHHKqqKIM-E8_zyhCoGk8psef7d9t0k

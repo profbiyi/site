@@ -1,4 +1,5 @@
 {% load landing_utils %}
+{% dict_to_json extra %}
 {% inline_static_file 'js/scroll-top-wrapper.js' 'js' %}
 {% inline_static_file somedir|default:'js/schema.json' 'css' %}
 {% inline_static_file badpath|default:'js/schema.json' 'html' %}

@@ -1,8 +1,5 @@
-{% extends 'landing/base.html' %}
-{% load staticfiles %}
-{% block header %}
-  {% include "landing/parts/header.html" with title="About Us" %}
-{% endblock %}
+{% extends 'base_page.html' %}{% load staticfiles %}
+{% block page_title %}About Us{% endblock page_title %}
 {% block content %}
 <div class="container">
   <div class="row">

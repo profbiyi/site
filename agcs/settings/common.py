@@ -137,6 +137,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
                 'machina.core.context_processors.metadata',
+                'landing.core.context_processors.extra',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -192,6 +193,11 @@ LOGGING = {
         },
     },
     'loggers': {
+        'django.server': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
         'django': {
             'handlers': ['file', 'mail_admins'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
@@ -234,11 +240,3 @@ COMPRESS_JS_FILTERS=[
     'compressor.filters.jsmin.JSMinFilter',
     'compressor.filters.jsmin.SlimItFilter',
 ]
-
-try:
-    with BASE_DIR.joinpath('context.json').open() as handle:
-        LOCAL_CONTEXT = json.load(handle)
-except IOError: # pragma: no cover
-    LOCAL_CONTEXT = {}
-
-COMPANY = LOCAL_CONTEXT.get('company', {})

@@ -1,6 +1,7 @@
 import re
 from django.test import TestCase, Client
-from landing.models import Contact, Service, markup_markdown
+from landing.models import Service, markup_markdown
+from contact.models import Contact
 from django.core.exceptions import ValidationError
 from collections import namedtuple
 
