@@ -1,5 +1,2 @@
 *.html linguist-language=HTML+Django
-templates/landing/* linguist-vendored
-templates/admin/* linguist-vendored
-templates/favicon/* linguist-vendored
-community/templates/* linguist-vendored 
+templates/* linguist-vendored
