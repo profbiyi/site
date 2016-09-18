@@ -12,7 +12,7 @@ CACHES = {
     },
     'machina_attachments': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp',
+        'LOCATION': str(DATA_DIR.joinpath('tmp')),
    }
 }
 
