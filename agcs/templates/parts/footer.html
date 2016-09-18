@@ -24,11 +24,9 @@
     <hr class="visible-xs visible-sm">
     <div class="col-md-4 col-md-push-4 text-center">
       <p id="company-address">
-        <a href="tel:{{ '+1'|add:extra.schema.telephone|urlencode }}"><b>{{ extra.schema.telephone }}</b></a>
-        <br>{{ extra.schema.address.streetAddress }}<br>
-        {{ extra.schema.address.addressLocality|add:',' }}
-        {{ extra.schema.address.addressRegion }}
-        {{ extra.schema.address.postalCode }}
+        <a href="tel:{{ '+1'|add:extra.schema.telephone|urlencode }}"><strong>{{ extra.schema.telephone }}</strong></a>
+        <br>{{ extra.schema.address.streetAddress }}<br>{{ extra.schema.address.addressLocality|add:',' }}
+        {{ extra.schema.address.addressRegion }} {{ extra.schema.address.postalCode }}
       </p>
     </div>
     <hr class="visible-xs visible-sm">
