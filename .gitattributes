@@ -1,2 +1,2 @@
+agcs/templates/* linguist-vendored
 *.html linguist-language=HTML+Django
-templates/* linguist-vendored
