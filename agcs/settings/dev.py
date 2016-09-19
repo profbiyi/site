@@ -1,16 +1,11 @@
 from .common import *  # noqa
 
 ALLOWED_HOSTS = list(set([
-    'alphageek.xyz',
-    'www.alphageek.xyz',
+    'alphageek.dev',
+    'www.alphageek.dev',
+    'community.alphageek.dev',
 ] + SECRETS.get('allowed_hosts', [])))
 
-#CACHES = {
-    #'default': {
-        #'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        #'LOCATION': 'trololololol',
-    #},
-#}
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',

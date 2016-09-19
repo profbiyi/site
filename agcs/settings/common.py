@@ -43,7 +43,7 @@ DATABASES = {
     },
 }
 
-ROOT_URLCONF     = 'agcs.urls'
+ROOT_URLCONF = 'agcs.urls.www'
 
 WSGI_APPLICATION = 'agcs.wsgi.application'
 
@@ -207,6 +207,18 @@ LOGGING = {
         },
     },
 }
+
+# django-hosts settings
+
+DEFAULT_HOST = 'www'
+
+HOST_SCHEME = 'http'
+
+HOST_SITE_TIMEOUT = 3600
+
+ROOT_HOSTCONF = 'agcs.hosts'
+
+# django-machina settings
 
 MIGRATION_MODULES = {
     'forum_conversation': 'machina.apps.forum_conversation.migrations',

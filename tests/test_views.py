@@ -10,7 +10,7 @@ from machina.test.factories import create_forum
 from machina.test.factories import create_topic
 from machina.test.factories import PostFactory
 from machina.test.factories import UserFactory
-from agcs.urls import handler404, sitemaps
+from agcs.urls.www import handler404, sitemaps
 from contact.forms import ContactForm
 from landing.urls import urlpatterns as landing_urls
 

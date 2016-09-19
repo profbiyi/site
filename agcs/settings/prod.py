@@ -3,6 +3,7 @@ from .common import *
 ALLOWED_HOSTS = list(set([
     'alphageek.xyz',
     'www.alphageek.xyz',
+    'community.alphageek.xyz',
 ] + SECRETS.get('allowed_hosts', [])))
 
 CACHES = {
@@ -15,6 +16,10 @@ CACHES = {
         'LOCATION': str(DATA_DIR.joinpath('tmp')),
    }
 }
+
+HOST_SCHEME = 'https'
+
+PARENT_HOST = 'alphageek.xyz'
 
 DEBUG = False
 
