@@ -3,21 +3,21 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
+from django.contrib.flatpages.views import flatpage
+from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.views.generic.base import RedirectView
+from django.views.generic.base import RedirectView, TemplateView
+from django.views.decorators.cache import cache_page
 from machina.apps.forum.app import application as forum_app
-from landing.models import Service
-from landing.views import HomeView
 from contact.views import ContactView
+from landing.models import Service
+from landing.sitemaps import LandingSitemap
+from community.sitemaps import ForumsSitemap, TopicsSitemap
 
-from .sitemaps import (
-    StaticSitemap,
-    ForumsSitemap,
-    TopicsSitemap
-)
 
 sitemaps = {
-    'static': StaticSitemap,
+    'flatpages': FlatPageSitemap,
+    'landing': LandingSitemap,
     'forums': ForumsSitemap,
     'topics': TopicsSitemap,
 }
@@ -28,19 +28,38 @@ _pages = getattr(settings,'LOCAL_CONTEXT', {}).get('pages', [])
 
 urlpatterns = [
 
-    url(r'^',
-        include('landing.urls')
-    ),
-
-    url(r'^$',
-        HomeView.as_view(),
+    url(r'^(?P<url>(home|index)/)?$',
+        flatpage, { 'url': '/'},
         name='home'
     ),
 
+    url(r'^about/$',
+        flatpage, { 'url': '/about/'},
+        name='about'
+    ),
+
+    url(r'^contact/$',
+        ContactView.as_view(
+            success_url='/contact/',
+            model=Service,
+        ), name='contact'
+    ),
+
+    url(r'^community/$',
+        forum_app.index_view.as_view(),
+        name='community'
+    ),
+
     url(r'^sitemap\.xml$',
-        sitemap,
-        {'sitemaps': sitemaps},
-        name='django.contrib.sitemaps.views.sitemap'
+        cache_page(60)(sitemap), {'sitemaps': sitemaps}
+    ),
+
+    url(r'^manifest\.json$',
+        TemplateView.as_view(
+            content_type='application/json',
+            template_name='manifest.json'
+        ), {'prefix': getattr(settings, 'FAVICON_PREFIX', None)},
+        name='chrome_manifest'
     ),
 
     url(r'^favicon\.ico$',
@@ -59,25 +78,11 @@ urlpatterns = [
         admin.site.urls
     ),
 
-    url(r'^community/$',
-        forum_app.index_view.as_view(),
-        name='community',
-    ),
-
     url(r'^community/',
         include('community.urls')
     ),
 
-    url(r'^contact/$',
-        ContactView.as_view(
-            success_url='/contact/',
-            model=Service,
-        ), name='contact'
+    url(r'^',
+        include('landing.urls')
     ),
-
-    # url(r'contact/', ContactView.as_view(
-    #     object_list=Service.objects.all(),
-    #     pages=['home', 'about', 'contact', 'community', 'services',],
-    #     template_name='contact/contact.html'
-    # ), name='contact'),
 ]

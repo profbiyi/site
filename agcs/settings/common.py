@@ -65,7 +65,7 @@ USE_L10N         = True
 USE_TZ           = True
 EMAIL_USE_TLS    = True
 CSRF_COOKIE_HTTPONLY = True
-
+SITE_ID = 1
 
 STATICFILES_DIRS = [
     str(PROJECT_PACKAGE.joinpath('static')),
@@ -78,15 +78,17 @@ STATICFILES_FINDERS = [
 ]
 
 INSTALLED_APPS = [
-    'landing.apps.LandingConfig',
-    'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
+    'django.contrib.flatpages',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
+    'landing.apps.LandingConfig',
     'snowpenguin.django.recaptcha2',
     'favicon',
     'bootstrap3',
@@ -240,3 +242,5 @@ COMPRESS_JS_FILTERS=[
     'compressor.filters.jsmin.JSMinFilter',
     'compressor.filters.jsmin.SlimItFilter',
 ]
+
+FAVICON_PREFIX = 'img/favicon/'

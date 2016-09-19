@@ -3,17 +3,6 @@ from machina.apps.forum.models import Forum
 from community.apps.forum_conversation.models import Post, Topic
 from django.core.urlresolvers import reverse
 
-class StaticSitemap(sitemaps.Sitemap):
-    priority = 0.5
-    changefreq = 'daily'
-
-    def items(self):
-        return ['home', 'contact', 'about', 'services', 'community']
-
-    def location(self, item):
-        return reverse(item)
-
-
 class ForumsSitemap(sitemaps.Sitemap):
     priority = 0.5
     changefreq = 'daily'

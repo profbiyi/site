@@ -16,7 +16,7 @@
 <meta name="theme-color" content="#cccccc">
 <link rel="manifest" href="{% url 'chrome_manifest' %}">
 <link rel="canonical" href="{% block canonical %}{{ extra.schema.url }}{{ request.path }}{% endblock canonical %}" itemprop="url">
-{% get_favicons "img/favicon/" %}
+{% get_favicons extra.favicon_prefix %}
 {% block page_extra_head %}{% endblock page_extra_head %}
 <script type="application/ld+json">{% dict_to_json extra.schema %}</script>
 {% endblock bootstrap3_extra_head %}

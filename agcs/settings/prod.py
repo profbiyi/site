@@ -32,7 +32,7 @@ SESSION_COOKIE_HTTPONLY = True
 
 USE_X_FORWARDED_HOST = True
 
-HTML_MINIFY = True
+HTML_MINIFY = False
 
 STATIC_ROOT = str(DATA_DIR.joinpath('static'))
 

@@ -1,23 +1,32 @@
 import logging
 import importlib
 from pathlib import Path
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings, modify_settings
 from django.http import Http404
+from django.contrib.flatpages.models import FlatPage
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from machina.test.factories import create_forum
 from machina.test.factories import create_topic
 from machina.test.factories import PostFactory
 from machina.test.factories import UserFactory
-from agcs.urls import handler404
-from agcs.sitemaps import StaticSitemap, ForumsSitemap, TopicsSitemap
+from agcs.urls import handler404, sitemaps
 from contact.forms import ContactForm
 from landing.urls import urlpatterns as landing_urls
 
 
+@override_settings(
+    FIXTURE_DIRS = [
+        str(Path(__file__).resolve()
+            .parent.parent.joinpath('agcs','fixtures')),
+	]
+)
 class LandingViewsTest(TestCase):
-
-    fixtures = ['services.json']
+    fixtures = [
+        'services.json',
+        'dev_flatpages.json',
+        'dev_sites.json'
+    ]
 
     def setUp(self):
         self.u1 = UserFactory.create()
@@ -45,15 +54,18 @@ class LandingViewsTest(TestCase):
     def test_get_site_map(self):
         self.assertStatusOK('/sitemap.xml')
 
+    def test_get_flat_pages(self):
+        for p in FlatPage.objects.all():
+            self.assertStatusOK(p.url)
+
     def test_urls_from_site_map(self):
-        fsm = ForumsSitemap()
-        tsm = TopicsSitemap()
-        ssm = StaticSitemap()
-
-        self.assertGreaterEqual(len(fsm.items()), 1)
-        self.assertGreaterEqual(len(tsm.items()), 1)
-        self.assertGreaterEqual(len(ssm.items()), 1)
-
+        for k in sitemaps.keys():
+            try:
+                self.assertGreaterEqual(len(sitemaps[k]().items()), 1)
+            except AssertionError as e:
+                raise AssertionError('k=%s; v=%s\n%s' % (
+                    str(k),str(sitemaps[k]),str(e)
+                ))
 
 class TemplateTagsTest(TestCase):
 
