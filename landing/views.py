@@ -30,7 +30,7 @@ class AutoTitleMixin(ContextMixin):
 
 
 class LandingPageView(CacheMixin, AutoTitleMixin, ListView):
-    cache_timeout = settings.DEBUG and 5 or 3600
+    cache_timeout = settings.DEBUG and 5 or 500
     model = Service
 
 class ServicesView(LandingPageView):
