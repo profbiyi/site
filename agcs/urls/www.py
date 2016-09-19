@@ -14,7 +14,6 @@ from landing.models import Service
 from landing.sitemaps import LandingSitemap
 from community.sitemaps import ForumsSitemap, TopicsSitemap
 
-
 sitemaps = {
     'flatpages': FlatPageSitemap,
     'landing': LandingSitemap,
@@ -24,11 +23,9 @@ sitemaps = {
 
 handler404 = 'agcs.views.page_not_found_view'
 
-_pages = getattr(settings,'LOCAL_CONTEXT', {}).get('pages', [])
-
 urlpatterns = [
 
-    url(r'^(?P<url>(home|index)/)?$',
+    url(r'^$',
         cache_page(60*5)(flatpage),
         {'url': '/'},
         name='home'
@@ -63,6 +60,20 @@ urlpatterns = [
             template_name='manifest.json'
         )), {'prefix': getattr(settings, 'FAVICON_PREFIX', None)},
         name='chrome_manifest'
+    ),
+
+    url(r'^(home|index)/?$',
+        RedirectView.as_view(
+            url='/',
+            permanent=False
+        ), name='redirect-index'
+    ),
+
+    url(r'^(?P<name>(home|index|about|contact|services|community))\.html$',
+        RedirectView.as_view(
+            url='/%(name)s/',
+            permanent=True
+        ), name='redirect-html'
     ),
 
     url(r'^favicon\.ico$',
