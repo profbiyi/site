@@ -1,0 +1,18 @@
+[
+{
+  "model": "sites.site",
+  "pk": 1,
+  "fields": {
+    "domain": "www.alphageek.xyz",
+    "name": "www.alphageek.xyz"
+  }
+},
+{
+  "model": "sites.site",
+  "pk": 2,
+  "fields": {
+    "domain": "community.alphageek.xyz",
+    "name": "community.alphageek.xyz"
+  }
+}
+]

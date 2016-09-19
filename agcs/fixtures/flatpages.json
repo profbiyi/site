@@ -1,0 +1,32 @@
+[
+{
+  "model": "flatpages.flatpage",
+  "pk": 1,
+  "fields": {
+    "url": "/about/",
+    "title": "About Us",
+    "content": "<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-sm-10 col-sm-offset-1\">\r\n      <div class=\"well well-lg\">\r\n        <dl>\r\n          <dt>\r\n            <h1>\r\n              <a href=\"http://www.catb.org/jargon/html/A/alpha-geek.html\" target=\"_blank\">al\u00b7pha geek</a>\r\n            </h1>\r\n          </dt>\r\n          <dd>\r\n            <strong><em>noun</em>&nbsp;informal</strong>&nbsp;[from animal ethologists' alpha male]\r\n          </dd>\r\n        </dl>\r\n        <ol class=\"ol-horizontal\">\r\n          <li>&nbsp;&nbsp;<strong>the most technically accomplished or skillful person in some implied context</strong>\r\n            <blockquote class=\"definition\" cite=\"http://www.catb.org/jargon/html/A/alpha-geek.html\">\r\n              <q>Ask Larry, he's the alpha geek here.</q>\r\n            </blockquote>\r\n          </li>\r\n          <li>&nbsp;&nbsp;<strong>a person who has great expertise in computing and related technology</strong>\r\n            <blockquote class=\"definition\" cite=\"http://www.oxforddictionaries.com/definition/american_english/alpha-geek\">\r\n              <q>The alpha geeks are often a few years ahead of their time.</q>\r\n            </blockquote>\r\n          </li>\r\n        </ol>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>",
+    "enable_comments": false,
+    "template_name": "flatpages/about.html",
+    "registration_required": false,
+    "sites": [
+      1
+    ]
+  }
+},
+{
+  "model": "flatpages.flatpage",
+  "pk": 2,
+  "fields": {
+    "url": "/",
+    "title": "Computer Services",
+    "content": "<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-md-10 col-md-offset-1\">\r\n      <div class=\"jumbotron\">\r\n        <article>\r\n          <p class=\"lead\">\r\n            We know how intimidating your computer can be, so let us help.\r\n            Why spend the day trying to solve your tech problems when our\r\n            experts can get you up and running in no time? Let us do the work\r\n            so you can get on with your life. We'll even come to you (\r\n            <abbr title=\"Dallas/Fort Worth Metroplex\">DFW</abbr> residents only)!\r\n            <a href=\"/contact/\"><u>Contact us</u></a> NOW to schedule\r\n            an appointment!\r\n          </p>\r\n        </article>\r\n      </div>\r\n      <div class=\"jumbotron\">\r\n        <article>\r\n          <p class=\"lead\">\r\n            Need help when you're out of town? Don't panic. As long as you have\r\n            a working internet connection, we still might be able to help. Simply\r\n            schedule an appointment for a remote-assistance-eligible <a href=\"/services/\">\r\n            <u>service</u></a>, then follow our easy&nbsp;<abbr title=\"Virtual Private Network\">VPN</abbr>\r\n            &nbsp;setup instructions, and one of our experts will connect to your computer over\r\n            our encrypted virtual network!\r\n          </p>\r\n        </article>\r\n      </div>\r\n      <div class=\"jumbotron\">\r\n        <aside>\r\n          <p class=\"lead\">\r\n            If you have a problem which requires a service that is not <a href=\"/services/\">\r\n            <u>listed on our website</u></a>, please contact us and we will do our best to solve it, even if\r\n            that means referring you to one of our competitors.\r\n          </p>\r\n        </aside>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>",
+    "enable_comments": false,
+    "template_name": "flatpages/home.html",
+    "registration_required": false,
+    "sites": [
+      1
+    ]
+  }
+}
+]
