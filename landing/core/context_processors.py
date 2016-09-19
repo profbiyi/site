@@ -1,5 +1,6 @@
 import json
 from django.conf import settings
+from landing.models import Service
 
 def extra(request):
     extra = {
@@ -13,4 +14,9 @@ def extra(request):
         pass
 
     return { 'extra': extra }
+
+def services(request):
+    return {
+        'service_list': Service.objects.all(),
+    }
 

@@ -140,6 +140,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'machina.core.context_processors.metadata',
                 'landing.core.context_processors.extra',
+                'landing.core.context_processors.services',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
