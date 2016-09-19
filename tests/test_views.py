@@ -1,7 +1,7 @@
 import logging
 import importlib
 from pathlib import Path
-from django.test import TestCase, override_settings, modify_settings
+from django.test import TestCase, override_settings
 from django.http import Http404
 from django.contrib.flatpages.models import FlatPage
 from django.core.urlresolvers import reverse

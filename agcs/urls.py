@@ -29,12 +29,12 @@ _pages = getattr(settings,'LOCAL_CONTEXT', {}).get('pages', [])
 urlpatterns = [
 
     url(r'^(?P<url>(home|index)/)?$',
-        flatpage, { 'url': '/'},
+        flatpage, {'url': '/'},
         name='home'
     ),
 
     url(r'^about/$',
-        flatpage, { 'url': '/about/'},
+        flatpage, {'url': '/about/'},
         name='about'
     ),
 
