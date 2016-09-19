@@ -51,14 +51,15 @@ urlpatterns = [
     ),
 
     url(r'^sitemap\.xml$',
-        cache_page(60)(sitemap), {'sitemaps': sitemaps}
+        cache_page(60*60)(sitemap),
+        {'sitemaps': sitemaps}
     ),
 
-    url(r'^manifest\.json$',
+    url(r'^manifest\.json$', cache_page(60*60)(
         TemplateView.as_view(
             content_type='application/json',
             template_name='manifest.json'
-        ), {'prefix': getattr(settings, 'FAVICON_PREFIX', None)},
+        )), {'prefix': getattr(settings, 'FAVICON_PREFIX', None)},
         name='chrome_manifest'
     ),
 
