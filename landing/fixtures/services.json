@@ -1,1 +1,134 @@
-[{"model": "landing.service", "pk": 1, "fields": {"name": "Web Design", "description": "- Affordable personal and business websites\r\n- Custom hosting solutions to meet your budget\r\n- Maintain it yourself or let us handle everything for a nominal monthly fee\r\n- [Contact us](/contact/) for a FREE quote", "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Affordable personal and business websites</li>\n<li class=\"bullet-item\">Custom hosting solutions to meet your budget</li>\n<li class=\"bullet-item\">Maintain it yourself or let us handle everything for a nominal monthly fee</li>\n<li class=\"bullet-item\"><a href=\"/contact/\">Contact us</a> for a FREE quote</li>\n</ul></div>", "order": 1}}, {"model": "landing.service", "pk": 2, "fields": {"name": "VPN Solutions", "description": "- Point-to-Point or Site-to-Site\r\n- Home and Small office Road Warriors\r\n- SSL/TLS and/or PKCS#11 dual-factor authentication\r\n- Preconfigured virtual appliances", "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Point-to-Point or Site-to-Site</li>\n<li class=\"bullet-item\">Home and Small office Road Warriors</li>\n<li class=\"bullet-item\">SSL/TLS and/or PKCS#11 dual-factor authentication</li>\n<li class=\"bullet-item\">Preconfigured virtual appliances</li>\n</ul></div>", "order": 4}}, {"model": "landing.service", "pk": 3, "fields": {"name": "Custom Builds", "description": "- Custom Desktops\r\n- Gaming PCs\r\n- File, Web, VPN, Proxy, Media, & Remote Access Servers", "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Custom Desktops</li>\n<li class=\"bullet-item\">Gaming PCs</li>\n<li class=\"bullet-item\">File, Web, VPN, Proxy, Media, &amp; Remote Access Servers</li>\n</ul></div>", "order": 5}}, {"model": "landing.service", "pk": 4, "fields": {"name": "Networking", "description": "- Wireless configuration and connection troubleshooting\r\n- Wireless repeater/bridge/AP solutions\r\n- Security hardening\r\n- Reliability/performance troubleshooting", "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Wireless configuration and connection troubleshooting</li>\n<li class=\"bullet-item\">Wireless repeater/bridge/AP solutions</li>\n<li class=\"bullet-item\">Security hardening</li>\n<li class=\"bullet-item\">Reliability/performance troubleshooting</li>\n</ul></div>", "order": 12}}, {"model": "landing.service", "pk": 5, "fields": {"name": "Mobile Devices", "description": "- Email Configuration\r\n- Backup/Restore\r\n- Optimize for visual/hearing impaired\r\n- Rooting (Android only)\r\n- Carrier Unlock Codes", "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Email Configuration</li>\n<li class=\"bullet-item\">Backup/Restore</li>\n<li class=\"bullet-item\">Optimize for visual/hearing impaired</li>\n<li class=\"bullet-item\">Rooting (Android only)</li>\n<li class=\"bullet-item\">Carrier Unlock Codes</li>\n</ul></div>", "order": 6}}, {"model": "landing.service", "pk": 6, "fields": {"name": "Lessons", "description": "- Microsoft Word, Excel, PowerPoint, Outlook, etc.\r\n- Microsoft Windows, Apple OSX & iOS\r\n- ALL THINGS LINUX", "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Microsoft Word, Excel, PowerPoint, Outlook, etc.</li>\n<li class=\"bullet-item\">Microsoft Windows, Apple OSX &amp; iOS</li>\n<li class=\"bullet-item\">ALL THINGS LINUX</li>\n</ul></div>", "order": 7}}, {"model": "landing.service", "pk": 7, "fields": {"name": "Consulting", "description": "#", "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>", "order": 8}}, {"model": "landing.service", "pk": 8, "fields": {"name": "Device Setup", "description": "#", "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>", "order": 2}}, {"model": "landing.service", "pk": 9, "fields": {"name": "Viruses/Spyware", "description": "#", "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>", "order": 9}}, {"model": "landing.service", "pk": 10, "fields": {"name": "Maintenance", "description": "#", "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>", "order": 10}}, {"model": "landing.service", "pk": 11, "fields": {"name": "Repairs", "description": "#", "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>", "order": 11}}, {"model": "landing.service", "pk": 12, "fields": {"name": "Backup Solutions", "description": "- One-Time and/or Automated Backups\r\n- NAS, RAID Setup\r\n- Preconfigured Virtual Appliances", "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">One-Time and/or Automated Backups</li>\n<li class=\"bullet-item\">NAS, RAID Setup</li>\n<li class=\"bullet-item\">Preconfigured Virtual Appliances</li>\n</ul></div>", "order": 3}}]
+[
+{
+  "model": "landing.service",
+  "pk": 1,
+  "fields": {
+    "name": "Web Design",
+    "description": "- Affordable personal and business websites\r\n- Custom hosting solutions to meet your budget\r\n- Maintain it yourself or let us handle everything for a nominal monthly fee\r\n- [Contact us](/contact/) for a FREE quote",
+    "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Affordable personal and business websites</li>\n<li class=\"bullet-item\">Custom hosting solutions to meet your budget</li>\n<li class=\"bullet-item\">Maintain it yourself or let us handle everything for a nominal monthly fee</li>\n<li class=\"bullet-item\"><a href=\"/contact/\">Contact us</a> for a FREE quote</li>\n</ul></div>",
+    "anchor_id": "Web_Design",
+    "order": 1
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 2,
+  "fields": {
+    "name": "VPN Solutions",
+    "description": "- Point-to-Point or Site-to-Site\r\n- Home and Small office Road Warriors\r\n- SSL/TLS and/or PKCS#11 dual-factor authentication\r\n- Preconfigured virtual appliances",
+    "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Point-to-Point or Site-to-Site</li>\n<li class=\"bullet-item\">Home and Small office Road Warriors</li>\n<li class=\"bullet-item\">SSL/TLS and/or PKCS#11 dual-factor authentication</li>\n<li class=\"bullet-item\">Preconfigured virtual appliances</li>\n</ul></div>",
+    "anchor_id": "VPN_Solutions",
+    "order": 2
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 3,
+  "fields": {
+    "name": "Custom Builds",
+    "description": "- Custom Desktops\r\n- Gaming PCs\r\n- File, Web, VPN, Proxy, Media, & Remote Access Servers",
+    "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Custom Desktops</li>\n<li class=\"bullet-item\">Gaming PCs</li>\n<li class=\"bullet-item\">File, Web, VPN, Proxy, Media, &amp; Remote Access Servers</li>\n</ul></div>",
+    "anchor_id": "Custom_Builds",
+    "order": 4
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 4,
+  "fields": {
+    "name": "Networking",
+    "description": "- Wireless configuration and connection troubleshooting\r\n- Wireless repeater/bridge/AP solutions\r\n- Security hardening\r\n- Reliability/performance troubleshooting",
+    "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Wireless configuration and connection troubleshooting</li>\n<li class=\"bullet-item\">Wireless repeater/bridge/AP solutions</li>\n<li class=\"bullet-item\">Security hardening</li>\n<li class=\"bullet-item\">Reliability/performance troubleshooting</li>\n</ul></div>",
+    "anchor_id": "Networking",
+    "order": 5
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 5,
+  "fields": {
+    "name": "Mobile Devices",
+    "description": "- Email Configuration\r\n- Backup/Restore\r\n- Optimize for visual/hearing impaired\r\n- Rooting (Android only)\r\n- Carrier Unlock Codes",
+    "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Email Configuration</li>\n<li class=\"bullet-item\">Backup/Restore</li>\n<li class=\"bullet-item\">Optimize for visual/hearing impaired</li>\n<li class=\"bullet-item\">Rooting (Android only)</li>\n<li class=\"bullet-item\">Carrier Unlock Codes</li>\n</ul></div>",
+    "anchor_id": "Mobile_Devices",
+    "order": 6
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 6,
+  "fields": {
+    "name": "Lessons",
+    "description": "- Microsoft Word, Excel, PowerPoint, Outlook, etc.\r\n- Microsoft Windows, Apple OSX & iOS\r\n- ALL THINGS LINUX",
+    "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">Microsoft Word, Excel, PowerPoint, Outlook, etc.</li>\n<li class=\"bullet-item\">Microsoft Windows, Apple OSX &amp; iOS</li>\n<li class=\"bullet-item\">ALL THINGS LINUX</li>\n</ul></div>",
+    "anchor_id": "Lessons",
+    "order": 7
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 7,
+  "fields": {
+    "name": "Consulting",
+    "description": "#",
+    "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>",
+    "anchor_id": "Consulting",
+    "order": 8
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 8,
+  "fields": {
+    "name": "Device Setup",
+    "description": "#",
+    "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>",
+    "anchor_id": "Device_Setup",
+    "order": 9
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 9,
+  "fields": {
+    "name": "Viruses/Spyware",
+    "description": "#",
+    "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>",
+    "anchor_id": "Viruses_Spyware",
+    "order": 10
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 10,
+  "fields": {
+    "name": "Maintenance",
+    "description": "#",
+    "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>",
+    "anchor_id": "Maintenance",
+    "order": 11
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 11,
+  "fields": {
+    "name": "Repairs",
+    "description": "#",
+    "html": "<div class=\"service-markup\"><h1 class=\"text-primary\"></h1></div>",
+    "anchor_id": "Repairs",
+    "order": 12
+  }
+},
+{
+  "model": "landing.service",
+  "pk": 12,
+  "fields": {
+    "name": "Backup Solutions",
+    "description": "- One-Time and/or Automated Backups\r\n- NAS, RAID Setup\r\n- Preconfigured Virtual Appliances",
+    "html": "<div class=\"service-markup\"><ul class=\"list-group\">\n<li class=\"bullet-item\">One-Time and/or Automated Backups</li>\n<li class=\"bullet-item\">NAS, RAID Setup</li>\n<li class=\"bullet-item\">Preconfigured Virtual Appliances</li>\n</ul></div>",
+    "anchor_id": "Backup_Solutions",
+    "order": 3
+  }
+}
+]
