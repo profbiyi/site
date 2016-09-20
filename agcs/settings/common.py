@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.redirects',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
@@ -119,6 +120,7 @@ MIDDLEWARE_CLASSES = [
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
     'machina.apps.forum_permission.middleware.ForumPermissionMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 ]
 
 TEMPLATES = [
