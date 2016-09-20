@@ -22,7 +22,7 @@
         <a href="{% url 'contact' %}">Contact</a>
       </li>
       <li{% if 'community' in request.path %} class="active"{% endif %}>
-        <a href="{% url 'community' %}">Forum</a>
+        <a href="{% url 'forum:index' %}">Forum</a>
       </li>
       <li class="dropdown{% if 'services' in request.path %} active{% endif %}">
         <a id="dLabel" href="{% url 'services' %}" role="button"

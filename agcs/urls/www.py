@@ -8,7 +8,6 @@ from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.decorators.cache import cache_page
-from machina.apps.forum.app import application as forum_app
 from contact.views import ContactView
 from landing.models import Service
 from landing.sitemaps import LandingSitemap
@@ -44,11 +43,6 @@ urlpatterns = [
         ), name='contact'
     ),
 
-    url(r'^community/$',
-        forum_app.index_view.as_view(),
-        name='community'
-    ),
-
     url(r'^sitemap\.xml$',
         cache_page(60*60)(sitemap),
         {'sitemaps': sitemaps}
@@ -60,28 +54,6 @@ urlpatterns = [
             template_name='manifest.json'
         )), {'prefix': getattr(settings, 'FAVICON_PREFIX', None)},
         name='chrome_manifest'
-    ),
-
-    url(r'^(home|index)/?$',
-        RedirectView.as_view(
-            url='/',
-            permanent=False
-        ), name='redirect-index'
-    ),
-
-    url(r'^(?P<name>(home|index|about|contact|services|community))\.html$',
-        RedirectView.as_view(
-            url='/%(name)s/',
-            permanent=True
-        ), name='redirect-html'
-    ),
-
-    url(r'^favicon\.ico$',
-        RedirectView.as_view(
-            url=staticfiles_storage.url('img/favicon.ico'),
-            permanent=False
-        ),
-        name='favicon'
     ),
 
     url(r'^admin/doc/',
@@ -100,3 +72,14 @@ urlpatterns = [
         include('landing.urls')
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns.extend([
+        url(r'^favicon\.ico$',
+            RedirectView.as_view(
+                url=staticfiles_storage.url('img/favicon.ico'),
+                permanent=False
+            ),
+            name='favicon'
+        ),
+    ])
