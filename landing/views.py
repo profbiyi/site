@@ -1,37 +1,29 @@
-import json
-from django.views.generic.base import ContextMixin
-from django.views.generic.list import ListView
-from django.views.decorators.cache import cache_page
-from django.contrib import messages
+from django.views.generic.base import TemplateView
+from django.utils.module_loading import import_string
 from django.conf import settings
 from .mixins import CacheMixin
 from .models import Service
 
 
-class AutoTitleMixin(ContextMixin):
-    page_title = None
-
-    @property
-    def title(self):
-        return (self.page_title or
-            self.template_name
-                .rpartition('/')[-1]
-                .rpartition('.')[0]
-                .replace('_', ' ')
-        )
-
-    @property
-    def common_context(self):
-        return {'title' : getattr(self, 'title', None),}
+class LandingPageView(CacheMixin, TemplateView):
+    cache_timeout = settings.DEBUG and 5 or 300
 
     def get_context_data(self, **kwargs):
-        kwargs.update(self.common_context)
-        return super(AutoTitleMixin, self).get_context_data(**kwargs)
+        try:
+            has_services = 'landing.core.context_processors.services' in (
+                import_string('django.template.engines').templates
+                    ['django']['OPTIONS']['context_processors']
+            )
+        except (KeyError, AttributeError):
+            has_services = False
 
+        if not has_services:
+            kwargs.update({
+                'service_list': Service.objects.all(),
+            })
 
-class LandingPageView(CacheMixin, AutoTitleMixin, ListView):
-    cache_timeout = settings.DEBUG and 5 or 500
-    model = Service
+        return super(LandingPageView, self).get_context_data(**kwargs)
+
 
 class ServicesView(LandingPageView):
     template_name = 'landing/pages/services.html'

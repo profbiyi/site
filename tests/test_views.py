@@ -1,7 +1,7 @@
 import logging
 import importlib
 from pathlib import Path
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings, RequestFactory
 from django.http import Http404
 from django.contrib.flatpages.models import FlatPage
 from django.core.urlresolvers import reverse
@@ -13,6 +13,7 @@ from machina.test.factories import UserFactory
 from agcs.urls.www import handler404, sitemaps
 from contact.forms import ContactForm
 from landing.urls import urlpatterns as landing_urls
+from landing.views import ServicesView
 
 
 @override_settings(
@@ -22,6 +23,7 @@ from landing.urls import urlpatterns as landing_urls
 	]
 )
 class LandingViewsTest(TestCase):
+
     fixtures = [
         'services.json',
         'dev_flatpages.json',
@@ -29,6 +31,7 @@ class LandingViewsTest(TestCase):
     ]
 
     def setUp(self):
+        self.rf = RequestFactory()
         self.u1 = UserFactory.create()
         self.top_level_forum = create_forum()
         self.topic = create_topic(forum=self.top_level_forum, poster=self.u1)
@@ -42,7 +45,6 @@ class LandingViewsTest(TestCase):
             ).status_code,
             msg='url: %s' % url
         )
-
 
     def test_get_landing_pages(self):
         for url in landing_urls:
@@ -67,24 +69,31 @@ class LandingViewsTest(TestCase):
                     str(k),str(sitemaps[k]),str(e)
                 ))
 
+    @override_settings(TEMPLATES=[])
+    def test_no_service_context_processors(self):
+        services_view = ServicesView()
+        setattr(services_view, 'request',
+            self.rf.get('/services/')
+        )
+        self.assertTrue('service_list' in
+            services_view.get_context_data()
+        )
+
 class TemplateTagsTest(TestCase):
 
     def test_landing_utils(self):
-
         with self.assertRaises(RuntimeError):
             render_to_string('test/landing_utils.html',
                 context={
                     'form': ContactForm(),
                     'badpath': 'js/none.js'
                 })
-
         with self.assertRaises(RuntimeError):
             render_to_string('test/landing_utils.html',
                 context={
                     'form': ContactForm(),
                     'somedir': 'js'
                 })
-
         render_to_string(
             'test/landing_utils.html',
             context={'form': ContactForm()}
