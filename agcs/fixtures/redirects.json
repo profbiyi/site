@@ -1,0 +1,74 @@
+[
+{
+  "model": "redirects.redirect",
+  "pk": 1,
+  "fields": {
+    "site": 1,
+    "old_path": "/index.html",
+    "new_path": "/"
+  }
+},
+{
+  "model": "redirects.redirect",
+  "pk": 2,
+  "fields": {
+    "site": 1,
+    "old_path": "/home.html",
+    "new_path": "/"
+  }
+},
+{
+  "model": "redirects.redirect",
+  "pk": 3,
+  "fields": {
+    "site": 1,
+    "old_path": "/about.html",
+    "new_path": "/about/"
+  }
+},
+{
+  "model": "redirects.redirect",
+  "pk": 4,
+  "fields": {
+    "site": 1,
+    "old_path": "/contact.html",
+    "new_path": "/contact/"
+  }
+},
+{
+  "model": "redirects.redirect",
+  "pk": 5,
+  "fields": {
+    "site": 1,
+    "old_path": "/services.html",
+    "new_path": "/services/"
+  }
+},
+{
+  "model": "redirects.redirect",
+  "pk": 6,
+  "fields": {
+    "site": 1,
+    "old_path": "/community.html",
+    "new_path": "/community/"
+  }
+},
+{
+  "model": "redirects.redirect",
+  "pk": 7,
+  "fields": {
+    "site": 1,
+    "old_path": "/home/",
+    "new_path": "/"
+  }
+},
+{
+  "model": "redirects.redirect",
+  "pk": 8,
+  "fields": {
+    "site": 1,
+    "old_path": "/index/",
+    "new_path": "/"
+  }
+}
+]
