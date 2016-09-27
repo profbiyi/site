@@ -55,7 +55,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   {% endblock footer %}
 </footer>
 
-{% include 'parts/scroll-top.html' %}
+{% block scroll_top_wrapper %}
+  {% include 'parts/scroll-top.html' %}
+{% endblock scroll_top_wrapper %}
 
 {% endblock bootstrap3_content %}
 
