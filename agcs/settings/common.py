@@ -101,7 +101,7 @@ INSTALLED_APPS = [
     'pagedown',
     'pytz',
     'community',
-    'contact',
+    'contact.apps.ContactConfig',
 ] + get_machina_apps([
     'community.apps.forum_conversation',
     'community.apps.forum_member',

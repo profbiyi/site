@@ -9,11 +9,9 @@ omit =
     agcs/util.py
     agcs/views.py
     agcs/settings/dev.py
-    contact/apps.py
     contact/admin.py
     contact/migrations*
     landing/admin.py
-    landing/apps.py
     landing/mixins.py
     landing/sites.py
     landing/migrations*
