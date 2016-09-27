@@ -31,7 +31,7 @@ def markup_markdown(md, allowed_tags=None):
         ] + ['p', 'div', 'pre']
     )
     soup = BeautifulSoup(
-        '<div class="service-markup">%s</div>' % html,
+        '<div class="service-markup">\n%s\n</div>' % html,
         'html.parser'
     )
     for ul in soup.select('ul'):
