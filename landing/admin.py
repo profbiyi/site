@@ -9,13 +9,22 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'order',)
     ordering = ('order',)
     readonly_fields = ('order', 'html', 'anchor_id',)
-    actions = ['move_to_top', 'move_to_bottom']
+    actions = ['move_to_top', 'move_to_bottom', 'save_selection']
 
     def move_to_top(self, request, queryset):
         self.move_to_x('top', request, queryset)
 
     def move_to_bottom(self, request, queryset):
         self.move_to_x('bottom', request, queryset)
+
+    def save_selection(self, request, queryset):
+        for service in queryset:
+            service.save()
+        self.message_user(request,
+            'Successfully saved %s.' % (
+                ', '.join(s.name for s in queryset)
+            )
+        )
 
     def move_to_x(self, where, request, queryset):
         if len(queryset) > 1:
@@ -53,3 +62,4 @@ class ServiceAdmin(admin.ModelAdmin):
 
     move_to_top.short_description    = 'Move Service to top'
     move_to_bottom.short_description = 'Move Service to bottom'
+    save_selection.short_description = 'Save selected services'
