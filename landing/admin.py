@@ -32,7 +32,7 @@ class ServiceAdmin(admin.ModelAdmin):
         if selection.order == target:
             self.message_user(request,
                 '%s is already at the %s!' % (
-                new_first.name, where
+                selection.name, where
             ))
             return
 
