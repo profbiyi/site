@@ -16,5 +16,6 @@
   "telephone": "{{ site.schema.telephone }}",
   "logo": "{{ site.schema.logo }}",
   "sameAs": [{% for l in site.schema.links.all %}
-    "{{ l.url }}"{% if not forloop.last %},{% endif %}{% endfor %}]
+    "{{ l.url }}"{% if not forloop.last %},{% endif %}{% endfor %}
+  ]
 }
