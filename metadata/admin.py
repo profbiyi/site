@@ -15,12 +15,23 @@ class LinkAdmin(admin.ModelAdmin):
 
 @admin.register(PostalAddress)
 class PostalAddressAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'address_string',)
+
+    def address_string(self, obj):
+        return str(obj)
+
+    address_string.short_description = 'Address'
 
 
 @admin.register(PhoneNumber)
 class PhoneNumberAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('number_string', 'kind',)
+    list_filter = ('kind',)
+
+    def number_string(self, obj):
+        return str(obj)
+
+    number_string.short_description = 'Phone Number'
 
 
 @admin.register(LocalBusiness)

@@ -1,11 +1,12 @@
 [
 {
     "model": "metadata.postaladdress",
-    "pk": 1,
+    "pk": 2,
     "fields": {
+        "name": "full",
         "street": "1727 Nest Place",
         "locality": "Plano",
-        "region": "TX",
+        "state": 47,
         "postal_code": "75093"
     }
 }

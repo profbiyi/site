@@ -3,7 +3,7 @@
     "model": "metadata.phonenumber",
     "pk": 1,
     "fields": {
-        "kind": "main",
+        "kind": "MA",
         "country_code": "1",
         "area_code": "972",
         "main_digits": "6569338"

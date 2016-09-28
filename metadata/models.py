@@ -10,6 +10,26 @@ __all__ = [
 ]
 
 
+class State(models.Model):
+
+    name = models.CharField(
+        max_length=25
+    )
+
+    abbreviation = models.CharField(
+        max_length=2
+    )
+
+    def __str__(self):
+        return '%s (%s)' % (
+            self.name,
+            self.abbreviation
+        )
+
+    class Meta:
+        ordering = ('name',)
+
+
 class Tag(models.Model):
 
     name = models.CharField(
@@ -52,6 +72,11 @@ class Link(models.Model):
 
 class PostalAddress(models.Model):
 
+    name = models.CharField(
+        max_length=200,
+        blank=True,
+    )
+
     street = models.CharField(
         max_length=200,
         verbose_name='streetAddress'
@@ -62,9 +87,10 @@ class PostalAddress(models.Model):
         verbose_name='addressLocality'
     )
 
-    region = models.CharField(
-        max_length=200,
-        verbose_name='addressRegion'
+    state = models.ForeignKey(
+        State,
+        verbose_name='addressRegion',
+        null=True
     )
 
     postal_code = models.CharField(
@@ -75,7 +101,8 @@ class PostalAddress(models.Model):
     def __str__(self):
         return "{0}\n{1},{2} {3}".format(
             self.street, self.locality,
-            self.region, self.postal_code
+            self.state.abbreviation,
+            self.postal_code
         )
 
     class Meta:
@@ -84,9 +111,23 @@ class PostalAddress(models.Model):
 
 class PhoneNumber(models.Model):
 
+    (MAIN, HOME, CELL,
+        WORK, FAX, OTHER,) = (
+    'MA', 'HO', 'CE',
+        'WO', 'FX', 'OT',
+    )
+
+    TYPE_CHOICES = (
+        (MAIN, 'Main'), (HOME, 'Home'),
+        (CELL, 'Cell'), (WORK, 'Work'),
+        (FAX, 'Fax'), (OTHER, 'Other'),
+    )
+
     kind = models.CharField(
-        max_length=30,
-        blank=True
+        max_length=2,
+        choices=TYPE_CHOICES,
+        default=MAIN,
+        verbose_name='Type'
     )
 
     country_code = models.CharField(

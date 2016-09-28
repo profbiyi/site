@@ -18,6 +18,7 @@ ok_fields = namedtuple('Data', [
 class MetadataModelsTest(TestCase):
 
     fixtures = [
+        'states.json',
         'tags.json',
         'links.json',
         'keywords.json',
