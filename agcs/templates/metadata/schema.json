@@ -3,15 +3,15 @@
   "@type": "LocalBusiness",
   "address": {
       "@type": "PostalAddress",
-      "addressLocality":  "{{ site.schema.address.locality }}",
-      "addressRegion":  "{{ site.schema.address.state.abbreviation }}",
-      "postalCode":  "{{ site.schema.address.postal_code }}",
-      "streetAddress":  "{{ site.schema.address.street }}"
+      "addressLocality": "{{ site.schema.address.locality }}",
+      "addressRegion": "{{ site.schema.address.state.abbreviation }}",
+      "postalCode": "{{ site.schema.address.postal_code }}",
+      "streetAddress": "{{ site.schema.address.street }}"
   },
-  "name":  "{{ site.schema.name }}",
-  "description":  "{{ site.schema.description }}",
-  "alternateName":  "{{ site.schema.alt_name }}",
-  "url":  "{{ site.schema.url }}",
+  "name": "{{ site.schema.name }}",
+  "description": "{{ site.schema.description }}",
+  "alternateName": "{{ site.schema.alt_name }}",
+  "url": "{{ site.schema.url }}",
   "email": "{{ site.schema.email }}",
   "telephone": "{{ site.schema.telephone }}",
   "logo": "{{ site.schema.logo }}",
