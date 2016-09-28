@@ -23,7 +23,3 @@ class LandingPageView(CacheMixin, TemplateView):
             })
 
         return super(LandingPageView, self).get_context_data(**kwargs)
-
-
-class ServicesView(LandingPageView):
-    template_name = 'landing/pages/services.html'

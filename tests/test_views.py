@@ -12,8 +12,7 @@ from machina.test.factories import PostFactory
 from machina.test.factories import UserFactory
 from agcs.urls.www import sitemaps
 from contact.forms import ContactForm
-from landing.urls import urlpatterns as landing_urls
-from landing.views import ServicesView
+from landing.views import LandingPageView
 
 
 @override_settings(
@@ -46,9 +45,8 @@ class LandingViewsTest(TestCase):
             msg='url: %s' % url
         )
 
-    def test_get_landing_pages(self):
-        for url in landing_urls:
-            self.assertStatusOK(reverse(url.name))
+    def test_get_services_page(self):
+        self.assertStatusOK(reverse('services'))
 
     def test_get_manifest(self):
         self.assertStatusOK(reverse('chrome_manifest'))
@@ -71,7 +69,10 @@ class LandingViewsTest(TestCase):
 
     @override_settings(TEMPLATES=[])
     def test_no_service_context_processors(self):
-        services_view = ServicesView()
+        services_view = LandingPageView()
+        setattr(services_view, 'template_name',
+            'pages/services.html'
+        )
         setattr(services_view, 'request',
             self.rf.get('/services/')
         )
@@ -98,4 +99,3 @@ class TemplateTagsTest(TestCase):
             'test/landing_utils.html',
             context={'form': ContactForm()}
         )
-

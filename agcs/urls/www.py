@@ -9,7 +9,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.decorators.cache import cache_page
 from contact.views import ContactView
-from landing.models import Service
+from landing.views import LandingPageView
 from landing.sitemaps import LandingSitemap
 from community.sitemaps import ForumsSitemap, TopicsSitemap
 
@@ -38,8 +38,17 @@ urlpatterns = [
     url(r'^contact/$',
         ContactView.as_view(
             success_url='/contact/',
-            model=Service,
-        ), name='contact'
+            template_name = 'pages/contact.html'
+        ), {'gapi_key' : getattr(
+            settings, 'GOOGLE_API_KEY', None
+        )}, name='contact'
+    ),
+
+    url(r'^services/$',
+        LandingPageView.as_view(
+            template_name='pages/services.html'
+        ),
+        name='services'
     ),
 
     url(r'^sitemap\.xml$',
@@ -65,10 +74,6 @@ urlpatterns = [
 
     url(r'^community/',
         include('community.urls')
-    ),
-
-    url(r'^',
-        include('landing.urls')
     ),
 ]
 
