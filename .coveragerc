@@ -1,7 +1,7 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = agcs,landing
+source = landing,contact,metadata,agcs
 omit =
     gunicorn_conf.py
     runtests.py
@@ -16,6 +16,8 @@ omit =
     landing/sites.py
     landing/migrations*
     landing/management/*
+    metadata/migrations*
+    metadata/admin.py
     tests/*
     community/*
 

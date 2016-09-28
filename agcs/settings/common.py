@@ -102,6 +102,7 @@ INSTALLED_APPS = [
     'pytz',
     'community',
     'contact.apps.ContactConfig',
+    'metadata.apps.MetadataConfig',
 ] + get_machina_apps([
     'community.apps.forum_conversation',
     'community.apps.forum_member',

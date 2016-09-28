@@ -1,0 +1,51 @@
+[
+{
+    "model": "metadata.keyword",
+    "pk": 1,
+    "fields": {
+        "name": "alpha geeks"
+    }
+},
+{
+    "model": "metadata.keyword",
+    "pk": 2,
+    "fields": {
+        "name": "computer assistance"
+    }
+},
+{
+    "model": "metadata.keyword",
+    "pk": 3,
+    "fields": {
+        "name": "computer fix"
+    }
+},
+{
+    "model": "metadata.keyword",
+    "pk": 4,
+    "fields": {
+        "name": "computer geeks"
+    }
+},
+{
+    "model": "metadata.keyword",
+    "pk": 5,
+    "fields": {
+        "name": "computer help"
+    }
+},
+{
+    "model": "metadata.keyword",
+    "pk": 6,
+    "fields": {
+        "name": "computer repair"
+    }
+},
+{
+    "model": "metadata.keyword",
+    "pk": 7,
+    "fields": {
+        "name": "home computer service"
+    }
+}
+]
