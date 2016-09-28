@@ -1,5 +1,5 @@
 {
-  "@contxt": "{{ site.schema.context }}",
+  "@context": "{{ site.schema.context }}",
   "@type": "LocalBusiness",
   "address": {
       "@type": "PostalAddress",
