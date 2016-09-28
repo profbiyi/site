@@ -1,7 +1,6 @@
 from django.db import models
 from django.core import validators
 from django.contrib.sites.models import Site
-from django.contrib.postgres.fields import ArrayField
 
 
 __all__ = [
