@@ -17,6 +17,7 @@ omit =
     landing/migrations*
     landing/management/*
     metadata/migrations*
+    metadata/management/*
     metadata/admin.py
     tests/*
     community/*

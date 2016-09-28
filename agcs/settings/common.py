@@ -144,6 +144,8 @@ TEMPLATES = [
                 'machina.core.context_processors.metadata',
                 'landing.core.context_processors.extra',
                 'landing.core.context_processors.services',
+                'metadata.core.context_processors.links',
+                'metadata.core.context_processors.website',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -260,3 +262,5 @@ COMPRESS_JS_FILTERS=[
 ]
 
 FAVICON_PREFIX = 'img/favicon/'
+
+DEFAULT_WEBSITE_NAME='www.alphageek.xyz'
