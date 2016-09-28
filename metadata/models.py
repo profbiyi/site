@@ -5,13 +5,24 @@ from django.contrib.postgres.fields import ArrayField
 
 
 __all__ = [
-    'Keyword', 'Link', 'PostalAddress',
-    'PhoneNumber', 'LocalBusiness', 'Website',
+    'Tag', 'Keyword', 'Link',
+    'PostalAddress', 'PhoneNumber',
+    'LocalBusiness', 'Website',
 ]
 
 
+class Tag(models.Model):
+
+    name = models.CharField(
+        max_length=200
+    )
+
+    def __str__(self):
+        return self.name
+
+
 class Keyword(models.Model):
-    
+
     name = models.CharField(
         max_length=200
     )
@@ -24,6 +35,11 @@ class Link(models.Model):
 
     name = models.CharField(
         max_length=200
+    )
+
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True
     )
 
     url = models.URLField(

@@ -4,7 +4,10 @@
     "pk": 1,
     "fields": {
         "name": "facebook",
-        "url": "https://facebook.com/alphageekcs"
+        "url": "https://facebook.com/alphageekcs",
+        "tags": [
+            1
+        ]
     }
 },
 {
@@ -12,7 +15,10 @@
     "pk": 2,
     "fields": {
         "name": "google_plus",
-        "url": "https://plus.google.com/+Ntxcomputerservices/about"
+        "url": "https://plus.google.com/+Ntxcomputerservices/about",
+        "tags": [
+            1
+        ]
     }
 },
 {
@@ -20,7 +26,10 @@
     "pk": 3,
     "fields": {
         "name": "google_maps",
-        "url": "https://maps.google.com?daddr=Alpha+Geek+Computer+Services+1727+Nest+Place+Plano+TX+75093"
+        "url": "https://maps.google.com?daddr=Alpha+Geek+Computer+Services+1727+Nest+Place+Plano+TX+75093",
+        "tags": [
+            1
+        ]
     }
 },
 {
@@ -28,7 +37,10 @@
     "pk": 4,
     "fields": {
         "name": "yelp",
-        "url": "https://www.yelp.com/biz/alpha-geek-computer-services-plano"
+        "url": "https://www.yelp.com/biz/alpha-geek-computer-services-plano",
+        "tags": [
+            1
+        ]
     }
 },
 {
@@ -36,7 +48,10 @@
     "pk": 5,
     "fields": {
         "name": "github",
-        "url": "https://github.com/alphageek-xyz"
+        "url": "https://github.com/alphageek-xyz",
+        "tags": [
+            1
+        ]
     }
 }
 ]

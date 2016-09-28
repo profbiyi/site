@@ -18,6 +18,7 @@ ok_fields = namedtuple('Data', [
 class MetadataModelsTest(TestCase):
 
     fixtures = [
+        'tags.json',
         'links.json',
         'keywords.json',
         'phone_numbers.json',
@@ -30,10 +31,6 @@ class MetadataModelsTest(TestCase):
             name='www.alphageek.xyz'
         )
         self.site = site
-        Keyword.objects.create(name='foo')
-        Keyword.objects.create(name='bar')
-        Link.objects.create(name='foo-link', url='http://example.com/foo')
-        Link.objects.create(name='bar-link', url='http://example.com/bar')
 
     def test_create_website(self):
         business = LocalBusiness.objects.create(

@@ -1,0 +1,9 @@
+[
+{
+    "model": "metadata.tag",
+    "pk": 1,
+    "fields": {
+        "name": "social"
+    }
+}
+]
