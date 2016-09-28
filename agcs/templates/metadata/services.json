@@ -31,7 +31,6 @@
         "longitude": "-96.772012"
       },
       "geoRadius": "25"
-    }
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
