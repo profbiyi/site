@@ -18,7 +18,7 @@ install:
 	pip install fake-factory
 
 coverage:
-	coverage run --source=landing,contact,agcs runtests.py
+	coverage run --source=landing,contact,metadata,agcs runtests.py
 
 html: coverage
 	coverage html
