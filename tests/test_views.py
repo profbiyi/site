@@ -10,7 +10,7 @@ from machina.test.factories import create_forum
 from machina.test.factories import create_topic
 from machina.test.factories import PostFactory
 from machina.test.factories import UserFactory
-from agcs.urls.www import handler404, sitemaps
+from agcs.urls.www import sitemaps
 from contact.forms import ContactForm
 from landing.urls import urlpatterns as landing_urls
 from landing.views import ServicesView
@@ -99,23 +99,3 @@ class TemplateTagsTest(TestCase):
             context={'form': ContactForm()}
         )
 
-
-
-class ErrorPageViewsTest(TestCase):
-
-    def setUp(self):
-        self.logger = logging.getLogger('django.request')
-        self.old_level = self.logger.getEffectiveLevel()
-        self.logger.setLevel(logging.ERROR)
-
-    def tearDown(self):
-        self.logger.setLevel(self.old_level)
-
-    def test_page_not_found(self):
-        module, name = handler404.rsplit('.', 1)
-        response = self.client.get('/foo/bar.baz')
-        self.assertHTMLEqual(response.content.decode(),
-            getattr(importlib.import_module(module), name)(
-                response.request, Http404('Bad request')
-            ).content.decode()
-        )

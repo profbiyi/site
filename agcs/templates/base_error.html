@@ -1,0 +1,41 @@
+{% extends 'base.html' %}{% load staticfiles %}
+{% block bootstrap3_title %}{{ code }} | {{ err }}{% endblock bootstrap3_title %}
+{% block bootstrap3_extra_head %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}" type="text/css" charset="utf-8">
+{% endblock bootstrap3_extra_head %}
+{% block bootstrap3_content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h1>
+        <span class="fa fa-border fa-2x">
+          <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+          <i class="fa text-primary" aria-hidden="true">{{ code }}</i>
+        </span>
+      </h1>
+    </div>
+  </div>
+</div>
+<main id="content" class="group" role="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h2><strong>{{ mesg|default:err }}</strong></h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4">
+        <hr class="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <p class="lead">Click <a href="/">here</a> to go to the home page.</p>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer footer-inverse">
+  {% include 'parts/footer.html' %}
+</footer>
+{% endblock bootstrap3_content %}

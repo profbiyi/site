@@ -20,7 +20,6 @@ sitemaps = {
     'topics': TopicsSitemap,
 }
 
-handler404 = 'agcs.views.page_not_found_view'
 
 urlpatterns = [
 
