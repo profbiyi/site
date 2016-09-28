@@ -1,6 +1,7 @@
 {
   "@context": "{{ site.schema.context }}",
   "@type": "LocalBusiness",
+  "hasMap": "{{ links.google_maps }}",
   "address": {
       "@type": "PostalAddress",
       "addressLocality": "{{ site.schema.address.locality }}",
