@@ -1,67 +1,50 @@
+import os
+import sys
+from importlib import import_module
+
+
+bind               = 'unix:%s' % os.path.join(os.environ['DJANGOPROJECT_DATA_DIR'], 'run', 'gunicorn.sock')
+pidfile            = os.path.join(os.environ['DJANGOPROJECT_DATA_DIR'], 'run', 'gunicorn.pid')
+worker_tmp_dir     = os.path.join(os.environ['DJANGOPROJECT_DATA_DIR'], 'tmp', 'gunicorn')
+errorlog           = os.path.join(os.environ['DJANGOPROJECT_DATA_DIR'], 'log', 'gunicorn', 'error.log')
+accesslog          = os.path.join(os.environ['DJANGOPROJECT_DATA_DIR'], 'log', 'gunicorn', 'access.log')
+working_dir        = os.path.join(os.path.expanduser('~django'), 'site', 'site')
+chdir              = working_dir
 user               = None
 group              = None
-bind               = 'unix:/var/local/agcs/run/gunicorn.sock'
-pidfile            = '/var/local/agcs/run/gunicorn.pid'
-worker_tmp_dir     = '/var/local/agcs/tmp/gunicorn'
-errorlog           = '/var/local/agcs/log/gunicorn/error.log'
-accesslog          = '/var/local/agcs/log/gunicorn/access.log'
 capture_output     = True
-working_dir        = '/home/django/site/site'
-chdir              = working_dir
-loglevel           = 'info'
 backlog            = 2048
 worker_connections = 1000
 timeout            = 30
 keepalive          = 2
 umask              = 0
-debug              = False
 spew               = False
 daemon             = False
 proc_name          = None
 tmp_upload_dir     = None
 
-
 try:
     from multiprocessing import cpu_count
     workers = 2 * cpu_count() + 1
-    del(cpu_count)
 except NotImplementedError:
     workers = 3
 
-try:
-    import sys
-    sys.path.index(working_dir)
-except ValueError:
+if working_dir not in sys.path:
     sys.path.insert(0, working_dir)
-finally:
-    del(sys)
 
-try:
-    from importlib import import_module
-    from os import getenv
-    debug = import_module(getenv('DJANGO_SETTINGS_MODULE')).DEBUG
-except AttributeError:
-    debug = debug
-finally:
-    del(getenv, import_module)
-
-loglevel = debug and 'debug' or 'info'
+debug = getattr(import_module(os.environ['DJANGO_SETTINGS_MODULE']), 'DEBUG', False)
+loglevel = 'debug' if debug else 'info'
 
 
 def on_starting(server):
-    from os import (
-        mkdir, chmod, stat,
-        access, F_OK
-    )
-
     global worker_tmp_dir
 
     try:
-        access(worker_tmp_dir, F_OK) or (
-            mkdir(worker_tmp_dir)
+        os.access(worker_tmp_dir, os.F_OK) or (
+            os.mkdir(worker_tmp_dir)
         )
-        stat(worker_tmp_dir).st_mode == 0o46775 or (
-            chmod(worker_tmp_dir, 0o46775)
+        os.stat(worker_tmp_dir).st_mode == 0o46775 or (
+            os.chmod(worker_tmp_dir, 0o46775)
         )
     except:
         worker_tmp_dir = None
@@ -87,12 +70,19 @@ def worker_int(worker):
 
 def post_fork(server, worker):
     pass
+
+
 def pre_fork(server, worker):
     pass
+
+
 def pre_exec(server):
     server.log.info("Forked child, re-executing.")
+
+
 def when_ready(server):
     server.log.info("Server is ready. Spawning workers")
+
+
 def worker_abort(worker):
     worker.log.info("worker received SIGABRT signal")
-
