@@ -32,7 +32,7 @@ To run locally, do the following (on Ubuntu 16.04):
 
 #. Setup database
 
-   .. code-block:: bash
+   .. code-block:: sql
 
     cat <<EOF | sudo -u postgres psql
     CREATE DATABASE agcs_db;
@@ -61,7 +61,7 @@ To run locally, do the following (on Ubuntu 16.04):
 
     mkvirtualenv -p python3 agcs
 
-#. Clone the base repository and submodules
+#. Clone this repository
 
    .. code-block:: bash
 
@@ -87,7 +87,7 @@ To run locally, do the following (on Ubuntu 16.04):
 
 #. Install dependencies and run tests
 
-   .. code-block:: bash
+   .. code-block::
 
     make install && make test
 
