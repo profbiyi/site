@@ -1,6 +1,5 @@
-{% extends 'base.html' %}{% load staticfiles %}{% load bootstrap3 %}
-{% load cache %}{% load landing_utils %}{% load favicon %}
-
+{% extends 'base.html' %}
+{% load staticfiles bootstrap3 cache landing_utils favicon %}
 {% block bootstrap3_extra_head %}
 <link rel="stylesheet" href="{% static 'css/landing.css' %}" type="text/css" charset="utf-8">
 <meta name="keywords" content="{{ site.keywords.all|join:', ' }}">
