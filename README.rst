@@ -1,6 +1,6 @@
-========================
+==========================
 Main site Django_ project
-========================
+==========================
 
 .. image:: https://img.shields.io/travis/alphageek-xyz/site.svg?style=flat-square
 	:target: https://travis-ci.org/alphageek-xyz/site
@@ -21,16 +21,16 @@ To run locally, do the following (on Ubuntu 16.04):
    .. code-block:: bash
 
     sudo apt-get install git python3-pip postgresql-9.5
-    sudo -H pip3 install -U pip3
+    sudo -H pip3 install -U pip
     sudo -H pip3 install -U virtualenvwrapper
 
-#. Start services
+#. Start services (if not already running)
 
    .. code-block:: bash
 
     sudo systemctl start postgresql.service
 
-#. Setup database
+#. Configure the database
 
    .. code-block:: sql
 
@@ -70,7 +70,7 @@ To run locally, do the following (on Ubuntu 16.04):
     git clone https://github.com/alphageek-xyz/site.git
     cd site && setvirtualenvproject
 
-#. Create a data directory and 'secrets.json'
+#. Create a data directory and ``secrets.json``
 
    .. code-block:: bash
 
@@ -91,20 +91,31 @@ To run locally, do the following (on Ubuntu 16.04):
    .. code-block::
 
     make install && make test
+    
+   - If install fails due to psycopg2, install dev packages
+       
+     .. code-block:: bash
+       
+        sudo apt-get install postgresql-server-dev-9.5 python3-dev
+
+#. Populate the database
+
+   .. code-block:: bash
+    
+    make fixtures
 
 #. Run the development server
 
    .. code-block:: bash
 
-    ./manage.py runserver
+    make run
 
    - To fix 404 errors for favicons, generate them
 
      .. code-block:: bash
 
-        ./manage.py generate_favicon --prefix 'assets/img/favicon/' agcs/static/img/agcs.png &&
-        cp -r ~/data/static_root/assets/img/favicon agcs/static/img
-
+        make static
+        
 - Note: If you are modeling your own site after this one:
     + Adjust all brand-related variables and settings
     + Use your own logo
