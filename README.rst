@@ -41,6 +41,7 @@ To run locally, do the following (on Ubuntu 16.04):
     ALTER ROLE django SET default_transaction_isolation TO 'read committed';
     ALTER ROLE django SET timezone TO 'UTC';
     GRANT ALL PRIVILEGES ON DATABASE agcs_db TO django;
+    ALTER USER django CREATEDB;
     EOF
 
 #. Set environment variables
