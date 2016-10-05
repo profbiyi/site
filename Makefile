@@ -9,6 +9,7 @@ clean:
 install:
 	pip install -U setuptools
 	pip install -q psycopg2
+	pip install Django==1.10.2
 	pip install -r requirements.txt
 	pip install anglerfish
 	pip install css-html-js-minify
