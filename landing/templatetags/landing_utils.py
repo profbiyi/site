@@ -15,11 +15,31 @@ register = Library()
 
 @register.simple_tag
 def dict_to_json(pydict):
+    """
+    Accepts a python dict and returns it's JSON representation.
+
+    Sample usage::
+
+        <script type="application/ld+json">
+            {% dict_to_json:some_dict %}
+        </script>
+    """
     return mark_safe(json.dumps(pydict))
 
 
 @register.simple_tag
 def inline_static_file(path, minify=None):
+    """
+    Outputs the [minified] contents of a given static file.
+
+    For example, to display the minified CSS file "``inline.css``"::
+
+        <style>
+            {% inline_static_file 'inline.css' 'css' %}
+        </style>
+
+    The optional ``minify`` argument can be one of css, js, or html.
+    """
     p = finders.find(path)
 
     if not p:
@@ -40,6 +60,26 @@ def inline_static_file(path, minify=None):
 
 @register.simple_tag
 def async_css(href):
+    """
+    Outputs a link and noscript tag, which will asynchronously load an external stylesheet.
+
+    Sample usage::
+
+        <head>
+        ...
+            {% async_css '/static/foo.css' %}
+        ...
+        </head>
+
+    Results in::
+
+        <head>
+        ...
+            <link rel="preload" href="/static/foo.css" onload="this.rel='stylesheet'">
+            <noscript><link rel="stylesheet" href="/static/foo.css"></noscript>
+        ...
+        </head>
+    """
     return format_html(''.join([
         '<link rel="preload" href="{0}" as="style" onload="this.rel=\'stylesheet\'">',
         '<noscript><link rel="stylesheet" href="{0}"></noscript>'
@@ -48,6 +88,15 @@ def async_css(href):
 
 @register.simple_tag
 def autofocus_form(form, *args, **kwargs):
+    """
+    Add the 'autofocus' attribute to the first input tag of a form.
+
+    Usage::
+
+        {% autofocus_form form form_group_class='row' %}
+
+    Extra args and kwargs are passed to ``bootstrap_form``.
+    """
     return mark_safe(re.sub(
         '<input', '<input autofocus',
         str(bootstrap_form(form, *args, **kwargs)),
@@ -57,9 +106,17 @@ def autofocus_form(form, *args, **kwargs):
 
 @register.simple_tag
 def autofocus_field(field, *args, **kwargs):
+    """
+    Add the 'autofocus' attribute to an input tag.
+
+    Usage::
+
+        {% autofocus_field field field_class='col-md-12' %}
+
+    Extra args and kwargs are passed to ``bootstrap_field``.
+    """
     return mark_safe(re.sub(
-        '<input',
-        '<input autofocus',
+        '<input', '<input autofocus',
         str(bootstrap_field(field, *args, **kwargs)),
         count=1
     ))
