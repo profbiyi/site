@@ -3,24 +3,14 @@
 branch = True
 source = landing,contact,metadata,agcs
 omit =
-    gunicorn_conf.py
-    runtests.py
-    agcs/wsgi.py
+    *tests*
+    *migrations*
+    *admin.py
+    *wsgi.py
     agcs/util.py
-    agcs/views.py
     agcs/settings/dev.py
-    contact/admin.py
-    contact/migrations*
-    landing/admin.py
     landing/mixins.py
-    landing/sites.py
-    landing/migrations*
     landing/management/*
-    metadata/migrations*
-    metadata/management/*
-    metadata/admin.py
-    tests/*
-    community/*
 
 [report]
 exclude_lines =

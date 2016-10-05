@@ -27,13 +27,13 @@ static:
 	cp -r ~/data/static_root/assets/img/favicon agcs/static/img
 
 coverage:
-	coverage run --source=landing,contact,metadata,agcs runtests.py
+	coverage run runtests.py
 
 html: coverage
 	coverage html
 
 serve-html: html
-	cd coverage_html_report && python2 -m SimpleHTTPServer 8002
+	cd coverage_html_report && python -m http.server 8002
 
 travis: coverage
 
