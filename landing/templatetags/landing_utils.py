@@ -21,7 +21,7 @@ def dict_to_json(pydict):
     Sample usage::
 
         <script type="application/ld+json">
-            {% dict_to_json:some_dict %}
+            {% dict_to_json some_dict %}
         </script>
     """
     return mark_safe(json.dumps(pydict))
