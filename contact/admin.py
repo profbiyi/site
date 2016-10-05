@@ -7,7 +7,7 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter     = ('status', 'date',)
     list_display    = ('date', 'status', 'name', 'email', 'phone', 'comment',)
     actions         = ['mark_closed', 'mark_responded', 'mark_new', 'delete_selected']
-    ordering        = ['date', 'status',]
+    ordering        = ['-date', 'status',]
     date_hierarchy  = 'date'
     fields          = (
         'status', 'notes', 'name', 'date',
