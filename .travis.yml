@@ -20,7 +20,7 @@ env:
 
 install:
   - make install
-  - pip install codecov
+  - pip install coveralls
 
 before_script:
   - psql -c 'create database agcs_db;' -U postgres
@@ -29,9 +29,8 @@ script:
   - make travis
 
 after_success:
-  - codecov
+  - coveralls
 
 branches:
   only:
     - master
-

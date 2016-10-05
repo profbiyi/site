@@ -6,9 +6,9 @@ Main site Django_ project
 	:target: https://travis-ci.org/alphageek-xyz/site
 	:alt: Build status
 
-.. image:: https://img.shields.io/codecov/c/github/alphageek-xyz/site.svg?style=flat-square
-	:target: https://codecov.io/gh/alphageek-xyz/site
-	:alt: Codecov status
+.. image:: https://img.shields.io/coveralls/alphageek-xyz/site.svg?style=flat-square
+	:target: https://coveralls.io/github/alphageek-xyz/site
+	:alt: Coveralls status
 
 .. _Django: https://www.djangoproject.com/
 
