@@ -115,8 +115,8 @@ To run locally, do the following (on Ubuntu 16.04):
      .. code-block:: bash
 
         make static
-        
-- Note: If you are modeling your own site after this one:
+
+- Note: If you are modeling your own site after this one, the following steps will help ensure compliance with condition #3 of the LICENSE
     + Adjust all brand-related variables and settings
     + Use your own logo
     + Use your own fixtures
