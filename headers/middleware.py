@@ -20,14 +20,30 @@ class VaryAcceptEncodingMiddleware(MiddlewareMixin):
 class ViaHeaderMiddleware(MiddlewareMixin):
     via_proxies = []
 
-    @property
-    def proxies(self):
-        return ', '.join(
-            self.via_proxies or [
-                '%s Django' % get_version()
-            ] + getattr(settings, 'VIA_PROXIES', [])
-        )
+    def __init__(self, get_response=None):
+        super(ViaHeaderMiddleware, self).__init__(get_response)
+        self.proxies = self.via_proxies or getattr(
+            settings, 'VIA_PROXIES', []
+        ) or ['Django/%s' % get_version()]
 
     def process_response(self, request, response):
-        set_headers(response, default=True, Via=self.proxies)
+        if 'SERVER_SOFTWARE' in request.META:
+            self.proxies.append(request.META['SERVER_SOFTWARE'])
+        set_headers(response, default=True, Via=', '.join(self.proxies))
         return response
+
+
+class MultipleProxyMiddleware(MiddlewareMixin):
+    FORWARDED_FOR_FIELDS = [
+        'HTTP_X_FORWARDED_FOR',
+        'HTTP_X_FORWARDED_HOST',
+        'HTTP_X_FORWARDED_SERVER',
+    ]
+
+    def process_request(self, request):
+        for field in self.FORWARDED_FOR_FIELDS:
+            if field in request.META:
+                if ',' in request.META[field]:
+                    parts = request.META[field].split(',')
+                    request.META[field] = parts[-1].strip()
+

@@ -44,6 +44,3 @@ STATIC_ROOT = str(DATA_DIR.joinpath('static'))
 
 MEDIA_ROOT = str(DATA_DIR.joinpath('media'))
 
-from gunicorn import SERVER_SOFTWARE as GUNICORN_VERSION
-
-VIA_PROXIES = [GUNICORN_VERSION]

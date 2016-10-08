@@ -2,12 +2,14 @@ from django.test import TestCase, override_settings, RequestFactory
 from django_hosts.resolvers import reverse
 from headers.utils.functional import (
     set_headers,
-    del_headers
+    del_headers,
+    get_uwsgi_version,
+    get_gunicorn_version,
 )
 from headers.utils.decorators import (
     with_headers,
     without_headers,
-    via_header
+    via_header,
 )
 from myip.views import my_ip_address
 
@@ -53,3 +55,7 @@ class HeadersUtilsTest(TestCase):
         )(self.rf.get('/'))
         self.assertFalse(res.has_header('Foo'))
         self.assertFalse(res.has_header('Via'))
+
+    def test_get_server_versions(self):
+        self.assertTrue(get_uwsgi_version() is not None)
+        self.assertTrue(get_gunicorn_version() is not None)
