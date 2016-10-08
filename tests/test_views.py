@@ -99,3 +99,11 @@ class TemplateTagsTest(TestCase):
             'test/landing_utils.html',
             context={'form': ContactForm()}
         )
+
+
+class MyIPTest(TestCase):
+    @override_settings(ROOT_URLCONF='myip.urls')
+    def test_my_ip_address(self):
+        res = self.client.get(reverse('myip'))
+        self.assertTrue(int(res['Cache-Control'].split(
+            'max-age=')[-1]) <= 10)

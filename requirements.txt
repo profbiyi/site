@@ -85,3 +85,4 @@ encoding
 #sphinx-rtd-theme>=0.1
 #uwsgi>=2.0
 #Whoosh>=2.6.0
+django-hosts==2.0

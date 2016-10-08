@@ -4,6 +4,7 @@ ALLOWED_HOSTS = list(set([
     'alphageek.dev',
     'www.alphageek.dev',
     'community.alphageek.dev',
+    'myip.alphageek.dev',
 ] + SECRETS.get('allowed_hosts', [])))
 
 CACHES = {

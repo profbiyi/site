@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
+    'django_hosts',
     'landing.apps.LandingConfig',
     'snowpenguin.django.recaptcha2',
     'favicon',
@@ -103,6 +104,8 @@ INSTALLED_APPS = [
     'community',
     'contact.apps.ContactConfig',
     'metadata.apps.MetadataConfig',
+    'headers.apps.HeadersConfig',
+    'myip.apps.MyIPConfig',
 ] + get_machina_apps([
     'community.apps.forum_conversation',
     'community.apps.forum_member',
@@ -111,17 +114,20 @@ INSTALLED_APPS = [
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
     'machina.apps.forum_permission.middleware.ForumPermissionMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'headers.middleware.ViaHeaderMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 TEMPLATES = [
@@ -150,7 +156,10 @@ TEMPLATES = [
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
-            ]
+            ],
+            'builtins': [
+                'django_hosts.templatetags.hosts_override',
+            ],
         },
     },
 ]

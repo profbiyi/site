@@ -4,6 +4,7 @@ ALLOWED_HOSTS = list(set([
     'alphageek.xyz',
     'www.alphageek.xyz',
     'community.alphageek.xyz',
+    'myip.alphageek.xyz',
 ] + SECRETS.get('allowed_hosts', [])))
 
 CACHES = {
@@ -42,3 +43,7 @@ HTML_MINIFY = False
 STATIC_ROOT = str(DATA_DIR.joinpath('static'))
 
 MEDIA_ROOT = str(DATA_DIR.joinpath('media'))
+
+from gunicorn import SERVER_SOFTWARE as GUNICORN_VERSION
+
+VIA_PROXIES = [GUNICORN_VERSION]
