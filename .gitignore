@@ -66,3 +66,4 @@ static_dir/static/*
 coverage_html_report
 services.json
 agcs/static/img/favicon/
+*.swp

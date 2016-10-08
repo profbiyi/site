@@ -126,6 +126,7 @@ MIDDLEWARE_CLASSES = [
     'htmlmin.middleware.MarkRequestMiddleware',
     'machina.apps.forum_permission.middleware.ForumPermissionMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'headers.middleware.VaryAcceptEncodingMiddleware',
     'headers.middleware.ViaHeaderMiddleware',
     'django_hosts.middleware.HostsResponseMiddleware',
 ]

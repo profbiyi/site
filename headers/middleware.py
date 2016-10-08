@@ -1,11 +1,23 @@
 from django.utils.deprecation import MiddlewareMixin
+from django.utils.cache import patch_vary_headers
 from django import get_version
 from django.conf import settings
 from .utils.functional import set_headers
 
 
-class ViaHeaderMiddleware(MiddlewareMixin):
+class VaryAcceptEncodingMiddleware(MiddlewareMixin):
+    def process_response(self, request, response):
+        newheaders = response.has_header('Vary') and (
+            response['Vary'].replace(
+                ' ', str()
+            ).split(',')
+        ) or []
+        newheaders.append('Accept-Encoding')
+        patch_vary_headers(response, list(set(newheaders)))
+        return response
 
+
+class ViaHeaderMiddleware(MiddlewareMixin):
     via_proxies = []
 
     @property
