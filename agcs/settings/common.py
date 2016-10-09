@@ -67,6 +67,8 @@ EMAIL_USE_TLS    = True
 CSRF_COOKIE_HTTPONLY = True
 SITE_ID = 1
 
+USE_ETAGS        = True
+
 STATICFILES_DIRS = [
     str(PROJECT_PACKAGE.joinpath('static')),
     MACHINA_MAIN_STATIC_DIR,
@@ -116,8 +118,9 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_hosts.middleware.HostsRequestMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
+    'headers.middleware.VaryAcceptEncodingMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'headers.middleware.MultipleProxyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -127,7 +130,6 @@ MIDDLEWARE_CLASSES = [
     'htmlmin.middleware.MarkRequestMiddleware',
     'machina.apps.forum_permission.middleware.ForumPermissionMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    'headers.middleware.VaryAcceptEncodingMiddleware',
     'headers.middleware.ViaHeaderMiddleware',
     'django_hosts.middleware.HostsResponseMiddleware',
 ]

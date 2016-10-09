@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, RequestFactory, modify_settings
 from django.utils.decorators import decorator_from_middleware
 from headers.middleware import (
     MultipleProxyMiddleware,
@@ -30,3 +30,16 @@ class HeadersMiddleWareTest(TestCase):
         viawrap = decorator_from_middleware(ViaHeaderMiddleware)
         mulwrap = decorator_from_middleware(MultipleProxyMiddleware)
         viawrap(mulwrap(goodview))(req)
+
+    def test_multi_proxy(self):
+        with self.modify_settings(MIDDLEWARE_CLASSES={
+            'prepend': 'headers.middleware.MultipleProxyMiddleware',
+        }):
+            req = self.rf.get('/',
+                SERVER_NAME='www.alphageek.xyz',
+                SERVER_SOFTWARE='server/1.1',
+                HTTP_X_FORWARDED_FOR='Foo, Bar'
+            )
+            res = self.client.get('/', **req.META)
+            print(res.serialize_headers().decode())
+
