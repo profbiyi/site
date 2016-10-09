@@ -7,13 +7,11 @@ from .utils.functional import set_headers
 
 class VaryAcceptEncodingMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
-        newheaders = response.has_header('Vary') and (
-            response['Vary'].replace(
-                ' ', str()
-            ).split(',')
-        ) or []
+        newheaders = response.has_header('Vary') and ([
+            s.strip() for s in response['Vary'].split(',')
+        ]) or []
         newheaders.append('Accept-Encoding')
-        patch_vary_headers(response, list(set(newheaders)))
+        patch_vary_headers(response, set(newheaders))
         return response
 
 
@@ -29,7 +27,9 @@ class ViaHeaderMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         if 'SERVER_SOFTWARE' in request.META:
             self.proxies.append(request.META['SERVER_SOFTWARE'])
-        set_headers(response, default=True, Via=', '.join(self.proxies))
+        set_headers(response, default=True, Via=', '.join(
+            set(self.proxies)
+        ))
         return response
 
 
