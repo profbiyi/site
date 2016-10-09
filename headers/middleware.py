@@ -27,9 +27,7 @@ class ViaHeaderMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         if 'SERVER_SOFTWARE' in request.META:
             self.proxies.append(request.META['SERVER_SOFTWARE'])
-        set_headers(response, default=True, Via=', '.join(
-            set(self.proxies)
-        ))
+        set_headers(response, default=True, Via=', '.join(set(self.proxies)))
         return response
 
 
@@ -46,4 +44,3 @@ class MultipleProxyMiddleware(MiddlewareMixin):
                 if ',' in request.META[field]:
                     parts = request.META[field].split(',')
                     request.META[field] = parts[-1].strip()
-
