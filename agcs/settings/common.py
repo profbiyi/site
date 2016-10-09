@@ -60,8 +60,8 @@ LANGUAGE_CODE    = 'en-us'
 TIME_ZONE        = 'America/Chicago'
 EMAIL_HOST       = 'smtp.zoho.com'
 EMAIL_PORT       = '587'
-USE_I18N         = True
-USE_L10N         = True
+USE_I18N         = False
+USE_L10N         = False
 USE_TZ           = True
 EMAIL_USE_TLS    = True
 CSRF_COOKIE_HTTPONLY = True
@@ -277,3 +277,6 @@ COMPRESS_JS_FILTERS=[
 FAVICON_PREFIX = 'img/favicon/'
 
 DEFAULT_WEBSITE_NAME='www.alphageek.xyz'
+
+LANGUAGES = [('en', 'English'),]
+

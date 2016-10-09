@@ -44,3 +44,10 @@ STATIC_ROOT = str(DATA_DIR.joinpath('static'))
 
 MEDIA_ROOT = str(DATA_DIR.joinpath('media'))
 
+SECURE_BROWSER_XSS_FILTER = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+X_FRAME_OPTIONS = 'DENY'
+
+SILENCED_SYSTEM_CHECKS = ['security.W008',]
