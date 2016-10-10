@@ -161,9 +161,6 @@ TEMPLATES = [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
-            'builtins': [
-                'django_hosts.templatetags.hosts_override',
-            ],
         },
     },
 ]
@@ -279,4 +276,3 @@ FAVICON_PREFIX = 'img/favicon/'
 DEFAULT_WEBSITE_NAME='www.alphageek.xyz'
 
 LANGUAGES = [('en', 'English'),]
-
