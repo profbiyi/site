@@ -25,9 +25,11 @@ class ViaHeaderMiddleware(MiddlewareMixin):
         ) or ['Django/%s' % get_version()]
 
     def process_response(self, request, response):
-        if 'SERVER_SOFTWARE' in request.META:
-            self.proxies.append(request.META['SERVER_SOFTWARE'])
-        set_headers(response, default=True, Via=', '.join(set(self.proxies)))
+        set_headers(response, default=True, Via=', '.join(set(
+            self.proxies + [request.META['SERVER_SOFTWARE']] if (
+                'SERVER_SOFTWARE' in request.META
+            ) else self.proxies
+        )))
         return response
 
 
