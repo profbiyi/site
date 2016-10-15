@@ -19,9 +19,9 @@ def get_uwsgi_version():
     return None if status else output
 
 
-def get_gunicorn_version():
+def get_gunicorn_version(): # pragma: no cover
     try:
         from gunicorn import __version__
         return __version__
-    except ImportError: # pragma: no cover
+    except ImportError:
         return None

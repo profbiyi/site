@@ -9,15 +9,7 @@ clean:
 
 install:
 	pip install -U setuptools
-	pip install -q psycopg2
-	pip install Django==1.10.2
-	pip install -r requirements.txt
-	pip install anglerfish
-	pip install css-html-js-minify
-	pip install -U 'html5lib<0.99999999'
-	pip install -U bleach
-	pip install factory-boy
-	pip install fake-factory
+	pip install -r requirements/dev.txt
 
 run:
 	python manage.py runserver 0.0.0.0:8000

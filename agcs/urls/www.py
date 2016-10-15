@@ -87,3 +87,7 @@ if settings.DEBUG:
             name='favicon'
         ),
     ])
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]

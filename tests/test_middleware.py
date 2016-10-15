@@ -25,21 +25,9 @@ class HeadersMiddleWareTest(TestCase):
             MultipleProxyMiddleware,
             'FORWARDED_FOR_FIELDS'
         ): req.META[f] = 'Value1'
+        del(req.META['HTTP_X_FORWARDED_SERVER'])
         req.META['HTTP_X_FORWARDED_FOR'] += ',Foo'
         req.META['SERVER_SOFTWARE'] = 'foo/1.1'
         viawrap = decorator_from_middleware(ViaHeaderMiddleware)
         mulwrap = decorator_from_middleware(MultipleProxyMiddleware)
         viawrap(mulwrap(goodview))(req)
-
-    def test_multi_proxy(self):
-        with self.modify_settings(MIDDLEWARE_CLASSES={
-            'prepend': 'headers.middleware.MultipleProxyMiddleware',
-        }):
-            req = self.rf.get('/',
-                SERVER_NAME='www.alphageek.xyz',
-                SERVER_SOFTWARE='server/1.1',
-                HTTP_X_FORWARDED_FOR='Foo, Bar'
-            )
-            res = self.client.get('/', **req.META)
-            print(res.serialize_headers().decode())
-

@@ -114,7 +114,7 @@ INSTALLED_APPS = [
 ])
 
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_hosts.middleware.HostsRequestMiddleware',
@@ -126,9 +126,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'htmlmin.middleware.HtmlMinifyMiddleware',
-    'htmlmin.middleware.MarkRequestMiddleware',
-    'machina.apps.forum_permission.middleware.ForumPermissionMiddleware',
+    'community.middleware.BetterForumPermissionMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'headers.middleware.ViaHeaderMiddleware',
     'django_hosts.middleware.HostsResponseMiddleware',

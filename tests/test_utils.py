@@ -58,4 +58,4 @@ class HeadersUtilsTest(TestCase):
 
     def test_get_server_versions(self):
         self.assertTrue(get_uwsgi_version() is not None)
-        self.assertTrue(get_gunicorn_version() is not None)
+        self.assertTrue(get_gunicorn_version() is None)
