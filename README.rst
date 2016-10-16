@@ -16,66 +16,19 @@ The code provided in this repo will not run flawlessly without local modificatio
 
 To run locally, do the following (on Ubuntu 16.04):
 
-#. Install system dependencies
+#. Install system dependencies.
 
    .. code-block:: bash
 
-    sudo apt-get install git python3-pip postgresql-9.5
-    sudo -H pip3 install -U pip
-    sudo -H pip3 install -U virtualenvwrapper
+    sudo apt-get install git python3-dev python3-pip \
+        postgresql-9.5 postgresql-server-dev-9.5
+    sudo -H pip3 install -U pip virtualenvwrapper
 
-#. Start services (if not already running)
-
-   .. code-block:: bash
-
-    sudo systemctl start postgresql.service
-
-#. Configure the database
-
-   .. code-block:: sql
-
-    cat <<EOF | sudo -u postgres psql
-    CREATE DATABASE agcs_db;
-    CREATE USER django WITH PASSWORD 'db-secret';
-    ALTER ROLE django SET client_encoding TO 'utf8';
-    ALTER ROLE django SET default_transaction_isolation TO 'read committed';
-    ALTER ROLE django SET timezone TO 'UTC';
-    GRANT ALL PRIVILEGES ON DATABASE agcs_db TO django;
-    ALTER USER django CREATEDB;
-    EOF
-
-#. Set environment variables
+#. Create a data directory and ``secrets.json``.
 
    .. code-block:: bash
 
-    cat <<EOF>> ~/.bashrc && . ~/.bashrc
-    set -a
-    VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-    DJANGOPROJECT_DATA_DIR=~/data
-    set +a
-    . /usr/local/bin/virtualenvwrapper.sh
-    EOF
-
-#. Create a Python 3.x virtualenv
-
-   .. code-block:: bash
-
-    mkvirtualenv -p python3 agcs
-
-#. Clone this repository
-
-   .. code-block:: bash
-
-    mkdir ~/site && cd ~/site
-    git clone https://github.com/alphageek-xyz/site.git
-    cd site && setvirtualenvproject
-
-#. Create a data directory and ``secrets.json``
-
-   .. code-block:: bash
-
-    mkdir -p ~/data/conf ~/data/log/django
-    echo '
+    mkdir -p ~/data/conf && echo '
     { "secret_key": "xyz",
       "db_host": "localhost",
       "db_password": "db-secret",
@@ -86,35 +39,75 @@ To run locally, do the following (on Ubuntu 16.04):
       "email_host_pass": "email-secret" }
     ' > ~/data/conf/secrets.json
 
-#. Install dependencies and run tests
+#. Set environment variables.
+
+   .. code-block:: bash
+
+     cat <<EOF>> ~/.bashrc && . ~/.bashrc
+     set -a
+     VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+     DJANGOPROJECT_DATA_DIR=~/data
+     set +a
+     . /usr/local/bin/virtualenvwrapper.sh
+     EOF
+
+#. Configure the database.
+
+   .. code-block:: sql
+
+    cat <<EOF | sudo -u postgres psql
+    DROP DATABASE IF EXISTS agcs_db;
+    CREATE DATABASE agcs_db;
+    DO \$$ BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'django') THEN
+            CREATE ROLE django WITH CREATEDB PASSWORD '$(python3 -c \
+                "import sys; exec('\n'.join(sys.argv[1:]))" "import json" \
+                "with open('$DJANGOPROJECT_DATA_DIR/conf/secrets.json') as f:" \
+                " print(json.load(f)['db_password'])")';
+        END IF;
+    END \$$;
+    ALTER ROLE django SET default_transaction_isolation TO 'read committed';
+    ALTER ROLE django SET timezone TO 'UTC';
+    GRANT ALL PRIVILEGES ON DATABASE agcs_db TO django;
+    EOF
+
+#. Create a Python 3.x virtualenv.
+
+   .. code-block:: bash
+
+    mkvirtualenv -p python3 agcs
+
+#. Clone this repository.
+
+   .. code-block:: bash
+
+    mkdir ~/site && cd ~/site
+    git clone https://github.com/alphageek-xyz/site.git
+    cd site && setvirtualenvproject
+
+#. Install dependencies and run tests.
 
    .. code-block::
 
     make install && make test
-    
-   - If install fails due to psycopg2, install dev packages
-       
-     .. code-block:: bash
-       
-        sudo apt-get install postgresql-server-dev-9.5 python3-dev
 
-#. Populate the database
+#. Generate favicons and collect static files.
 
    .. code-block:: bash
-    
+
+        make static
+
+#. Populate the database with some defaults.
+
+   .. code-block:: bash
+
     make fixtures
 
-#. Run the development server
+#. Run the development server.
 
    .. code-block:: bash
 
     make run
-
-   - To fix 404 errors for favicons, generate them
-
-     .. code-block:: bash
-
-        make static
 
 - Note: If you are modeling your own site after this one, the following steps will help ensure compliance with condition #3 of the LICENSE
     + Adjust all brand-related variables and settings
