@@ -1,14 +1,14 @@
-from django.db.models import F
 from django.contrib import admin
+from django.db.models import F
 from .models import Service
 
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    fields = ('order', 'name', 'description', 'html', 'anchor_id',)
+    fields = ('order', 'name', 'description',)
     list_display = ('name', 'order',)
     ordering = ('order',)
-    readonly_fields = ('order', 'html', 'anchor_id',)
+    readonly_fields = ('order',)
     actions = ['move_to_top', 'move_to_bottom', 'save_selection']
 
     def move_to_top(self, request, queryset):

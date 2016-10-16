@@ -38,7 +38,7 @@
         {% for service in service_list %}
           <li class="service-item">
             <a id="{{ service.anchor_id }}-dd-link" class="service-link"
-               href="{% if 'services' not in request.path %}{% url 'services' %}{% endif %}#{{ service.anchor_id }}">{{ service.name }}</a>
+               href="{% if 'services' not in request.path %}{{ service.get_absolute_url }}{% else %}#{{ service.anchor_id }}{% endif %}">{{ service.name }}</a>
           </li>
         {% endfor %}
         </ul>

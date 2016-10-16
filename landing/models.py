@@ -6,6 +6,8 @@ from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.encoding import smart_text
+from django.utils.functional import cached_property
+
 
 _MARKDOWN_SETTINGS = {
     'ul_classes' : ['list-group'],
@@ -13,6 +15,8 @@ _MARKDOWN_SETTINGS = {
     'hx_classes' : ['text-primary'],
     'extensions': [
         'markdown.extensions.tables',
+        'markdown.extensions.abbr',
+        'markdown.extensions.smarty',
         'pymdownx.magiclink',
         'pymdownx.betterem',
         'pymdownx.tilde',
@@ -69,35 +73,31 @@ class Service(models.Model):
         default='#'
     )
 
-    html = models.TextField(
-        verbose_name='HTML Markup',
-    )
-
-    anchor_id = models.CharField(
-        verbose_name='Anchor ID',
-        max_length=30,
-        null=True,
-        blank=True,
-    )
-
     order = models.IntegerField(
         null=True,
     )
 
+    @cached_property
+    def html(self):
+        return markup_markdown(self.description) if (
+            self.description
+        ) else None
+
+    @cached_property
+    def anchor_id(self):
+        return re.sub(
+            " ?[&/\\@ ] ?", '_', self.name
+        )[:30] if self.name else str()
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return '%s#%s' % (reverse('services'), self.anchor_id)
+
     def save(self, *args, **kwargs):
-        self.html = (
-            markup_markdown(self.description)
-        ) if self.description else None
-
-        self.anchor_id = (
-            re.sub(" ?[&/\\@ ] ?", '_', self.name)[:30]
-        ) if self.name else str()
-
         if not self.order:
             self.order = getattr(
                 Service.objects.last(), 'pk', 0
             ) + 1
-
         return super(Service, self).save(*args, **kwargs)
 
     def __str__(self):
