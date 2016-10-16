@@ -23,7 +23,7 @@
         </div>
         <div class="list-group table-of-contents panel-body">
         {% for service in service_list %}
-          <a class="list-group-item" href="#{{ service.anchor_id }}">{{ service.name }}</a>
+          <a class="list-group-item" href="{{ service.get_absolute_url }}">{{ service.name }}</a>
         {% endfor %}
         </div> <!--list-group -->
       </div> <!-- panel -->
