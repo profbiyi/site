@@ -1,15 +1,22 @@
 from django.conf import settings
-from metadata.models import Link, Website
+from metadata.models import Website
 
 
 def links(request):
-    queryset = Link.objects.distinct('name')
-    return {
-        'links': dict(zip(
-            queryset.values_list('name', flat=True),
-            queryset.values_list('url', flat=True)
-        ))
-    }
+    try:
+        return {
+            'links': dict(
+                Website.objects.get(
+                    site__name=settings.DEFAULT_WEBSITE_NAME
+                ).schema.links.filter(
+                    tags__name='social'
+                ).values_list(
+                    'name', 'url'
+                )
+            )
+        }
+    except (AttributeError, Website.DoesNotExist):
+        return {}
 
 def _website():
     try:
