@@ -27,7 +27,7 @@ class ServiceAdmin(admin.ModelAdmin):
         )
 
     def move_to_x(self, where, request, queryset):
-        if len(queryset) > 1:
+        if queryset.count() > 1:
             self.message_user(request,
                 'Please select only one service'
             )

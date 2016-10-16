@@ -42,9 +42,11 @@ class Service(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.order:
-            self.order = getattr(
-                Service.objects.last(), 'pk', 0
-            ) + 1
+            self.order = 1 + (
+                Service.objects.aggregate(
+                    n=models.Max('order')
+                )['n'] or 0
+            )
         return super(Service, self).save(*args, **kwargs)
 
     def __str__(self):

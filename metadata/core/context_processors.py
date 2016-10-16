@@ -3,10 +3,12 @@ from metadata.models import Link, Website
 
 
 def links(request):
+    queryset = Link.objects.distinct('name')
     return {
-        'links': {
-            l.name: l.url for l in Link.objects.all()
-        }
+        'links': dict(zip(
+            queryset.values_list('name', flat=True),
+            queryset.values_list('url', flat=True)
+        ))
     }
 
 def _website():
