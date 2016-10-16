@@ -4,7 +4,7 @@ from django.contrib.sites.models import Site
 
 
 __all__ = [
-    'Tag', 'Keyword', 'Link',
+    'State', 'Tag', 'Keyword', 'Link',
     'PostalAddress', 'PhoneNumber',
     'LocalBusiness', 'Website',
 ]

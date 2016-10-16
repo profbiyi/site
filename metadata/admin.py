@@ -47,3 +47,8 @@ class KeywordAdmin(admin.ModelAdmin):
 @admin.register(Website)
 class WebsiteAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(State)
+class StateAdmin(admin.ModelAdmin):
+    fields = readonly_fields = ['id', 'name', 'abbreviation']
+    list_display = ['id', 'name', 'abbreviation']
