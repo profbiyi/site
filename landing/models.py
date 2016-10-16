@@ -33,7 +33,7 @@ class Service(models.Model):
     @cached_property
     def anchor_id(self):
         return re.sub(
-            " ?[&/\\@ ] ?", '_', self.name
+            " ?[&/\\@ ]+ ?", '_', self.name
         )[:30]
 
     def get_absolute_url(self):
