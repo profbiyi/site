@@ -101,7 +101,7 @@ To run locally, do the following (on Ubuntu 16.04):
 
    .. code-block:: bash
 
-    make fixtures
+    make load
 
 #. Run the development server.
 

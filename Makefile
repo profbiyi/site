@@ -1,4 +1,4 @@
-.PHONY: all install coverage html travis test clean run serve-html static migrate fixtures
+.PHONY: all install coverage html travis test clean run serve-html static migrate dump load
 
 clean:
 	find . -name "*.pyc" -type f -delete
@@ -17,7 +17,7 @@ run:
 static:
 	python manage.py collectstatic
 	python manage.py generate_favicon --prefix \
-	    'assets/img/favicon/' agcs/static/img/agcs.png
+        'assets/img/favicon/' agcs/static/img/agcs.png
 	cp -r ~/data/static_root/assets/img/favicon agcs/static/img
 
 coverage:
@@ -38,6 +38,13 @@ migrate:
 	python manage.py makemigrations
 	python manage.py migrate
 
-fixtures: migrate
-	python manage.py loaddata \
-	    landing/fixtures/* metadata/fixtures/* agcs/fixtures/*
+dump:
+	@python manage.py dumpdata \
+        -e admin -e auth \
+        -e sessions -e contenttypes \
+        -e forum_tracking -e forum_member \
+        -e forum_conversation -e forum_polls \
+        -e forum_attachments -e forum_permission
+
+load: migrate
+	python manage.py loaddata agcs/fixtures/all.json
