@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.db.models import F
+from django.db.models import F, Max
 from .models import Service
 
 
@@ -33,10 +33,13 @@ class ServiceAdmin(admin.ModelAdmin):
             )
             return
 
-        selection = queryset.last()
         target = (where == 'top') and 1 or (
-            Service.objects.order_by('order').last().order
+            Service.objects.aggregate(
+                n=Max('order')
+            )['n'] or 1
         )
+
+        selection = queryset.last()
 
         if selection.order == target:
             self.message_user(request,
