@@ -40,3 +40,5 @@ CACHES = {
 
 STATIC_URL = '/s/'
 STATIC_ROOT = '/tmp'
+ROOT_URLCONF = 'tests.urls'
+

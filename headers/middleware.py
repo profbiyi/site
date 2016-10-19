@@ -1,8 +1,27 @@
 from django.utils.deprecation import MiddlewareMixin
-from django.utils.cache import patch_vary_headers
+from django.utils.cache import patch_vary_headers, get_conditional_response
+from django.utils.http import unquote_etag
 from django import get_version
 from django.conf import settings
 from .utils.functional import set_headers
+from django.middleware.http import ConditionalGetMiddleware
+
+
+class GetIfNoneMatchMiddleware(ConditionalGetMiddleware): # pragma: no cover
+    def process_response(self, request, response):
+        if (not response.streaming and
+            not response.has_header('Content-Length')
+        ): response['Content-Length'] = str( # pragma: no cover
+            len(response.content)
+        )
+        etag = response.get('ETag')
+        if etag:
+            return get_conditional_response(
+                request,
+                etag=unquote_etag(etag),
+                response=response,
+            )
+        return response
 
 
 class VaryAcceptEncodingMiddleware(MiddlewareMixin):

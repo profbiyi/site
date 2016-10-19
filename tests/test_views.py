@@ -10,7 +10,7 @@ from machina.test.factories import create_forum
 from machina.test.factories import create_topic
 from machina.test.factories import PostFactory
 from machina.test.factories import UserFactory
-from agcs.urls.www import sitemaps
+from .urls import sitemaps
 from contact.forms import ContactForm
 from landing.views import LandingPageView
 
@@ -47,6 +47,7 @@ class LandingViewsTest(TestCase):
 
     def test_get_services_page(self):
         self.assertStatusOK(reverse('services'))
+        self.assertStatusOK(reverse('no-cache-services'))
 
     def test_get_manifest(self):
         self.assertStatusOK(reverse('chrome_manifest'))

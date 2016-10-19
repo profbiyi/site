@@ -6,9 +6,9 @@ from .models import Service
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     fields = ('order', 'name', 'description',)
-    list_display = ('name', 'order',)
+    list_display = ('name', 'order', 'modified',)
     ordering = ('order',)
-    readonly_fields = ('order',)
+    readonly_fields = ('order', 'modified',)
     actions = ['move_to_top', 'move_to_bottom', 'save_selection']
 
     def move_to_top(self, request, queryset):

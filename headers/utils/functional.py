@@ -2,16 +2,18 @@ import subprocess
 
 def set_headers(response, default=True, **headers):
     for header,value in headers.items():
+        h = header.replace('_', '-')
         if default:
-            response.setdefault(header, value)
+            response.setdefault(h, value)
         else:
-            response[header] = value
+            response[h] = value
 
 
 def del_headers(response, *headers):
     for header in headers:
-        if response.has_header(header):
-            del(response[header])
+        h = header.replace('_', '-')
+        if response.has_header(h):
+            del(response[h])
 
 
 def get_uwsgi_version():

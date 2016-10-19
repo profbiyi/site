@@ -3,11 +3,16 @@ from django.db import models
 from django.utils.functional import cached_property
 from landing.utils import markup_markdown
 
+class ServiceManager(models.Manager):
+    def last_modified(self):
+        return self.latest('modified').modified
 
 class Service(models.Model):
+    objects = ServiceManager()
 
     class Meta:
         ordering = ('order',)
+        get_latest_by = 'modified'
 
     name = models.CharField(
         verbose_name='Service Name',
@@ -22,6 +27,10 @@ class Service(models.Model):
 
     order = models.IntegerField(
         null=True,
+    )
+
+    modified = models.DateTimeField(
+        auto_now=True,
     )
 
     @cached_property
@@ -51,3 +60,4 @@ class Service(models.Model):
 
     def __str__(self):
         return str(self.name)
+

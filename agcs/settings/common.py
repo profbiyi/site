@@ -47,9 +47,11 @@ ROOT_URLCONF = 'agcs.urls.www'
 
 WSGI_APPLICATION = 'agcs.wsgi.application'
 
-ADMINS = MANAGERS  = (('Ryan Kaiser', 'ryank@alphageek.xyz'),)
+ADMINS = MANAGERS  = (('Alpha Geek', 'root@alphageek.xyz'),)
 
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'no-reply@alphageek.xyz'
+
+FROM_EMAIL_NAME = 'Alpha Geek'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 

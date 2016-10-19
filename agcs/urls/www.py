@@ -12,6 +12,8 @@ from contact.views import ContactView
 from landing.views import LandingPageView
 from landing.sitemaps import LandingSitemap
 from community.sitemaps import ForumsSitemap, TopicsSitemap
+from headers.utils.decorators import with_headers
+
 
 sitemaps = {
     'flatpages': FlatPageSitemap,
@@ -45,10 +47,19 @@ urlpatterns = [
     ),
 
     url(r'^services/$',
-        LandingPageView.as_view(
-            template_name='pages/services.html'
-        ),
-        name='services'
+        with_headers(False, X_Robots_Tag='noarchive')(
+            LandingPageView.as_view(
+                template_name='pages/services.html',
+                cache_timeout=settings.DEBUG and 5 or 300
+            )
+        ), name='services'
+    ),
+
+    url(r'^robots\.txt$',
+        TemplateView.as_view(
+            content_type='text/plain',
+            template_name='robots.txt',
+        ), name='robots'
     ),
 
     url(r'^sitemap\.xml$',

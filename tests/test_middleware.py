@@ -1,9 +1,15 @@
 from django.http import HttpResponse
-from django.test import TestCase, RequestFactory, modify_settings
+from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from django.test import (
+    TestCase,
+    RequestFactory,
+    modify_settings,
+    override_settings,
+)
 from headers.middleware import (
     MultipleProxyMiddleware,
-    ViaHeaderMiddleware
+    ViaHeaderMiddleware,
 )
 
 
@@ -31,3 +37,12 @@ class HeadersMiddleWareTest(TestCase):
         viawrap = decorator_from_middleware(ViaHeaderMiddleware)
         mulwrap = decorator_from_middleware(MultipleProxyMiddleware)
         viawrap(mulwrap(goodview))(req)
+
+    @override_settings(USE_ETAGS=False)
+    def test_without_etags(self):
+        res = self.client.get(
+            reverse('contact'),
+            CONTENT_LENGTH=123
+        )
+        self.assertEqual(200, res.status_code)
+        self.assertFalse(res.has_header('ETag'))
