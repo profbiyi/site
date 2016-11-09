@@ -15,7 +15,6 @@ from .utils import mkemail
 
 
 class ContactForm(forms.ModelForm):
-
     class Meta:
         model = Contact
         fields = [
@@ -27,8 +26,7 @@ class ContactForm(forms.ModelForm):
     captcha = ReCaptchaField(label="   ", widget=ReCaptchaWidget())
 
     def send_email(self):
-
-        emails=[EmailMultiAlternatives(**{
+        emails = [EmailMultiAlternatives(**{
             'subject'    : 'Contact Form: ' + str(self.instance.name),
             'from_email' : mkemail(settings.FROM_EMAIL_NAME, settings.EMAIL_HOST_USER),
             'to'         : [mkemail(a[0], a[1]) for a in settings.ADMINS],
@@ -66,4 +64,3 @@ class ContactForm(forms.ModelForm):
             print(e)
             return False
         return True
-
