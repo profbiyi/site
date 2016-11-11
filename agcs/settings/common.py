@@ -47,7 +47,10 @@ ROOT_URLCONF = 'agcs.urls.www'
 
 WSGI_APPLICATION = 'agcs.wsgi.application'
 
-ADMINS = MANAGERS  = (('Alpha Geek', 'root@alphageek.xyz'),)
+ADMINS = MANAGERS  = (
+    ('Alpha Geek', 'root@alphageek.xyz'),
+    ('Ryan Kaiser', 'ryank@alphageek.xyz'),
+)
 
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'no-reply@alphageek.xyz'
 
@@ -60,7 +63,7 @@ STATIC_URL       = '/s/'
 MEDIA_URL        = '/m/'
 LANGUAGE_CODE    = 'en-us'
 TIME_ZONE        = 'America/Chicago'
-EMAIL_HOST       = 'smtp.zoho.com'
+EMAIL_HOST       = 'smtp.gmail.com'
 EMAIL_PORT       = '587'
 USE_I18N         = False
 USE_L10N         = False

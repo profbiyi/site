@@ -28,7 +28,7 @@ class ContactForm(forms.ModelForm):
     def send_email(self):
         emails = [EmailMultiAlternatives(**{
             'subject'    : 'Contact Form: ' + str(self.instance.name),
-            'from_email' : mkemail(settings.FROM_EMAIL_NAME, settings.EMAIL_HOST_USER),
+            'from_email' : mkemail(settings.FROM_EMAIL_NAME, settings.DEFAULT_FROM_EMAIL),
             'to'         : [mkemail(a[0], a[1]) for a in settings.ADMINS],
             'reply_to'   : [mkemail(str(self.instance.name), self.cleaned_data['email'])],
             'body'       : str().join('{0:15s} : {1}\n'.format(
