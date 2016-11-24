@@ -1,12 +1,15 @@
 from django.db import models
 from django.core import validators
 from django.core.exceptions import ValidationError
+from django.utils.functional import cached_property
+
 
 STATUS_CHOICES = (
     ('r', 'Responded'),
     ('c', 'Closed'),
     ('n', 'New'),
 )
+
 
 class Contact(models.Model):
 
@@ -40,20 +43,6 @@ class Contact(models.Model):
             validators.RegexValidator(
                 '^[aA-zZ]+$',
                 message='Enter a valid last name.',
-                code='invalid',
-            ),
-        ],
-    )
-
-    name = models.CharField(
-        verbose_name='Full Name',
-        max_length=100,
-        blank=True,
-        validators=[
-            validators.MinLengthValidator(5),
-            validators.RegexValidator(
-                '[aA-zZ]+(?:[aA-zZ]+) [aA-zZ]+\Z',
-                message='Enter a valid name (first & last, letters only).',
                 code='invalid',
             ),
         ],
@@ -110,26 +99,9 @@ class Contact(models.Model):
         blank=True
     )
 
-    def save(self,  *args, **kwargs):
-        if not self.name and (self.first_name and self.last_name):
-            self.name = self.first_name + ' ' + self.last_name
-        elif self.name: # pragma: no cover
-            parts = self.name.split(' ')
-            if len(parts) == 2:
-                self.first_name = parts[0]
-                self.last_name = parts[1]
-            else:
-                raise ValidationError("Bad name: '%s'" % self.name)
-
-        name = self.name.split(' ')
-
-        if self.name.split(' ') != [
-            self.first_name, self.last_name
-        ]: raise ValidationError("Bad names: '%s','%s','%s'" % (
-            self.first_name, self.last_name, self.name
-        ))
-
-        return super(Contact, self).save(*args, **kwargs)
+    @cached_property
+    def name(self):
+        return ' '.join([self.first_name, self.last_name])
 
     def __str__(self):
         if self.date:

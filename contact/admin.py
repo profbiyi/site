@@ -5,12 +5,12 @@ from .models import Contact, STATUS_CHOICES
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     list_filter     = ('status', 'date',)
-    list_display    = ('date', 'status', 'name', 'email', 'phone', 'comment',)
+    list_display    = ('date', 'status', 'full_name', 'email', 'phone', 'comment',)
     actions         = ['mark_closed', 'mark_responded', 'mark_new', 'delete_selected']
     ordering        = ['-date', 'status',]
     date_hierarchy  = 'date'
     fields          = (
-        'status', 'notes', 'name', 'date',
+        'status', 'notes', 'full_name', 'date',
         'email', 'phone', 'comment',
         'remote_address'
     )
@@ -38,6 +38,10 @@ class ContactAdmin(admin.ModelAdmin):
     def mark_new(self, *args):
         self.change_status('n', *args)
 
+    def full_name(self, obj):
+        return obj.name
+
     mark_closed.short_description    = 'Mark selected issues as closed'
     mark_responded.short_description = "Mark selected issues as responded to"
     mark_new.short_description       = "Mark selected issues as new"
+    full_name.short_description      = "Full Name"

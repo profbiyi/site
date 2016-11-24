@@ -140,6 +140,7 @@ class LandingContactModelTest(TestCase):
         c.full_clean()
         c.first_name = ''
         with self.assertRaises(ValidationError):
-            c.save()
+            c.full_clean()
         c.first_name = 'Baz'
+        c.full_clean()
         c.save()
