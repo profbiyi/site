@@ -1,28 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.=w3.org/TR/html4/loose.dtd">
-<html lang=3D"en">
+<html lang=3D"en" />
 <head>
-  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
-  <meta name=3D"viewport" content=3D"initial-scale=3D1.0">
-  <meta name=3D"format-detection" content=3D"telephone=3Dno">
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8" />
+  <meta name=3D"viewport" content=3D"initial-scale=3D1.0" />
+  <meta name=3D"format-detection" content=3D"telephone=3Dno" />
   <style type=3D"text/css">
-    table {
-      border-spacing:0;
-    }
-
-    table td {
-      border-collapse:collapse;
-    }
-
-    table, th, td {
-        border: 1px solid black;
-        padding: 5px;
-        text-align: left;
-    }
-
-    .item {
-        color: red;
-        font-weight: bold;
-    }
+    table {border-spacing:0;}
+    table td {border-collapse:collapse;}
+    table, th, td {border: 1px solid black;padding: 5px;text-align: left;}
+    .item {color: red;font-weight: bold;}
   </style>
 </head>
   <body>
@@ -48,5 +34,28 @@
         <td style="border-collapse:collapse; border: 1px solid black; padding: 5px; text-align: left;">{{ comment }}</td>
       </tr>
     </table>
+    <br />
+    <div style="text-align: left;">
+      <hr />
+      <span style="font-family: Helvetica, Arial, sans-serif; line-height: 18px; text-align: center; background-color: rgb(255, 255, 255);">
+        <div style="text-align: left;"><b><br /></b></div>
+        <div style="text-align: left;"><b><font face="Verdana, arial, Helvetica, sans-serif" size="2">
+          <a href="{{ site.schema.url }}">{{ site.schema.name }}</a></font></b>
+        </div>
+        <div style="text-align: left;">
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: small;">{{ site.schema.address.street }}</span>
+        </div>
+        <div style="text-align: left;">
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: small;">{{ site.schema.address.locality|add:',' }}&nbsp;{{ site.schema.address.state.abbreviation }}&nbsp;{{ site.schema.address.postal_code }}</span>
+        </div>
+        <div style="text-align: left;">
+          <span style="font-size: small; font-family: Arial, Helvetica, sans-serif;">{{ site.schema.telephone }}</span>
+        </div>
+        <div style="text-align: left;">
+          <a href="mailto:contact@alphageek.xyz" title="Email Us" target="_blank" style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: small;">contact@alphageek.xyz</a>
+        </div>
+        <div style="text-align: left;"><br /></div>
+      </span></div><div style="text-align: left;">
+    </div>
   </body>
 </html>

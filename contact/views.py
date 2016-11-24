@@ -13,7 +13,7 @@ class ContactView(FormView):
         )
         try:
             self.object = form.save()
-            form.send_email()
+            form.send_email(request=self.request)
         except: # pragma: no cover
             messages.error(self.request,
                 'An internal server error occured.',

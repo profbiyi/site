@@ -25,7 +25,7 @@ class ContactForm(forms.ModelForm):
     cc_myself = forms.BooleanField(required=False, initial=False)
     captcha = ReCaptchaField(label="   ", widget=ReCaptchaWidget())
 
-    def send_email(self):
+    def send_email(self, request=None):
         emails = [EmailMultiAlternatives(**{
             'subject'    : 'Contact Form: ' + str(self.instance.name),
             'from_email' : mkemail(settings.FROM_EMAIL_NAME, settings.DEFAULT_FROM_EMAIL),
@@ -43,7 +43,8 @@ class ContactForm(forms.ModelForm):
                     'phone'   : self.cleaned_data['phone'],
                     'email'   : self.cleaned_data['email'],
                     'comment' : self.cleaned_data['comment'],
-                }
+                },
+                request=request
             ), 'text/html'
         )
 

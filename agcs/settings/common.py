@@ -49,7 +49,6 @@ WSGI_APPLICATION = 'agcs.wsgi.application'
 
 ADMINS = MANAGERS  = (
     ('Alpha Geek', 'root@alphageek.xyz'),
-    ('Ryan Kaiser', 'ryank@alphageek.xyz'),
 )
 
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'no-reply@alphageek.xyz'
