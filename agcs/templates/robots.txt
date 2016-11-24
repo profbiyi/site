@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /admin/
 Sitemap: {{ request.scheme }}://{{ request.META.SERVER_NAME }}/sitemap.xml
+{% comment %}Disallow: /{% endcomment %}
