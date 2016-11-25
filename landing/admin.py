@@ -60,7 +60,9 @@ class ServiceAdmin(admin.ModelAdmin):
         selection.order = target
         selection.save()
         self.message_user(request,
-            'Successfully moved %s to the top' % selection.name
+            'Successfully moved "{}" to the {}'.format(
+                selection.name, where
+            )
         )
 
     move_to_top.short_description    = 'Move Service to top'
