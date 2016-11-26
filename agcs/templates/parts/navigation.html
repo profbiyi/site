@@ -22,12 +22,12 @@
         <a href="{% url 'contact' %}">Contact</a>
       </li>
       <li class="dropdown{% if 'about' in request.path %} active{% endif %}">
-        <a id="dLabel" href="{% url 'about' %}" role="button"
+        <a id="AdLabel" href="{% url 'about' %}" role="button"
             data-target="#" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">About
             <i class="fa fa-caret-down" aria-hidden="true"></i>
         </a>
-        <ul class="dropdown-menu" aria-labelledby="dLabel">
+        <ul class="dropdown-menu" aria-labelledby="AdLabel">
           <li>
             <a id="aboutus" class="text-primary" href="{% url 'about' %}">Alpha Geeks<hr class="separator"></a>
           </li>
