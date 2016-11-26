@@ -37,6 +37,18 @@ urlpatterns = [
         name='about'
     ),
 
+    url(r'^about/privacy/$',
+        cache_page(60*5)(flatpage),
+        {'url': '/about/privacy/'},
+        name='privacy'
+    ),
+
+    url(r'^about/terms/$',
+        cache_page(60*5)(flatpage),
+        {'url': '/about/terms/'},
+        name='terms'
+    ),
+
     url(r'^contact/$',
         ContactView.as_view(
             success_url='/contact/',

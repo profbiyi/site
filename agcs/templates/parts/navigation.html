@@ -15,14 +15,30 @@
       <li{% if '/home/' == request.path or '/index/' == request.path or '/' == request.path %} class="active"{% endif %}>
         <a href="{% url 'home' %}">Home</a>
       </li>
-      <li{% if 'about' in request.path %} class="active"{% endif %}>
-        <a href="{% url 'about' %}">About</a>
+      <li{% if 'community' in request.path %} class="active"{% endif %}>
+        <a href="{% url 'forum:index' %}">Forum</a>
       </li>
       <li{% if 'contact' in request.path %} class="active"{% endif %}>
         <a href="{% url 'contact' %}">Contact</a>
       </li>
-      <li{% if 'community' in request.path %} class="active"{% endif %}>
-        <a href="{% url 'forum:index' %}">Forum</a>
+      <li class="dropdown{% if 'about' in request.path %} active{% endif %}">
+        <a id="dLabel" href="{% url 'about' %}" role="button"
+            data-target="#" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">About
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dLabel">
+          <li>
+            <a id="aboutus" class="text-primary" href="{% url 'about' %}">Alpha Geeks<hr class="separator"></a>
+          </li>
+          <li role="separator" class="divider"></li>
+          <li class="service-item">
+            <a id="privacy-dd-link" class="service-link" href="{% url 'privacy' %}">Privacy Policy</a>
+          </li>
+          <li class="service-item">
+            <a id="privacy-dd-link" class="service-link" href="{% url 'terms' %}">Terms &amp; Conditions</a>
+          </li>
+        </ul>
       </li>
       <li class="dropdown{% if 'services' in request.path %} active{% endif %}">
         <a id="dLabel" href="{% url 'services' %}" role="button"
