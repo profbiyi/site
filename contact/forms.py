@@ -26,10 +26,10 @@ class ContactForm(forms.ModelForm):
     captcha = ReCaptchaField(label="   ", widget=ReCaptchaWidget())
 
     def send_email(self, request=None):
+
         emails = [EmailMultiAlternatives(**{
             'subject'    : 'Contact Form: ' + str(self.instance.name),
-            'from_email' : mkemail(settings.FROM_EMAIL_NAME, settings.DEFAULT_FROM_EMAIL),
-            'to'         : [mkemail(a[0], a[1]) for a in settings.ADMINS],
+            'to'         : [mkemail(*a) for a in settings.ADMINS],
             'reply_to'   : [mkemail(str(self.instance.name), self.cleaned_data['email'])],
             'body'       : str().join('{0:15s} : {1}\n'.format(
                             self.fields[f].label, self.cleaned_data[f])
@@ -51,7 +51,7 @@ class ContactForm(forms.ModelForm):
         if self.cleaned_data['cc_myself']:
             emails.append(copy.copy(emails[0]))
             emails[1].to = emails[0].reply_to
-            emails[1].reply_to = emails[0].to
+            emails[1].reply_to = [settings.DEFAULT_REPLY_ADDR]
 
         try:
             with get_connection() as con:

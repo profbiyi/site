@@ -51,12 +51,12 @@ ADMINS = MANAGERS  = (
     ('Alpha Geek', 'root@alphageek.xyz'),
 )
 
-DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'no-reply@alphageek.xyz'
+DEFAULT_REPLY_ADDR = '"Alpha Geek (contact)" <contact@alphageek.xyz>'
+DEFAULT_FROM_EMAIL = '"Alpha Geek (no-reply)" <no-reply@alphageek.xyz>'
+SERVER_EMAIL = '"Alpha Geeks (root)" <root@alphageek.xyz>'
 
-FROM_EMAIL_NAME = 'Alpha Geek'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 ADMIN_URL        = 'admin/'
 STATIC_URL       = '/s/'
 MEDIA_URL        = '/m/'
