@@ -82,6 +82,16 @@ blockquote.definition {
   border: 1px solid rgba(86,61,124,.2);
 }
 
+.comany-addr {
+  margin: 0 0 .5em 0;
+  color: white;
+}
+
+footer address.company-addr {
+  margin: 0.5em 0 0.5em 0;
+  color: white;
+}
+
 @media (max-width: 768px) {
   header .jumbotron p {
     font-size: 18px;

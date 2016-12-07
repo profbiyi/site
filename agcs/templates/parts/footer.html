@@ -23,11 +23,13 @@
     </div>
     <hr class="visible-xs visible-sm">
     <div class="col-md-4 col-md-push-4 text-center">
-      <p id="company-address">
-        <a href="tel:{{ site.schema.telephone|urlencode }}"><strong>{{ site.schema.telephone }}</strong></a>
-        <br>{{ site.schema.address.street }}<br>{{ site.schema.address.locality|add:',' }}
-        {{ site.schema.address.state.abbreviation }} {{ site.schema.address.postal_code }}
-      </p>
+      <address class="company-addr">
+        <a href="tel:{{ site.schema.telephone|urlencode }}">
+          <strong>{{ site.schema.telephone }}</strong>
+        </a><br>
+        {{ site.schema.address.street }}<br>{{ site.schema.address.locality }}&comma;
+        {{ site.schema.address.state.abbreviation }}&nbsp;{{ site.schema.address.postal_code }}
+      </address>
     </div>
     <hr class="visible-xs visible-sm">
     <div class="col-md-4 col-md-pull-4 text-center">

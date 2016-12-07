@@ -49,6 +49,8 @@ urlpatterns = [
         name='terms'
     ),
 
+    url(r'^(?P<url>shared/.*)$', flatpage),
+
     url(r'^contact/$',
         ContactView.as_view(
             success_url='/contact/',
