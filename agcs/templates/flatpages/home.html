@@ -1,9 +1,5 @@
-{% extends 'base_page.html' %}{% load staticfiles %}
-
+{% extends 'base_flatpage.html' %}{% load staticfiles %}
 {% block canonical %}https://www.alphageek.xyz{% endblock canonical %}
-
-{% block page_title %}{{ flatpage.title }}{% endblock page_title %}
-
 {% block header %}
 <div class="container-fluid">
   <div class="row">
@@ -14,6 +10,3 @@
   </div>
 </div>
 {% endblock header %}
-
-{% block content %}{{ flatpage.content }}{% endblock content %}
-
