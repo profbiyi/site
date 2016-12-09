@@ -89,10 +89,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script>
   $(document).ready(function() {
-    $(window.location.hash + '-dd-link').parent().toggleClass('active');
-    $('.service-link').parent('.service-item').click(function() {
+    var subpg = (function() {
+      try {
+        return window.location
+          .pathname.match(
+            /^\/about\/([^\/]+)\/$/
+          )[1];
+      } catch(err) {
+        return window.location.hash.substr(1);
+      }
+    })();
+    $('.service-item:has(#'+subpg+'-dd-link)').toggleClass('active');
+    $('.service-item').click(function() {
       $('#navbar').collapse('hide');
-      $('.service-item.active').removeClass('active');
+      $('.service-item').removeClass('active');
       $(this).addClass('active');
       window.location = $(this).find('a.service-link').attr('href');
     });
@@ -101,19 +111,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script>
   $(document).ready(function() {
-    function isSmall() {
-      return $('a.navbar-brand.hidden-xs').css('display') == "none";
+    var isSmall = () => {
+      return $('.hidden-xs')
+        .css('display') == "none";
     }
-    $('.dropdown').hover(function() {
+
+    $('.dropdown').on("show.bs.dropdown", function() {
+      $('i', this).attr('class', 'fa fa-caret-down');
+      if (!$(this).hasClass('active'))
+        $('.dropdown-toggle', this).css({
+          'background-color': '#687b7c',
+          'border-color': '#566566'
+        });
+    });
+
+    $('.dropdown').on("hide.bs.dropdown", function() {
+      $('i', this).attr('class', 'fa fa-caret-up');
+      $('.dropdown-toggle', this).removeAttr('style');
+    });
+
+   $('.dropdown').hover(function() {
       if (isSmall()) return;
       $('.dropdown-menu', this).stop(true, true).fadeIn('fast');
-      $(this).toggleClass('open');
-      $('i', this).toggleClass('fa-caret-down fa-caret-up');
+      $('.dropdown-toggle', this).dropdown("toggle");
     }, function() {
       if (isSmall()) return;
       $('.dropdown-menu', this).stop(true, true).fadeOut('fast');
-      $(this).toggleClass('open');
-      $('i', this).toggleClass('fa-caret-down fa-caret-up');
+      $('.dropdown-toggle', this).dropdown("toggle");
     });
   });
 </script>

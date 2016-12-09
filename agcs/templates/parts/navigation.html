@@ -16,19 +16,20 @@
         <a href="{% url 'home' %}">Home</a>
       </li>
       <li class="dropdown{% if 'services' in request.path %} active{% endif %}">
-        <a id="dLabel" href="{% url 'services' %}" role="button"
+        <a class="dropdown-toggle" id="dLabel" href="{% url 'services' %}"
+            role="button" type="button"
             data-target="#" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">Services
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
+            <i class="fa fa-caret-up" aria-hidden="true"></i>
         </a>
-        <ul class="dropdown-menu" aria-labelledby="dLabel">
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li>
             <a id="whatwedo" class="text-primary" href="{% url 'services' %}">What We Do<hr class="separator"></a>
           </li>
           <li role="separator" class="divider"></li>
         {% for service in service_list %}
           <li class="service-item">
-            <a id="{{ service.anchor_id }}-dd-link" class="service-link" href="{{ service.get_absolute_url }}">{{ service.name }}</a>
+            <a id="{{ service.anchor_id }}-dd-link" role="menuitem" class="service-link" href="{{ service.get_absolute_url }}">{{ service.name }}</a>
           </li>
         {% endfor %}
         </ul>
@@ -37,12 +38,13 @@
         <a href="{% url 'contact' %}">Contact</a>
       </li>
       <li class="dropdown{% if 'about' in request.path %} active{% endif %}">
-        <a id="AdLabel" href="{% url 'about' %}" role="button"
+        <a class="dropdown-toggle" id="AdLabel" href="{% url 'about' %}"
+            role="button" type="button"
             data-target="#" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">About
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
+            <i class="fa fa-caret-up" aria-hidden="true"></i>
         </a>
-        <ul class="dropdown-menu" aria-labelledby="AdLabel">
+        <ul class="dropdown-menu" role="menu" aria-labelledby="AdLabel">
           <li>
             <a id="aboutus" class="text-primary" href="{% url 'about' %}">Alpha Geeks<hr class="separator"></a>
           </li>

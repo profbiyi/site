@@ -1,4 +1,7 @@
-.navbar-nav li.active a {
+.navbar-nav li.active a,
+.navbar-nav > li > a:hover,
+.navbar-nav > li > a:focus
+.navbar-nav li.open a[data-toggle="dropdown"] {
   font-weight: bold;
 }
 
@@ -9,6 +12,10 @@ hr.separator {
 @media (min-width: 768px) {
   hr.separator {
     display: none;
+  }
+
+  .nav-stacked>li+li {
+    margin-top: 0;
   }
 }
 

@@ -97,6 +97,19 @@ footer address.company-addr {
   vertical-align: middle;
 }
 
+
+/*
+.navbar-inverse .navbar-nav >
+.dropdown.open > a[data-toggle=dropdown] {
+  background-color: #777777;
+}
+
+.navbar-inverse .navbar-nav >
+.dropdown.active.open > a[data-toggle=dropdown] {
+  background-color: #15a589;
+}
+*/
+
 @media (max-width: 768px) {
   header .jumbotron p {
     font-size: 18px;
