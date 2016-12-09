@@ -16,14 +16,7 @@
 </head>
 <body id="page-top">
   {% block bootstrap3_content %}{% endblock bootstrap3_content %}
-  {#<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>#}
   <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
-  <script>
-    //var j = document.createElement('script');
-    //j.src = "{% static 'js/vendor/jquery.min.js' %}";
-    //document.body.appendChild(j);
-  //})();
-  </script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   {% block bootstrap3_extra_script %}{% endblock bootstrap3_extra_script %}
 </body>
